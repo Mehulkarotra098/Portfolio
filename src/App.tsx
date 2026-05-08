@@ -16,7 +16,7 @@ function App() {
       <Nav />
       <main ref={mainRef} className="overflow-x-hidden">
         {/* Hero Section */}
-        <section className="pt-40 md:pt-60">
+        <section className="pt-40 md:pt-60 px-margin-x">
           <Hero />
         </section>
 
