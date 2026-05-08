@@ -94,7 +94,7 @@ export const Skills = () => {
             <motion.span className="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]" variants={headingVariants}>
               Expertise
             </motion.span>
-            <motion.h2 className="font-display-xl text-6xl md:text-8xl text-on-surface leading-none mb-8" variants={headingVariants}>
+            <motion.h2 className="font-display-xl text-6xl md:text-8xl text-on-surface leading-none mb-8 font-bold" variants={headingVariants}>
               Creative
               <br />
               <span className="italic text-primary">Arsenal</span>
@@ -130,7 +130,7 @@ export const Skills = () => {
                       {item.number}
                     </motion.span>
                     <motion.h3
-                      className="font-display-xl text-3xl text-on-surface group-hover:text-primary transition-colors"
+                      className="font-display-xl text-3xl text-on-surface group-hover:text-primary transition-colors font-bold"
                       whileHover={{ x: 4 }}
                     >
                       {item.title}
