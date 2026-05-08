@@ -107,7 +107,7 @@ export const Contact = () => {
           <motion.span className="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]" variants={headingVariants}>
             Get in touch
           </motion.span>
-          <motion.h2 className="font-display-xl text-[56px] md:text-[80px] leading-[0.9] mb-12 text-on-surface" variants={headingVariants}>
+          <motion.h2 className="font-display-xl text-[56px] md:text-[80px] leading-[0.9] mb-12 text-on-surface font-bold" variants={headingVariants}>
             Let's build the{' '}
             <motion.span
               className="italic text-primary"
@@ -123,7 +123,7 @@ export const Contact = () => {
           </motion.h2>
           <motion.div className="flex flex-col gap-6" variants={containerVariants}>
             <motion.a
-              className="font-headline-md text-3xl md:text-4xl text-primary-container transition-all inline-block w-fit"
+              className="font-headline-md text-3xl md:text-4xl text-primary-container transition-all inline-block w-fit font-bold"
               href="mailto:mkarotra369@gmail.com"
               whileHover={{ x: 8, letterSpacing: '0.05em' }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -150,7 +150,7 @@ export const Contact = () => {
             {/* Name Input */}
             <motion.div className="relative group" variants={inputVariants}>
               <motion.input
-                className="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl peer placeholder-transparent text-on-surface"
+                className="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl peer placeholder-transparent text-on-surface font-bold"
                 id="name"
                 placeholder="Name"
                 type="text"
@@ -172,7 +172,7 @@ export const Contact = () => {
             {/* Email Input */}
             <motion.div className="relative group" variants={inputVariants}>
               <motion.input
-                className="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl peer placeholder-transparent text-on-surface"
+                className="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl peer placeholder-transparent text-on-surface font-bold"
                 id="email"
                 placeholder="Email"
                 type="email"
@@ -194,7 +194,7 @@ export const Contact = () => {
             {/* Message Input */}
             <motion.div className="relative group" variants={inputVariants}>
               <motion.textarea
-                className="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl resize-none h-40 peer placeholder-transparent text-on-surface"
+                className="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl resize-none h-40 peer placeholder-transparent text-on-surface font-bold"
                 id="message"
                 placeholder="Message"
                 value={formData.message}
@@ -214,7 +214,7 @@ export const Contact = () => {
 
             {/* Submit Button */}
             <motion.button
-              className="group relative inline-flex items-center gap-6 bg-primary-container text-on-primary-container px-12 py-6 overflow-hidden rounded-lg hover:text-on-primary transition-colors"
+              className="group relative inline-flex items-center gap-6 bg-primary-container text-on-primary-container px-12 py-6 overflow-hidden rounded-lg hover:text-on-primary transition-colors font-bold"
               type="submit"
               variants={buttonVariants}
               whileHover="hover"
