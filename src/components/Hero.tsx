@@ -122,7 +122,7 @@ export const Hero = () => {
           </motion.span>
 
           <motion.h1
-            className="font-display-xl text-[56px] md:text-[100px] lg:text-[110px] leading-[0.95] mb-16"
+            className="text-[56px] md:text-[100px] lg:text-[128px] leading-[0.95] mb-16 font-bold"
             style={{ perspective: '1000px' }}
           >
             <motion.div className="headline-line" variants={headlineVariants}>
