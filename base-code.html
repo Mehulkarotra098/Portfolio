@@ -1,0 +1,446 @@
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MEHUL KAROTRA | UI/UX Developer Showcase</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#2e62ff",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#353534",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-container": "#f8f5ff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "surface": "#131313",
+                        "secondary-fixed-dim": "#00dbe9",
+                        "on-tertiary": "#1000a9",
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "on-primary-container": "#f7f6ff",
+                        "secondary-fixed": "#7df4ff",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed": "#e1e0ff",
+                        "surface-variant": "#353534",
+                        "tertiary-container": "#5c5fea",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "error-container": "#93000a",
+                        "primary": "#b7c4ff",
+                        "on-primary": "#002682",
+                        "inverse-primary": "#024cec",
+                        "on-error": "#690005",
+                        "surface-dim": "#131313",
+                        "primary-fixed": "#dce1ff",
+                        "on-tertiary-fixed": "#07006c",
+                        "surface-container": "#201f1f",
+                        "on-primary-fixed-variant": "#0039b5",
+                        "secondary": "#d3fbff",
+                        "on-secondary-fixed": "#002022",
+                        "secondary-container": "#00eefc",
+                        "background": "#131313",
+                        "outline": "#8d90a2",
+                        "on-surface-variant": "#c3c5d8",
+                        "surface-tint": "#b7c4ff",
+                        "outline-variant": "#434656",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary": "#c0c1ff",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#00686f",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed": "#001552",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary": "#00363a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-x": "40px",
+                        "section-gap": "160px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-xl": ["Newsreader"],
+                        "body-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "headline-md": ["Newsreader"],
+                        "headline-lg": ["Newsreader"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "500"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .project-card:hover img {
+            transform: scale(1.04);
+        }
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(90deg, #2e62ff 0%, transparent 100%);
+        }
+        .text-reveal {
+            background: linear-gradient(to right, #b7c4ff 50%, #8d90a2 50%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: background-position 0.6s ease;
+        }
+        .text-reveal:hover {
+            background-position: 0 0;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10 transition-all duration-600 ease-out h-20">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-x h-full">
+<a class="font-display-xl text-body-lg font-bold tracking-tighter text-on-surface group" href="#">
+<span class="inline-block transition-transform duration-300 group-hover:-translate-y-1">Mehul Karotra</span>
+</a>
+<div class="hidden md:flex items-center space-x-12 font-label-sm uppercase">
+<a class="text-on-surface border-b border-primary-container pb-1 transition-all" href="#work">Work</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#about">Philosophy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#experience">Experience</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#contact">Contact</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-8 py-3 font-label-sm uppercase hover:bg-inverse-primary hover:text-on-primary transition-colors duration-300 rounded-lg">
+            Hire Me
+        </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="pt-40 pb-20 md:pt-60 md:pb-40 px-margin-x max-w-container-max mx-auto relative overflow-hidden" id="hero">
+<div class="absolute top-40 right-0 w-1/3 h-px bg-primary-container/20 hidden lg:block"></div>
+<div class="grid grid-cols-12 gap-gutter relative z-10">
+<div class="col-span-12 lg:col-span-10">
+<span class="font-label-sm text-primary-container block mb-8 tracking-[0.4em] uppercase">UI/UX Developer &amp; Designer</span>
+<h1 class="font-display-xl text-[56px] md:text-[100px] lg:text-[110px] leading-[0.95] mb-16">
+                    Crafting <span class="italic font-light text-primary">Seamless</span><br/>
+                    Digital <span class="text-on-surface-variant font-light">Interfaces.</span>
+</h1>
+</div>
+<div class="col-span-12 lg:col-span-5 lg:col-start-7">
+<p class="font-body-lg text-on-surface-variant leading-relaxed border-l border-primary-container/30 pl-8">
+                    Mehul Karotra is a Mumbai-based developer specializing in the intersection of design and technology. Currently scaling products at Apex36 Technology Services.
+                </p>
+<div class="mt-12 flex gap-8 items-center">
+<a class="font-label-sm text-primary border-b border-primary-container pb-1 hover:opacity-60 transition-opacity" href="#work">EXPLORE WORK</a>
+<span class="w-12 h-px bg-outline-variant"></span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">SCROLL TO DISCOVER</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Selected Works: Increased Gutter & Padding -->
+<section class="px-margin-x max-w-container-max mx-auto mb-section-gap" id="work">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-32 gap-8">
+<div>
+<h2 class="font-display-xl text-6xl md:text-8xl mb-4 text-on-surface">Selected<br/><span class="italic ml-8 md:ml-16 text-primary">Creations</span></h2>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-on-surface-variant block tracking-widest mb-2 uppercase">Archive</span>
+<span class="font-headline-md text-2xl text-on-surface">2022 — 2024</span>
+</div>
+</div>
+<!-- Vertical gaps increased significantly: gap-y-64 -->
+<div class="grid grid-cols-12 gap-y-64 md:gap-x-12 lg:gap-x-24">
+<!-- Project 01: Large Left -->
+<div class="col-span-12 md:col-span-7 group">
+<div class="relative overflow-hidden mb-12 bg-surface-container-low aspect-[16/10] rounded-xl border border-outline-variant/10">
+<img alt="My Country Mobile" class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlzjwdvRL2Vtr_cIviRlf7Sh7jg670G7_YNKrPejTPOC8bDnkPPuqQDsxx__GHmiFHaTBQkCQ83ZTo8M24FiAYfB-KV_t-wOGMD2UGuN1bEffllIlQldXr3hDtpdZxNkRDl-2oV1ukpD7mnDS9zpTsE3qhyxt6c34hTyCs_z3Fytb_vIgi5S2vWnFu9u4ZeVeQctYtXgWD_rtM1B7g56L2VUN0Xi0dzlFv3ORTk57hcrs5K6sF8tc_xE3P6OcbFnM0J7Yg9-J6ucXG"/>
+<div class="absolute top-6 left-6 bg-surface-container-highest/90 backdrop-blur-sm px-4 py-2 text-[10px] font-label-sm tracking-widest uppercase text-on-surface">01 / Featured</div>
+</div>
+<div class="max-w-lg px-2">
+<span class="font-label-sm text-[10px] tracking-[0.2em] text-primary uppercase mb-4 block">WordPress • Figma • UI/UX</span>
+<h3 class="font-headline-lg text-4xl mb-6 text-reveal inline-block cursor-default">My Country Mobile</h3>
+<p class="font-body-md text-on-surface-variant mb-10">A comprehensive redesign for a global VoIP leader, focusing on clarity and conversion-centric user flows.</p>
+<a class="inline-flex items-center gap-4 group/link text-primary" href="#">
+<span class="font-label-sm border-b border-primary-container pb-1 group-hover/link:border-transparent transition-all">VIEW CASE STUDY</span>
+<span class="material-symbols-outlined transition-transform group-hover/link:translate-x-2">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Project 02: Narrow Right Offset -->
+<div class="col-span-12 md:col-span-4 md:col-start-9 group md:mt-48">
+<div class="relative overflow-hidden mb-12 bg-surface-container aspect-[4/5] rounded-xl border border-outline-variant/10">
+<img alt="Callmama" class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqli4xHIUkOXNNn-n8M8JoUVUYYLSYvYRBxILcGX7bblzGs4MCauRcaRg1yte87SAXgrxVwevk3v_J_hBe_A53_43AD3ecsw5wGbTZtJXR6hzoBzhoqQ8OEG1gB9Q7ruAddFrVewjvfO73jCJDgUNhsi6iOtU_xNG8E0pGhIruybTdZm5uc7ILgk5kre1lnLl9FQ5F3w03alni82xFqwLTnbZV1_asFTMJXe37-XqjNy3TLMkaxTtt8aG_i5zKqXSCoTzt9QYseDhi"/>
+</div>
+<div class="px-2">
+<span class="font-label-sm text-[10px] tracking-[0.2em] text-primary uppercase mb-4 block">B2C Product • UI/UX</span>
+<h3 class="font-headline-md text-3xl mb-4 text-on-surface">Callmama</h3>
+<p class="font-body-md text-on-surface-variant">Simplifying international communication through a minimal and accessible interface.</p>
+</div>
+</div>
+<!-- Project 03: Wide Center -->
+<div class="col-span-12 lg:col-span-10 lg:col-start-2 group">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center px-4">
+<div class="order-2 md:order-1">
+<span class="font-label-sm text-[10px] tracking-[0.2em] text-primary uppercase mb-4 block">Enterprise Platform</span>
+<h3 class="font-headline-lg text-4xl mb-8 text-on-surface">Teloz Communication</h3>
+<p class="font-body-lg text-on-surface-variant mb-10">Reimagining enterprise SaaS with a focus on information density and cognitive ease for high-volume users.</p>
+<ul class="space-y-6 mb-10">
+<li class="flex items-center gap-4 font-body-md text-on-surface-variant">
+<span class="w-8 h-px bg-primary-container"></span> Information Architecture
+                            </li>
+<li class="flex items-center gap-4 font-body-md text-on-surface-variant">
+<span class="w-8 h-px bg-primary-container"></span> Visual Design System
+                            </li>
+</ul>
+</div>
+<div class="order-1 md:order-2 relative overflow-hidden bg-surface-container aspect-square rounded-xl border border-outline-variant/10">
+<img alt="Teloz" class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6QWhhzusWMFYdWGwZeHFyNC4k8oJnxVPrY3EjnpPkY8_0EdFvGFlNc2-5QgQtTiIef8I9nVVLolW_q9h9A7NPZhgOxvZuAe8ZYKFUmsknF6proj60L1EPrfpUSBJ3hku8BKQRQNzqH2TGFeFyz17hjBlk6I_p5Klai0mTQk02akqds04gNN2s53J7qsMFQRznxlp9cynNN5ShHWCP0eRVDpR7V4D0NzAb1itmYQx_tfzKwMwbg1gbapIebDJxKKKlVqg16i1pZ6WL"/>
+</div>
+</div>
+</div>
+<!-- Project 04: Offset Image -->
+<div class="col-span-12 md:col-span-5 group md:mt-24">
+<div class="relative overflow-hidden mb-12 bg-surface-container aspect-[3/4] rounded-xl border border-outline-variant/10">
+<img alt="Ringflow" class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:rotate-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxSlsLPNp56fY6A9HJAEi7JA7xcm137qljGZ-Uelw1DPbIX93cKpa-2XpoMvTg2n9ot5K8AmaLFse76mjjCZ8JXQF52wXjI0ltity3gOj4-0ydCaNwO-nWrQgjfoywFh-swDexq-txN23w7w0VdCn3MLg7AZX5nYDZcSyEbf2lJIPmPWIU3MaBEOWEzXeiSr-NcSRpDpeq8sf7rJ3J5eS5uIBtaLMQ7rButNmsM4PPmTmdg1Yxi2SdPNlanIX_yoqjyr06-yoS2VMS"/>
+</div>
+<div class="px-2">
+<h3 class="font-headline-md text-3xl mb-4 text-on-surface">Ringflow</h3>
+<p class="font-body-md text-on-surface-variant">A React-driven interface for modern contact centers, prioritizing real-time data visualization.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Philosophy & Experience -->
+<section class="bg-surface-container py-32" id="about">
+<div class="px-margin-x max-w-container-max mx-auto">
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12 lg:col-span-5 mb-24 lg:mb-0">
+<span class="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]">The Philosophy</span>
+<h2 class="font-display-xl text-5xl md:text-7xl mb-12 italic leading-tight text-on-surface">Human-Centric <br/><span class="text-primary-container">by Design.</span></h2>
+<p class="font-body-lg text-on-surface-variant mb-8 max-w-md">I believe digital products should be as intuitive as a physical object. My approach blends systematic thinking with artistic intuition to create experiences that feel both familiar and futuristic.</p>
+<div class="space-y-12 mt-20">
+<div>
+<span class="font-label-sm text-[10px] text-primary/40 block mb-4 uppercase tracking-widest">Education</span>
+<h4 class="font-headline-md text-xl mb-1 text-on-surface">Bachelor of Science</h4>
+<p class="font-body-md text-on-surface-variant">Information Technology</p>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-primary/40 block mb-4 uppercase tracking-widest">Notable Achievement</span>
+<p class="font-body-md text-on-surface-variant italic">Led the front-end architecture for a platform scaling to 1M+ active monthly users across global regions.</p>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-6 lg:col-start-7" id="experience">
+<span class="font-label-sm text-primary mb-12 block uppercase tracking-[0.4em]">The Journey</span>
+<div class="space-y-0">
+<!-- Experience Items with Primary Accents -->
+<div class="group border-t border-outline-variant/20 py-10 hover:bg-surface-bright/20 transition-colors px-4 -mx-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500">Apex36 Technology Services</h3>
+<p class="font-body-md text-on-surface-variant">UI/UX Developer (Present)</p>
+</div>
+<span class="font-label-sm text-[11px] tracking-widest text-primary">MUMBAI, IN</span>
+</div>
+</div>
+<div class="group border-t border-outline-variant/20 py-10 hover:bg-surface-bright/20 transition-colors px-4 -mx-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500">My Country Mobile</h3>
+<p class="font-body-md text-on-surface-variant">UI/UX Designer &amp; Web Developer</p>
+</div>
+<span class="font-label-sm text-[11px] tracking-widest text-primary">DUBAI/GLOBAL</span>
+</div>
+</div>
+<div class="group border-t border-outline-variant/20 py-10 hover:bg-surface-bright/20 transition-colors px-4 -mx-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500">ApplQ Innovations</h3>
+<p class="font-body-md text-on-surface-variant">Front-end Developer</p>
+</div>
+<span class="font-label-sm text-[11px] tracking-widest text-primary">REMOTE</span>
+</div>
+</div>
+<div class="group border-t border-b border-outline-variant/20 py-10 hover:bg-surface-bright/20 transition-colors px-4 -mx-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500">Threepin Info Tec.</h3>
+<p class="font-body-md text-on-surface-variant">Junior Web Developer</p>
+</div>
+<span class="font-label-sm text-[11px] tracking-widest text-primary">MUMBAI, IN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Section: Editorial Layout -->
+<section class="py-section-gap bg-background overflow-hidden" id="skills">
+<div class="px-margin-x max-w-container-max mx-auto">
+<div class="grid grid-cols-12 gap-gutter border-b border-outline-variant/20 pb-24">
+<div class="col-span-12 lg:col-span-4 sticky top-40 h-fit mb-24 lg:mb-0">
+<span class="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]">Expertise</span>
+<h2 class="font-display-xl text-6xl md:text-8xl text-on-surface leading-none mb-8">Creative<br/><span class="italic text-primary">Arsenal</span></h2>
+<p class="font-body-lg text-on-surface-variant max-w-sm">Merging deep technical proficiency with an eye for detail and user-first methodology.</p>
+</div>
+<div class="col-span-12 lg:col-span-7 lg:col-start-6 space-y-32"><!-- Skill Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- 01 UI/UX Card -->
+<div class="group bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 hover:border-primary-container/30 transition-all duration-500 flex flex-col h-full">
+<div class="flex items-center gap-4 mb-8">
+<span class="font-label-sm text-primary-container text-lg italic">01</span>
+<h3 class="font-display-xl text-3xl text-on-surface group-hover:text-primary transition-colors">UI/UX Design</h3>
+</div>
+<div class="grid grid-cols-1 gap-y-6">
+<div class="border-l-2 border-primary-container/20 pl-4">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">Strategy &amp; Ideation</h4>
+<p class="font-headline-md text-xl text-on-surface">User Research, Wireframing</p>
+</div>
+<div class="border-l-2 border-primary-container/20 pl-4">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">Execution &amp; Scale</h4>
+<p class="font-headline-md text-xl text-on-surface">Prototyping, Design Systems</p>
+</div>
+</div>
+</div>
+<!-- 02 Front-End Card -->
+<div class="group bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 hover:border-primary-container/30 transition-all duration-500 flex flex-col h-full">
+<div class="flex items-center gap-4 mb-8">
+<span class="font-label-sm text-primary-container text-lg italic">02</span>
+<h3 class="font-display-xl text-3xl text-on-surface group-hover:text-primary transition-colors">Front-End</h3>
+</div>
+<div class="grid grid-cols-1 gap-y-6">
+<div class="border-l-2 border-primary-container/20 pl-4">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">Core &amp; Logic</h4>
+<p class="font-headline-md text-xl text-on-surface">HTML5, CSS3, React.js</p>
+</div>
+<div class="border-l-2 border-primary-container/20 pl-4">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">Styling &amp; Interaction</h4>
+<p class="font-headline-md text-xl text-on-surface">Tailwind CSS, JS (ES6+)</p>
+</div>
+</div>
+</div>
+<!-- 03 Tools Card -->
+<div class="group bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 hover:border-primary-container/30 transition-all duration-500 col-span-1 md:col-span-2">
+<div class="flex items-center gap-4 mb-8">
+<span class="font-label-sm text-primary-container text-lg italic">03</span>
+<h3 class="font-display-xl text-3xl text-on-surface group-hover:text-primary transition-colors">Tools &amp; Technologies</h3>
+</div>
+<div class="flex flex-wrap gap-x-12 gap-y-6">
+<div class="min-w-[140px]">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">Design</h4>
+<p class="font-headline-md text-xl text-on-surface">Figma, Photoshop</p>
+</div>
+<div class="min-w-[140px]">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">Engineering</h4>
+<p class="font-headline-md text-xl text-on-surface">VS Code, Git</p>
+</div>
+<div class="min-w-[140px]">
+<h4 class="font-label-sm text-[10px] uppercase text-primary/60 tracking-widest mb-1">CMS</h4>
+<p class="font-headline-md text-xl text-on-surface">WordPress</p>
+</div>
+</div>
+</div>
+<!-- 04 Other Skills -->
+<div class="col-span-1 md:col-span-2 pt-8">
+<div class="flex items-center gap-4 mb-6">
+<span class="font-label-sm text-primary-container text-lg italic">04</span>
+<h3 class="font-display-xl text-2xl text-on-surface">Specialized Capabilities</h3>
+</div>
+<p class="font-body-lg text-on-surface-variant italic leading-relaxed">
+            Information Architecture, Search Engine Optimization (SEO), Responsive Design Patterns, and Accessibility Compliance.
+        </p>
+</div>
+</div></div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="px-margin-x max-w-container-max mx-auto mb-32" id="contact">
+<div class="editorial-line mb-32"></div>
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12 lg:col-span-6 lg:sticky lg:top-40 h-fit">
+<span class="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]">Get in touch</span>
+<h2 class="font-display-xl text-[56px] md:text-[80px] leading-[0.9] mb-12 text-on-surface">Let's build the <span class="italic text-primary">next</span> big thing.</h2>
+<div class="flex flex-col gap-6">
+<a class="font-headline-md text-3xl md:text-4xl hover:italic text-primary-container transition-all inline-block w-fit" href="mailto:mkarotra369@gmail.com">mkarotra369@gmail.com</a>
+<p class="font-body-lg text-on-surface-variant">Based in Mumbai, Maharashtra, India. <br/>Open to global collaborations.</p>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 lg:col-start-8 mt-20 lg:mt-0">
+<form class="space-y-16">
+<div class="relative group">
+<input class="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl peer placeholder-transparent text-on-surface" id="name" placeholder="Name" type="text"/>
+<label class="absolute left-0 top-0 font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-[10px]" for="name">Full Name</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl peer placeholder-transparent text-on-surface" id="email" placeholder="Email" type="email"/>
+<label class="absolute left-0 top-0 font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-[10px]" for="email">Email Address</label>
+</div>
+<div class="relative group">
+<textarea class="w-full bg-transparent border-b-2 border-outline-variant/30 py-6 focus:border-primary focus:ring-0 transition-colors outline-none font-headline-md text-2xl resize-none h-40 peer placeholder-transparent text-on-surface" id="message" placeholder="Message"></textarea>
+<label class="absolute left-0 top-0 font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-[10px]" for="message">Your Project Brief</label>
+</div>
+<button class="group relative inline-flex items-center gap-6 bg-primary-container text-on-primary-container px-12 py-6 overflow-hidden rounded-lg" type="submit">
+<span class="relative z-10 font-label-sm tracking-[0.2em] uppercase">Send Message</span>
+<span class="relative z-10 material-symbols-outlined transition-transform group-hover:translate-x-2">arrow_forward</span>
+<div class="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-container-lowest border-t border-outline-variant/10 pt-32 pb-16">
+<div class="max-w-container-max mx-auto px-margin-x">
+<div class="flex flex-col md:flex-row justify-between gap-16 mb-24">
+<div>
+<h3 class="font-display-xl text-3xl font-bold mb-8 text-on-surface">Mehul Karotra</h3>
+<p class="font-body-md text-on-surface-variant max-w-xs">A digital artisan focused on the marriage of function and beauty.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+<div class="flex flex-col gap-4">
+<span class="font-label-sm text-[10px] text-primary uppercase tracking-widest">Connect</span>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="https://linkedin.com/in/mehul-karotra-a71a97276" target="_blank">LinkedIn</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/mehulkarotra" target="_blank">GitHub</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-sm text-[10px] text-primary uppercase tracking-widest">Navigation</span>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#work">Work</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#about">About</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/10 gap-4">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">© 2024 MEHUL KAROTRA — ALL RIGHTS RESERVED.</span>
+<span class="font-label-sm text-[10px] text-primary-container uppercase tracking-widest italic">MADE WITH INTENTION IN MUMBAI</span>
+</div>
+</div>
+</footer>
+<div class="fixed bottom-12 right-12 z-50">
+<a class="w-14 h-14 bg-primary-container text-on-primary-container flex items-center justify-center rounded-xl hover:bg-primary transition-all hover:-translate-y-1 shadow-2xl" href="#">
+<span class="material-symbols-outlined">north</span>
+</a>
+</div>
+</body></html>
