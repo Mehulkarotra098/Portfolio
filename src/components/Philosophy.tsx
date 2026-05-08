@@ -65,7 +65,7 @@ export const Philosophy = () => {
             <motion.span className="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]" variants={itemVariants}>
               The Philosophy
             </motion.span>
-            <motion.h2 className="font-display-xl text-5xl md:text-7xl mb-12 italic leading-tight text-on-surface" variants={itemVariants}>
+            <motion.h2 className="font-display-xl text-5xl md:text-7xl mb-12 italic leading-tight text-on-surface font-bold" variants={itemVariants}>
               Human-Centric <br />
               <motion.span
                 className="text-primary-container"
@@ -97,7 +97,7 @@ export const Philosophy = () => {
                   <span className="font-label-sm text-[10px] text-primary/40 block mb-4 uppercase tracking-widest">
                     {item.label}
                   </span>
-                  <h4 className="font-headline-md text-xl mb-1 text-on-surface">{item.title}</h4>
+                  <h4 className="font-headline-md text-xl mb-1 text-on-surface font-bold">{item.title}</h4>
                   <p className="font-body-md text-on-surface-variant italic">{item.subtitle}</p>
                 </motion.div>
               ))}
@@ -127,7 +127,7 @@ export const Philosophy = () => {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                       <motion.h3
-                        className="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500"
+                        className="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500 font-bold"
                         whileHover={{ x: 4 }}
                       >
                         {item.company}
