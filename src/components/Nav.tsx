@@ -31,7 +31,7 @@ export const Nav = () => {
 
   return (
     <motion.nav
-      className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10 transition-all duration-600 ease-out h-20"
+      className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10 transition-all duration-600 ease-out h-20 px-20"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -66,7 +66,7 @@ export const Nav = () => {
         </motion.div>
 
         <motion.button
-          className="bg-primary-container text-on-primary-container px-8 py-3 font-label-sm uppercase hover:bg-inverse-primary hover:text-on-primary transition-colors duration-300 rounded-lg"
+          className="bg-white text-black px-6 py-2 font-label-sm uppercase hover:bg-inverse-primary hover:text-on-primary transition-colors duration-300 rounded-lg"
           variants={itemVariants}
           whileHover={{ scale: 1.08, boxShadow: '0 0 20px rgba(46, 98, 255, 0.3)' }}
           whileTap={{ scale: 0.95 }}

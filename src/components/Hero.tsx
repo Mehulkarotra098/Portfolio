@@ -95,13 +95,13 @@ export const Hero = () => {
   return (
     <section
       ref={containerRef}
-      className="pt-40 pb-20 md:pt-60 md:pb-40 px-margin-x max-w-container-max mx-auto relative overflow-hidden"
+      className=" pb-20 sm:pt-40 md:pb-40 px-margin-x max-w-container-max mx-auto relative overflow-hidden"
       id="hero"
       style={{ perspective: '1200px' }}
     >
       {/* Animated accent line */}
       <motion.div
-        className="absolute top-40 right-0 w-1/3 h-px bg-gradient-to-l from-primary-container via-accent to-transparent hidden lg:block hero-accent-line origin-right"
+        className="absolute top-40 right-0 w-1/3 h-px bg-linear-to-l from-primary-container via-accent to-transparent hidden lg:block hero-accent-line origin-right"
         variants={lineVariants}
         initial="hidden"
         animate="visible"
@@ -152,7 +152,7 @@ export const Hero = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: false }}
           >
-            Mehul Karotra is a Mumbai-based developer specializing in the intersection of design and technology. Currently
+            I am a Mumbai-based developer specializing in the intersection of design and technology. Currently
             scaling products at Apex36 Technology Services.
           </motion.p>
 

@@ -46,8 +46,8 @@ export const Footer = () => {
     {
       category: 'Connect',
       links: [
-        { label: 'LinkedIn', href: 'https://linkedin.com/in/mehul-karotra-a71a97276' },
-        { label: 'GitHub', href: 'https://github.com/mehulkarotra' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/mehulkarotra/' },
+        { label: 'GitHub', href: 'https://github.com/Mehulkarotra098/' },
       ],
     },
     {
@@ -61,7 +61,7 @@ export const Footer = () => {
 
   return (
     <motion.footer
-      className="bg-surface-container-lowest border-t border-outline-variant/10 pt-32 pb-16"
+      className="bg-surface-container-lowest border-t border-outline-variant/10 pt-32 pb-16 px-20"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
