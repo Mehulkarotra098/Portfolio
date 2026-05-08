@@ -67,7 +67,12 @@ export default {
         "section-gap": "160px",
         "container-max": "1280px",
         "base": "8px",
-        "gutter": "24px"
+        "gutter": "24px",
+        "section-gap-sm": "60px",
+        "section-gap-md": "100px",
+        "section-gap-lg": "120px",
+        "section-gap-hero": "40px",
+        "breathing": "80px"
       },
       fontFamily: {
         "display-xl": ["Newsreader"],
@@ -78,12 +83,17 @@ export default {
         "label-sm": ["JetBrains Mono"]
       },
       fontSize: {
-        "display-xl": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display-xl": ["128px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "600" }],
         "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
         "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
         "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "500"}],
         "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "500"}],
         "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "500"}]
+      },
+      boxShadow: {
+        "glow-primary": "0 0 30px rgba(46, 98, 255, 0.2)",
+        "glow-primary-lg": "0 0 40px rgba(46, 98, 255, 0.3)",
+        "glow-accent": "0 0 20px rgba(0, 217, 255, 0.15)"
       }
     },
   },
