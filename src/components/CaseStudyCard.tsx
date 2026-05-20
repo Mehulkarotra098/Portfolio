@@ -69,13 +69,13 @@ export const CaseStudyCard = ({ project }: CaseStudyCardProps) => {
       })
     }
 
-    const imageContainer = cardRef.current?.querySelector('.image-container')
+    const imageContainer = cardRef.current?.querySelector<HTMLElement>('.image-container')
     if (imageContainer) {
-      imageContainer.addEventListener('mousemove', handleMouseMove)
+      imageContainer.addEventListener('mousemove', handleMouseMove as EventListener)
       imageContainer.addEventListener('mouseleave', handleMouseLeave)
 
       return () => {
-        imageContainer.removeEventListener('mousemove', handleMouseMove)
+        imageContainer.removeEventListener('mousemove', handleMouseMove as EventListener)
         imageContainer.removeEventListener('mouseleave', handleMouseLeave)
       }
     }
@@ -95,7 +95,7 @@ export const CaseStudyCard = ({ project }: CaseStudyCardProps) => {
               style={{ transformStyle: 'preserve-3d' }}
             />
             {/* Overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-linear-to-tr from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
           {/* Year Badge */}

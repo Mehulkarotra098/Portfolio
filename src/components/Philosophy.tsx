@@ -51,21 +51,21 @@ export const Philosophy = () => {
   ]
 
   return (
-    <section className="bg-surface-container py-32" id="about">
-      <div className="px-margin-x max-w-container-max mx-auto">
-        <div className="grid grid-cols-12 gap-gutter">
+    <section className="bg-surface-container py-8 sm:py-16 md:py-24 lg:py-32" id="about">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-margin-x max-w-container-max mx-auto">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6 md:gap-gutter">
           {/* Left Column */}
           <motion.div
-            className="col-span-12 lg:col-span-5 mb-24 lg:mb-0"
+            className="col-span-12 lg:col-span-5 mb-12 sm:mb-16 md:mb-20 lg:mb-0"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <motion.span className="font-label-sm text-primary mb-8 block uppercase tracking-[0.4em]" variants={itemVariants}>
+            <motion.span className="font-label-sm text-primary mb-4 sm:mb-6 md:mb-8 block uppercase tracking-[0.4em]" variants={itemVariants}>
               The Philosophy
             </motion.span>
-            <motion.h2 className="font-display-xl text-5xl md:text-7xl mb-12 italic leading-tight text-on-surface font-bold" variants={itemVariants}>
+            <motion.h2 className="font-display-xl text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 sm:mb-8 md:mb-10 lg:mb-12 italic leading-tight text-on-surface font-bold" variants={itemVariants}>
               Human-Centric <br />
               <motion.span
                 className="text-primary-container"
@@ -75,12 +75,12 @@ export const Philosophy = () => {
                 by Design.
               </motion.span>
             </motion.h2>
-            <motion.p className="font-body-lg text-on-surface-variant mb-8 max-w-md" variants={itemVariants}>
+            <motion.p className="font-body-lg text-on-surface-variant mb-6 sm:mb-8 md:mb-10 max-w-md" variants={itemVariants}>
               I believe digital products should be as intuitive as a physical object. My approach blends systematic thinking
               with artistic intuition to create experiences that feel both familiar and futuristic.
             </motion.p>
 
-            <motion.div className="space-y-12 mt-20" variants={containerVariants}>
+            <motion.div className="space-y-8 sm:space-y-10 md:space-y-12 mt-12 sm:mt-16 md:mt-20" variants={containerVariants}>
               {[
                 {
                   label: 'Education',
@@ -113,28 +113,28 @@ export const Philosophy = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <motion.span className="font-label-sm text-primary mb-12 block uppercase tracking-[0.4em]" variants={itemVariants}>
+            <motion.span className="font-label-sm text-primary mb-6 sm:mb-8 md:mb-10 lg:mb-12 block uppercase tracking-[0.4em]" variants={itemVariants}>
               The Journey
             </motion.span>
             <div className="space-y-0">
               {journeyData.map((item, idx) => (
                 <motion.div
                   key={idx}
-                  className="group border-t border-outline-variant/20 py-10 transition-colors px-4 -mx-4"
+                  className="group border-t border-outline-variant/20 py-4 sm:py-6 md:py-8 lg:py-10 transition-colors px-3 sm:px-4 md:px-4 -mx-3 sm:-mx-4 md:-mx-4"
                   variants={journeyItemVariants}
                   whileHover="hover"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 sm:gap-3 md:gap-4">
                     <div>
                       <motion.h3
-                        className="font-headline-md text-2xl text-on-surface group-hover:text-primary transition-colors duration-500 font-bold"
+                        className="font-headline-md text-lg sm:text-xl md:text-2xl text-on-surface group-hover:text-primary transition-colors duration-500 font-bold"
                         whileHover={{ x: 4 }}
                       >
                         {item.company}
                       </motion.h3>
-                      <p className="font-body-md text-on-surface-variant">{item.role}</p>
+                      <p className="font-body-md text-sm sm:text-base text-on-surface-variant">{item.role}</p>
                     </div>
-                    <motion.span className="font-label-sm text-[11px] tracking-widest text-primary" whileHover={{ scale: 1.1 }}>
+                    <motion.span className="font-label-sm text-[9px] sm:text-[10px] md:text-[11px] tracking-widest text-primary" whileHover={{ scale: 1.1 }}>
                       {item.location}
                     </motion.span>
                   </div>

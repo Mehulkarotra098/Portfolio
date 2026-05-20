@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion'
 
 export const Nav = () => {
+  const navLinks = [
+    { label: 'Work', href: '#work' },
+    { label: 'About', href: '#about' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Contact', href: '#contact' },
+  ]
+
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: {
@@ -31,14 +38,14 @@ export const Nav = () => {
 
   return (
     <motion.nav
-      className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10 transition-all duration-600 ease-out h-20 px-20"
+      className="fixed top-0 w-full z-50 transition-all duration-600 ease-out h-16 sm:h-20 px-4 sm:px-6 md:px-8 lg:px-margin-x"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className="flex justify-between items-center max-w-container-max mx-auto px-margin-x h-full">
+      <div className="flex justify-between items-center max-w-container-max mx-auto h-full">
         <motion.a
-          className="font-display-xl text-body-lg font-bold tracking-tighter text-on-surface group"
+          className="font-display-xl text-sm sm:text-base md:text-body-lg font-bold tracking-tighter text-on-surface group"
           href="#"
           variants={itemVariants}
           whileHover={{ x: -4 }}
@@ -51,28 +58,29 @@ export const Nav = () => {
           </motion.span>
         </motion.a>
 
-        <motion.div className="hidden md:flex items-center space-x-12 font-label-sm uppercase" variants={containerVariants}>
-          {['Work', 'Philosophy', 'Experience', 'Contact'].map((link, idx) => (
+        <motion.div className="hidden md:flex items-center space-x-6 md:space-x-8 lg:space-x-12 font-label-sm uppercase text-xs sm:text-sm" variants={containerVariants}>
+          {navLinks.map((link, idx) => (
             <motion.a
-              key={link}
-              className={`transition-colors duration-300 ${idx === 0 ? 'text-on-surface border-b border-primary-container pb-1' : 'text-on-surface-variant hover:text-primary'}`}
-              href={`#${link.toLowerCase()}`}
+              key={link.label}
+              className={`transition-colors duration-300 text-link ${idx === 0 ? 'text-on-surface' : 'text-on-surface-variant hover:text-primary'}`}
+              href={link.href}
               variants={itemVariants}
               whileHover={{ y: -2 }}
             >
-              {link}
+              {link.label}
             </motion.a>
           ))}
         </motion.div>
 
-        <motion.button
-          className="bg-white text-black px-6 py-2 font-label-sm uppercase hover:bg-inverse-primary hover:text-on-primary transition-colors duration-300 rounded-lg"
+        <motion.a
+          className="button-ripple bg-white text-black px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 font-label-sm text-xs sm:text-sm uppercase hover:bg-primary-container hover:text-on-primary-container transition-colors duration-300 rounded-lg"
+          href="mailto:mkarotra369@gmail.com"
           variants={itemVariants}
           whileHover={{ scale: 1.08, boxShadow: '0 0 20px rgba(46, 98, 255, 0.3)' }}
           whileTap={{ scale: 0.95 }}
         >
-          Hire Me
-        </motion.button>
+          Hire
+        </motion.a>
       </div>
     </motion.nav>
   )

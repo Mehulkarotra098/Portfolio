@@ -26,13 +26,14 @@ export const ScrollToTop = () => {
   }, [])
 
   return (
-    <div className="fixed bottom-12 right-12 z-50">
+    <div className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 md:bottom-12 md:right-12 z-50">
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="w-14 h-14 bg-primary-container text-on-primary-container flex items-center justify-center rounded-xl hover:bg-primary transition-all hover:-translate-y-1 shadow-2xl"
+          aria-label="Scroll to top"
+          className="button-ripple w-12 h-12 sm:w-14 sm:h-14 bg-primary-container text-on-primary-container flex items-center justify-center rounded-xl hover:bg-primary transition-all hover:-translate-y-1 shadow-2xl"
         >
-          <span className="material-symbols-outlined">north</span>
+          <span className="relative z-10 material-symbols-outlined">north</span>
         </button>
       )}
     </div>
