@@ -1,4 +1,15 @@
 import { motion } from 'framer-motion'
+import { Code2, PenTool, Sparkles, Wrench, type LucideIcon } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
+
+type SkillItem = {
+  number: string
+  title: string
+  icon: LucideIcon
+  skills?: Array<{ label: string; value: string }>
+  tools?: Array<{ category: string; items: string }>
+  description?: string
+}
 
 export const Skills = () => {
   const containerVariants = {
@@ -26,7 +37,7 @@ export const Skills = () => {
   }
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 22 },
     visible: {
       opacity: 1,
       y: 0,
@@ -37,16 +48,16 @@ export const Skills = () => {
       },
     },
     hover: {
-      y: -8,
-      boxShadow: '0 20px 40px rgba(46, 98, 255, 0.15)',
+      y: -4,
       transition: { duration: 0.3 },
     },
   }
 
-  const skillItems = [
+  const skillItems: SkillItem[] = [
     {
       number: '01',
       title: 'UI/UX Design',
+      icon: PenTool,
       skills: [
         { label: 'Strategy & Ideation', value: 'User Research, Wireframing' },
         { label: 'Execution & Scale', value: 'Prototyping, Design Systems' },
@@ -55,6 +66,7 @@ export const Skills = () => {
     {
       number: '02',
       title: 'Front-End',
+      icon: Code2,
       skills: [
         { label: 'Core & Logic', value: 'HTML5, CSS3, React.js' },
         { label: 'Styling & Interaction', value: 'Tailwind CSS, JS (ES6+)' },
@@ -63,9 +75,9 @@ export const Skills = () => {
     {
       number: '03',
       title: 'Tools & Technologies',
-      isFullWidth: true,
+      icon: Wrench,
       tools: [
-        { category: 'Design', items: 'Figma, Photoshop' },
+        { category: 'Design', items: 'Figma, Adobe Illustrator, Photoshop' },
         { category: 'Engineering', items: 'VS Code, Git' },
         { category: 'CMS', items: 'WordPress' },
       ],
@@ -73,110 +85,107 @@ export const Skills = () => {
     {
       number: '04',
       title: 'Specialized Capabilities',
-      isFullWidth: true,
+      icon: Sparkles,
       description:
         'Information Architecture, Search Engine Optimization (SEO), Responsive Design Patterns, and Accessibility Compliance.',
     },
   ]
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 lg:py-32 bg-background overflow-hidden" id="skills">
+    <section className="bg-background pt-12 sm:pt-16" id="skills">
       <div className="px-4 sm:px-6 md:px-8 lg:px-margin-x max-w-container-max mx-auto">
-        <div className="grid grid-cols-12 gap-6 sm:gap-8 md:gap-gutter border-b border-outline-variant/20 pb-12 sm:pb-16 md:pb-24">
-          {/* Left Sticky */}
-          <motion.div
-            className="col-span-12 lg:col-span-4 lg:sticky lg:top-24 h-fit mb-12 sm:mb-20 md:mb-28 lg:mb-0"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.span className="font-label-sm text-primary mb-4 sm:mb-6 md:mb-8 block uppercase tracking-[0.4em]" variants={headingVariants}>
-              Expertise
-            </motion.span>
-            <motion.h2 className="font-display-xl text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-on-surface leading-none mb-4 sm:mb-6 md:mb-8 font-bold" variants={headingVariants}>
-              Creative
-              <br />
-              <span className="italic text-primary">Arsenal</span>
-            </motion.h2>
-            <motion.p className="font-body-lg text-sm sm:text-base text-on-surface-variant max-w-sm" variants={headingVariants}>
-              Merging deep technical proficiency with an eye for detail and user-first methodology.
+        <motion.div
+          className="pb-12 sm:pb-16 md:pb-24"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <div className="mb-8 grid grid-cols-1 gap-5 md:mb-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <motion.div variants={headingVariants}>
+              <span className="mb-4 block font-label-sm text-primary uppercase tracking-[0.36em]">
+                Expertise
+              </span>
+              <h2 className="font-display-xl text-4xl font-bold leading-none text-on-surface sm:text-5xl md:text-6xl">
+                Creative <span className="italic text-primary">Arsenal</span>
+              </h2>
+            </motion.div>
+            <motion.p
+              className="max-w-2xl text-sm leading-relaxed text-on-surface-variant sm:text-base lg:justify-self-end lg:text-right"
+              variants={headingVariants}
+            >
+              Merging technical precision, interface craft, and production-ready design habits into one compact toolkit.
             </motion.p>
-          </motion.div>
+          </div>
 
-          {/* Right Content */}
           <motion.div
-            className="col-span-12 md:col-span-12 lg:col-span-7 lg:col-start-6 space-y-6 sm:space-y-8 md:space-y-12 lg:space-y-16"
+            className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"
             variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-8">
-              {skillItems.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  className={`group surface-glass p-4 sm:p-6 md:p-8 rounded-xl hover:border-primary-container/30 transition-all duration-500 flex flex-col h-full ${
-                    item.isFullWidth ? 'col-span-1 md:col-span-2' : ''
-                  }`}
-                  variants={cardVariants}
-                  whileHover="hover"
-                >
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
-                    <motion.span
-                      className="font-label-sm text-primary-container text-lg italic"
-                      whileHover={{ scale: 1.2, color: '#2e62ff' }}
-                    >
-                      {item.number}
-                    </motion.span>
-                    <motion.h3
-                      className="font-display-xl text-xl sm:text-2xl md:text-3xl text-on-surface group-hover:text-primary transition-colors font-bold"
-                      whileHover={{ x: 4 }}
-                    >
-                      {item.title}
-                    </motion.h3>
-                  </div>
+            {skillItems.map((item) => (
+              <motion.div key={item.number} className="group h-full" variants={cardVariants} whileHover="hover">
+                <Card className="relative h-full gap-0 overflow-hidden border-0 bg-[linear-gradient(145deg,rgb(var(--color-surface-container-high-rgb)/0.58),rgb(var(--color-surface-container-rgb)/0.28)_54%,rgb(var(--color-surface-container-low-rgb)/0.72))] p-0 text-on-surface shadow-none ring-1 ring-outline-variant/12 backdrop-blur-xl transition-all duration-500 hover:bg-[linear-gradient(145deg,rgb(var(--color-surface-container-highest-rgb)/0.58),rgb(var(--color-surface-container-rgb)/0.36)_58%,rgb(var(--color-surface-container-low-rgb)/0.76))] hover:ring-primary-container/24">
+                  <span className="pointer-events-none absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-primary-container/45 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute right-0 top-0 size-28 rounded-bl-full bg-primary-container/8 blur-2xl" />
 
-                  {/* Standard skill layout */}
-                  {!item.isFullWidth && item.skills && (
-                    <motion.div className="grid grid-cols-1 gap-y-4 sm:gap-y-5 md:gap-y-6" variants={containerVariants}>
-                      {item.skills.map((skill, skillIdx) => (
-                        <motion.div
-                          key={skillIdx}
-                          className="border-l-2 border-primary-container/20 pl-3 sm:pl-4 group/skill"
-                          whileHover={{ x: 4 }}
-                          variants={cardVariants}
-                        >
-                          <h4 className="font-label-sm text-[8px] sm:text-[9px] md:text-[10px] uppercase text-primary/60 tracking-widest mb-0.5 sm:mb-1 group-hover/skill:text-primary transition-colors">
-                            {skill.label}
-                          </h4>
-                          <p className="font-headline-md text-lg sm:text-xl text-on-surface leading-snug">{skill.value}</p>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  )}
-
-                  {/* Tools layout */}
-                  {'tools' in item && (
-                    <div className="flex flex-wrap gap-x-6 sm:gap-x-8 md:gap-x-12 gap-y-4 sm:gap-y-5 md:gap-y-6">
-                      {item.tools?.map((tool, toolIdx) => (
-                        <motion.div key={toolIdx} whileHover={{ y: -4 }} className="min-w-[120px] sm:min-w-[140px]">
-                          <h4 className="font-label-sm text-[8px] sm:text-[9px] md:text-[10px] uppercase text-primary/60 tracking-widest mb-0.5 sm:mb-1">
-                            {tool.category}
-                          </h4>
-                          <p className="font-headline-md text-lg sm:text-xl text-on-surface">{tool.items}</p>
-                        </motion.div>
-                      ))}
+                  <CardHeader className="gap-0 px-5 pb-3 pt-5">
+                    <div className="mb-4 flex items-center justify-between gap-4">
+                      <span className="font-label-sm text-sm italic text-primary-container">{item.number}</span>
+                      <span className="grid size-9 place-items-center rounded-lg bg-primary-container/10 text-primary-container transition-colors group-hover:bg-primary-container/16">
+                        <item.icon className="size-4" aria-hidden="true" />
+                      </span>
                     </div>
-                  )}
+                    <CardTitle className="text-xl font-bold leading-tight text-on-surface sm:text-2xl">
+                      {item.title}
+                    </CardTitle>
+                  </CardHeader>
 
-                  {/* Description layout */}
-                  {'description' in item && <p className="font-body-lg text-sm sm:text-base text-on-surface-variant italic leading-relaxed">{item.description}</p>}
-                </motion.div>
-              ))}
-            </div>
+                  <CardContent className="px-5 pb-5">
+                    {'skills' in item && item.skills && (
+                      <div className="space-y-3">
+                        {item.skills.map((skill) => (
+                          <div
+                            key={skill.label}
+                            className="rounded-lg bg-surface-container-lowest/20 px-3 py-3 ring-1 ring-white/5"
+                          >
+                            <p className="font-label-sm text-[9px] uppercase tracking-[0.18em] text-primary/70">
+                              {skill.label}
+                            </p>
+                            <p className="mt-1.5 text-sm font-medium leading-snug text-on-surface sm:text-[15px]">
+                              {skill.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {'tools' in item && item.tools && (
+                      <div className="flex flex-wrap gap-2">
+                        {item.tools.map((tool) => (
+                          <div
+                            key={tool.category}
+                            className="rounded-lg bg-surface-container-lowest/20 px-3 py-2 ring-1 ring-white/5"
+                          >
+                            <p className="font-label-sm text-[8px] uppercase tracking-[0.18em] text-primary/70">
+                              {tool.category}
+                            </p>
+                            <p className="mt-1 text-sm font-medium leading-snug text-on-surface">{tool.items}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {'description' in item && (
+                      <CardDescription className="text-sm leading-relaxed text-on-surface-variant">
+                        {item.description}
+                      </CardDescription>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

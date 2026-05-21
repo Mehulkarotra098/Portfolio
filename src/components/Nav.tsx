@@ -1,6 +1,12 @@
 import { motion } from 'framer-motion'
+import { Mail, Moon, Sun } from 'lucide-react'
+import { useTheme } from '@/context/ThemeContext'
+import { buttonHoverAccent } from './ui/button'
+import { cn } from '@/lib/utils'
 
 export const Nav = () => {
+  const { theme, toggleTheme } = useTheme()
+
   const navLinks = [
     { label: 'Work', href: '#work' },
     { label: 'About', href: '#about' },
@@ -9,79 +15,122 @@ export const Nav = () => {
   ]
 
   const containerVariants = {
-    hidden: { opacity: 0, y: -20 },
+    hidden: { opacity: 0, y: -16 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: 'spring',
-        stiffness: 80,
-        damping: 15,
-        delayChildren: 0.1,
+        stiffness: 90,
+        damping: 18,
+        delayChildren: 0.08,
         staggerChildren: 0.05,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
+    hidden: { opacity: 0, y: -8 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: 'spring',
-        stiffness: 100,
-        damping: 15,
+        stiffness: 110,
+        damping: 16,
       },
     },
   }
 
   return (
-    <motion.nav
-      className="fixed top-0 w-full z-50 transition-all duration-600 ease-out h-16 sm:h-20 px-4 sm:px-6 md:px-8 lg:px-margin-x"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <div className="flex justify-between items-center max-w-container-max mx-auto h-full">
-        <motion.a
-          className="font-display-xl text-sm sm:text-base md:text-body-lg font-bold tracking-tighter text-on-surface group"
-          href="#"
-          variants={itemVariants}
-          whileHover={{ x: -4 }}
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 md:px-8 lg:px-margin-x">
+      <motion.nav
+        className="pointer-events-auto mx-auto max-w-container-max"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        aria-label="Main navigation"
+      >
+        <div
+          className={cn(
+            'relative flex items-center justify-between gap-3 rounded-full border px-3 py-2 sm:gap-4 sm:px-5 sm:py-2.5',
+            'border-[rgb(var(--color-on-surface-rgb)/0.1)] bg-[rgb(var(--color-surface-container-lowest-rgb)/0.78)]',
+            'shadow-[0_10px_40px_rgb(var(--color-deep-violet-rgb)/0.22),inset_0_1px_0_rgb(var(--color-on-surface-rgb)/0.06)]',
+            'backdrop-blur-[20px]'
+          )}
         >
-          <motion.span
-            className="inline-block transition-transform duration-300 group-hover:-translate-y-1"
-            whileHover={{ scale: 1.05 }}
+          <motion.a
+            className="relative z-10 shrink-0 group"
+            href="#hero"
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            Mehul Karotra
-          </motion.span>
-        </motion.a>
+            <span className="block font-display-xl text-sm font-bold leading-none tracking-tight text-on-surface sm:text-base">
+              Mehul Karotra
+            </span>
+          </motion.a>
 
-        <motion.div className="hidden md:flex items-center space-x-6 md:space-x-8 lg:space-x-12 font-label-sm uppercase text-xs sm:text-sm" variants={containerVariants}>
-          {navLinks.map((link, idx) => (
-            <motion.a
-              key={link.label}
-              className={`transition-colors duration-300 text-link ${idx === 0 ? 'text-on-surface' : 'text-on-surface-variant hover:text-primary'}`}
-              href={link.href}
+          <motion.div
+            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 md:flex lg:gap-10"
+            variants={containerVariants}
+          >
+            {navLinks.map((link) => (
+              <motion.a
+                key={link.label}
+                className="font-label-sm text-[11px] uppercase tracking-[0.14em] text-on-surface-variant transition-colors duration-300 hover:text-on-surface"
+                href={link.href}
+                variants={itemVariants}
+                whileHover={{ y: -1 }}
+              >
+                {link.label}
+              </motion.a>
+            ))}
+          </motion.div>
+
+          <div className="relative z-10 flex shrink-0 items-center gap-2 sm:gap-2.5">
+            <motion.button
+              className={cn(
+                'grid size-8 place-items-center rounded-full border transition-colors duration-300 sm:size-9',
+                'border-[rgb(var(--color-on-surface-rgb)/0.1)] bg-[rgb(var(--color-surface-container-rgb)/0.45)] text-on-surface',
+                'hover:border-primary-container/40 hover:bg-[rgb(var(--color-surface-container-high-rgb)/0.55)] hover:text-primary-container'
+              )}
+              type="button"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+              onClick={toggleTheme}
               variants={itemVariants}
-              whileHover={{ y: -2 }}
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.94 }}
             >
-              {link.label}
-            </motion.a>
-          ))}
-        </motion.div>
+              {theme === 'dark' ? (
+                <Sun className="size-4" aria-hidden="true" />
+              ) : (
+                <Moon className="size-4" aria-hidden="true" />
+              )}
+            </motion.button>
 
-        <motion.a
-          className="button-ripple bg-white text-black px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 font-label-sm text-xs sm:text-sm uppercase hover:bg-primary-container hover:text-on-primary-container transition-colors duration-300 rounded-lg"
-          href="mailto:mkarotra369@gmail.com"
-          variants={itemVariants}
-          whileHover={{ scale: 1.08, boxShadow: '0 0 20px rgba(46, 98, 255, 0.3)' }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Hire
-        </motion.a>
-      </div>
-    </motion.nav>
+            <motion.a
+              className={cn(
+                'inline-flex h-8 items-center gap-1.5 rounded-full px-3 sm:h-9 sm:gap-2 sm:px-4 md:px-5',
+                'font-label-sm text-[10px] font-medium uppercase tracking-[0.12em] sm:text-[11px]',
+                'border border-transparent transition-all duration-300',
+                theme === 'dark'
+                  ? 'bg-white text-[rgb(var(--color-deep-violet-rgb))] shadow-[0_6px_24px_rgb(var(--color-white-rgb)/0.12)]'
+                  : 'bg-[rgb(var(--color-deep-violet-rgb))] text-white shadow-[0_6px_24px_rgb(var(--color-deep-violet-rgb)/0.28)]',
+                buttonHoverAccent
+              )}
+              href="mailto:mehulbitmaster@gmail.com"
+              variants={itemVariants}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <span className="hidden sm:inline">Let&apos;s Connect</span>
+              <span className="sm:hidden">Connect</span>
+              <Mail className="size-3.5 sm:size-4" aria-hidden="true" />
+            </motion.a>
+          </div>
+        </div>
+      </motion.nav>
+    </div>
   )
 }

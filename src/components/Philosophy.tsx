@@ -38,20 +38,20 @@ export const Philosophy = () => {
     },
     hover: {
       x: 8,
-      backgroundColor: 'rgba(46, 98, 255, 0.05)',
+      backgroundColor: 'rgb(var(--color-light-violet-rgb) / 0.1)',
       transition: { duration: 0.3 },
     },
   }
 
   const journeyData = [
     { company: 'Apex36 Technology Services', role: 'UI/UX Developer (Present)', location: 'MUMBAI, IN' },
-    { company: 'My Country Mobile', role: 'UI/UX Designer & Web Developer', location: 'DUBAI/GLOBAL' },
-    { company: 'ApplQ Innovations', role: 'Front-end Developer', location: 'REMOTE' },
+    { company: 'My Country Mobile', role: 'UI/UX Designer & Web Developer', location: 'MUMBAI, IN' },
+    { company: 'ApplQ Innovations', role: 'Front-end Developer', location: 'MUMBAI, IN' },
     { company: 'Threepin Info Tec.', role: 'Junior Web Developer', location: 'MUMBAI, IN' },
   ]
 
   return (
-    <section className="bg-surface-container py-8 sm:py-16 md:py-24 lg:py-32" id="about">
+    <section className="bg-surface-container py-8 sm:py-16 md:py-24" id="about">
       <div className="px-4 sm:px-6 md:px-8 lg:px-margin-x max-w-container-max mx-auto">
         <div className="grid grid-cols-12 gap-4 sm:gap-6 md:gap-gutter">
           {/* Left Column */}
@@ -69,7 +69,7 @@ export const Philosophy = () => {
               Human-Centric <br />
               <motion.span
                 className="text-primary-container"
-                whileHover={{ scale: 1.05, color: '#00d9ff' }}
+                whileHover={{ scale: 1.05, color: 'rgb(var(--color-primary-rgb))' }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
                 by Design.
@@ -84,14 +84,9 @@ export const Philosophy = () => {
               {[
                 {
                   label: 'Education',
-                  title: 'Bachelor of Science',
+                  title: 'Bachelor of Computer Application',
                   subtitle: 'Information Technology',
-                },
-                {
-                  label: 'Notable Achievement',
-                  title: 'Led the front-end architecture',
-                  subtitle: 'for a platform scaling to 1M+ active monthly users across global regions.',
-                },
+                }
               ].map((item, idx) => (
                 <motion.div key={idx} variants={itemVariants} whileHover={{ x: 8 }}>
                   <span className="font-label-sm text-[10px] text-primary/40 block mb-4 uppercase tracking-widest">

@@ -1,4 +1,8 @@
 import { motion } from 'framer-motion'
+import { ArrowRight, Phone } from 'lucide-react'
+import { buttonVariants, buttonHoverAccent } from './ui/button'
+import { Card } from './ui/card'
+import { cn } from '@/lib/utils'
 
 export const Contact = () => {
   const containerVariants = {
@@ -25,7 +29,7 @@ export const Contact = () => {
     },
   }
 
-  const buttonVariants = {
+  const ctaMotionVariants = {
     hidden: { opacity: 0, scale: 0.95 },
     visible: {
       opacity: 1,
@@ -38,7 +42,7 @@ export const Contact = () => {
     },
     hover: {
       scale: 1.05,
-      boxShadow: '0 0 30px rgba(46, 98, 255, 0.3)',
+      boxShadow: '0 0 30px rgb(var(--color-light-violet-rgb) / 0.34)',
     },
     tap: {
       scale: 0.98,
@@ -48,7 +52,7 @@ export const Contact = () => {
   return (
     <section className="px-4 sm:px-6 md:px-8 lg:px-margin-x max-w-container-max mx-auto pb-20 sm:pb-28 md:pb-36" id="contact">
       <motion.div
-        className="editorial-line mb-16 sm:mb-20 md:mb-28"
+        className="mb-16 h-0.5 bg-[linear-gradient(90deg,var(--gradient-line-from),var(--gradient-line-via),var(--gradient-line-to))] shadow-[0_0_20px_rgb(var(--color-light-violet-rgb)/0.42)] sm:mb-20 md:mb-28"
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true }}
@@ -71,10 +75,10 @@ export const Contact = () => {
           <motion.h2 className="font-display-xl text-4xl sm:text-5xl md:text-7xl lg:text-[80px] leading-[0.92] mb-8 sm:mb-10 md:mb-12 text-on-surface font-bold" variants={headingVariants}>
             Let's build the{' '}
             <motion.span
-              className="italic text-gradient"
+              className="bg-[linear-gradient(90deg,var(--gradient-text-from),var(--gradient-text-via),var(--gradient-text-to))] bg-clip-text italic text-transparent"
               whileHover={{
                 scale: 1.1,
-                textShadow: '0 0 20px rgba(183, 196, 255, 0.5)',
+                textShadow: '0 0 20px rgb(var(--color-light-violet-rgb) / 0.58)',
               }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
@@ -85,12 +89,12 @@ export const Contact = () => {
           <motion.div className="flex flex-col gap-6" variants={containerVariants}>
             <motion.a
               className="font-headline-md text-2xl sm:text-3xl md:text-4xl text-primary-container transition-all inline-block w-fit font-bold break-all"
-              href="mailto:mkarotra369@gmail.com"
+              href="mailto:mehulbitmaster@gmail.com"
               whileHover={{ x: 8, letterSpacing: '0.05em' }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               variants={headingVariants}
             >
-              mkarotra369@gmail.com
+              mehulbitmaster@gmail.com
             </motion.a>
             <motion.p className="font-body-lg text-on-surface-variant" variants={headingVariants}>
               Based in Mumbai, Maharashtra, India. <br />
@@ -101,13 +105,13 @@ export const Contact = () => {
 
         {/* Contact form intentionally commented out for now. */}
         <motion.div
-          className="col-span-12 lg:col-span-5 lg:col-start-8 mt-12 lg:mt-0 surface-glass rounded-xl p-5 sm:p-7 md:p-8"
+          className="col-span-12 mt-12 lg:col-span-5 lg:col-start-8 lg:mt-0"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="flex h-full min-h-[260px] flex-col justify-between gap-10">
+          <Card className="flex h-full min-h-[260px] flex-col justify-between gap-10 border-outline-variant/20 bg-surface-container/80 p-5 text-on-surface shadow-[0_24px_80px_rgb(var(--color-deep-violet-rgb)/0.24)] backdrop-blur-xl sm:p-7 md:p-8">
             <div>
               <p className="font-label-sm text-[10px] uppercase tracking-[0.28em] text-primary mb-5">
                 Direct contact
@@ -120,21 +124,43 @@ export const Contact = () => {
               </p>
             </div>
 
-            <motion.a
-              className="button-ripple group relative inline-flex w-full sm:w-auto items-center justify-center gap-4 bg-primary-container text-on-primary-container px-8 sm:px-10 py-5 overflow-hidden rounded-lg hover:text-on-primary-container transition-colors font-bold"
-              href="mailto:mkarotra369@gmail.com"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <motion.span className="relative z-10 font-label-sm tracking-[0.2em] uppercase">
-                Email Mehul
-              </motion.span>
-              <motion.span className="relative z-10 material-symbols-outlined transition-transform group-hover:translate-x-2">
-                arrow_forward
-              </motion.span>
-            </motion.a>
-          </div>
+            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              <motion.a
+                className={cn(
+                  buttonVariants({ variant: 'default', size: 'lg' }),
+                  'h-14 w-full rounded-lg bg-primary-container px-8 py-5 font-label-sm text-xs uppercase tracking-[0.18em] text-on-primary-container sm:w-auto sm:flex-1 sm:px-10',
+                  buttonHoverAccent
+                )}
+                href="mailto:mehulbitmaster@gmail.com"
+                variants={ctaMotionVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <span>let's Connect</span>
+                <motion.span className="transition-transform group-hover:translate-x-2">
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </motion.span>
+              </motion.a>
+              <motion.a
+                className={cn(
+                  buttonVariants({ variant: 'outline', size: 'lg' }),
+                  'h-14 w-full rounded-lg border-outline-variant/30 px-8 py-5 font-label-sm text-xs uppercase tracking-[0.18em] text-on-surface-variant sm:w-auto sm:flex-1 sm:px-10',
+                  buttonHoverAccent
+                )}
+                href="https://wa.me/917977360142"
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={ctaMotionVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <motion.span className="transition-transform group-hover:translate-x-2">
+                  <Phone className="size-4" aria-hidden="true" />
+                </motion.span>
+                Text Me
+              </motion.a>
+            </div>
+          </Card>
         </motion.div>
       </div>
     </section>

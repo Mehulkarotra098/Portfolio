@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { ThemeProvider } from './context/ThemeContext'
 import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
 import { SelectedWorks } from './components/SelectedWorks'
@@ -12,6 +13,7 @@ function App() {
   const mainRef = useRef<HTMLElement>(null)
 
   return (
+    <ThemeProvider>
     <div className="bg-background text-on-surface">
       <Nav />
       <main ref={mainRef} className="overflow-x-hidden">
@@ -28,24 +30,15 @@ function App() {
           <SelectedWorks />
         </section>
 
-        {/* Breathing Space */}
-        <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
-
         {/* Philosophy Section */}
         <section>
           <Philosophy />
         </section>
 
-        {/* Breathing Space */}
-        <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
-
         {/* Skills Section */}
         <section>
           <Skills />
         </section>
-
-        {/* Breathing Space */}
-        <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
 
         {/* Contact Section */}
         <section>
@@ -56,6 +49,7 @@ function App() {
       <Footer />
       <ScrollToTop />
     </div>
+    </ThemeProvider>
   )
 }
 

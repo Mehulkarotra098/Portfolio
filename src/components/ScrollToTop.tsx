@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { ArrowUp } from 'lucide-react'
+import { Button, buttonHoverAccent } from './ui/button'
+import { cn } from '@/lib/utils'
 
 export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -28,13 +31,17 @@ export const ScrollToTop = () => {
   return (
     <div className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 md:bottom-12 md:right-12 z-50">
       {isVisible && (
-        <button
+        <Button
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="button-ripple w-12 h-12 sm:w-14 sm:h-14 bg-primary-container text-on-primary-container flex items-center justify-center rounded-xl hover:bg-primary transition-all hover:-translate-y-1 shadow-2xl"
+          size="icon-lg"
+          className={cn(
+            'h-12 w-12 rounded-xl bg-primary-container text-on-primary-container shadow-2xl transition-all hover:-translate-y-1 sm:h-14 sm:w-14',
+            buttonHoverAccent
+          )}
         >
-          <span className="relative z-10 material-symbols-outlined">north</span>
-        </button>
+          <ArrowUp className="size-5" aria-hidden="true" />
+        </Button>
       )}
     </div>
   )
