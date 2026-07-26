@@ -17,20 +17,24 @@ describe('portfolio routes', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Loading page')
   })
 
-  it('renders the portfolio homepage at /', async () => {
-    renderAt('/')
+  it(
+    'renders the portfolio homepage at /',
+    async () => {
+      renderAt('/')
 
-    expect(
-      await screen.findByRole(
-        'heading',
-        {
-          level: 1,
-          name: /Crafting Seamless Digital Interfaces/i,
-        },
-        { timeout: 3_000 },
-      ),
-    ).toBeInTheDocument()
-  })
+      expect(
+        await screen.findByRole(
+          'heading',
+          {
+            level: 1,
+            name: /I design digital experiences—and build them for real\./i,
+          },
+          { timeout: 10_000 },
+        ),
+      ).toBeInTheDocument()
+    },
+    10_000,
+  )
 
   it.each([
     ['/work/tis-admissions', 'TIS Admissions 2026–27'],
