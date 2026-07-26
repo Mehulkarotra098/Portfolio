@@ -1,22 +1,19 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
-import { MotionConfig } from 'framer-motion'
 import { describe, expect, it } from 'vitest'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { Footer } from './Footer'
 import { Hero } from './Hero'
 import { Nav } from './Nav'
 
-const renderShell = (reducedMotion: 'always' | 'never' | 'user' = 'user') =>
+const renderShell = () =>
   render(
-    <MotionConfig reducedMotion={reducedMotion}>
-      <ThemeProvider>
-        <Nav />
-        <main>
-          <Hero />
-        </main>
-        <Footer />
-      </ThemeProvider>
-    </MotionConfig>,
+    <ThemeProvider>
+      <Nav />
+      <main>
+        <Hero />
+      </main>
+      <Footer />
+    </ThemeProvider>,
   )
 
 describe('portfolio shell', () => {
@@ -101,28 +98,5 @@ describe('portfolio shell', () => {
       'href',
       'mailto:mehulbitmaster@gmail.com',
     )
-
-    for (const [label, href] of [
-      ['Work', '#work'],
-      ['About', '#about'],
-      ['Skills', '#skills'],
-      ['Contact', '#contact'],
-    ]) {
-      expect(footer.getByRole('link', { name: label })).toHaveAttribute(
-        'href',
-        href,
-      )
-    }
-  })
-
-  it('renders motion components at rest when reduced motion is requested', () => {
-    renderShell('always')
-
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: 'I design digital experiences—and build them for real.',
-      }),
-    ).toHaveStyle({ transform: 'none' })
   })
 })

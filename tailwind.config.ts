@@ -75,22 +75,12 @@ export default {
         "breathing": "80px"
       },
       fontFamily: {
-        "display-xl": ["Newsreader", "Georgia", "Cambria", "Times New Roman", "serif"],
-        "body-md": ["Geist", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        "body-lg": ["Geist", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        "headline-md": ["Newsreader", "Georgia", "Cambria", "Times New Roman", "serif"],
-        "headline-lg": ["Newsreader", "Georgia", "Cambria", "Times New Roman", "serif"],
-        "label-sm": [
-          "JetBrains Mono",
-          "ui-monospace",
-          "SFMono-Regular",
-          "Menlo",
-          "Monaco",
-          "Consolas",
-          "Liberation Mono",
-          "Courier New",
-          "monospace",
-        ],
+        "display-xl": ["Newsreader"],
+        "body-md": ["Geist"],
+        "body-lg": ["Geist"],
+        "headline-md": ["Newsreader"],
+        "headline-lg": ["Newsreader"],
+        "label-sm": ["JetBrains Mono"]
       },
       fontSize: {
         "display-xl": ["128px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "600" }],

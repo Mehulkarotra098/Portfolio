@@ -1,4 +1,4 @@
-import { motion, useReducedMotionConfig } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
 const connectLinks = [
@@ -27,7 +27,7 @@ const navLinks = [
 ]
 
 export const Footer = () => {
-  const shouldReduceMotion = useReducedMotionConfig()
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <footer className="px-4 pb-6 pt-16 sm:px-6 sm:pb-8 sm:pt-20 md:px-8 lg:px-margin-x lg:pt-24">

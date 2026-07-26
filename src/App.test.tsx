@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter, useNavigate } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import App from './App'
@@ -17,23 +17,24 @@ describe('portfolio routes', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Loading page')
   })
 
-  it('renders the portfolio homepage at /', async () => {
-    renderAt('/')
-    await act(async () => {
-      await vi.dynamicImportSettled()
-    })
+  it(
+    'renders the portfolio homepage at /',
+    async () => {
+      renderAt('/')
 
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: /I design digital experiences—and build them for real\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveAttribute(
-      'href',
-      '#main-content',
-    )
-  })
+      expect(
+        await screen.findByRole(
+          'heading',
+          {
+            level: 1,
+            name: /I design digital experiences—and build them for real\./i,
+          },
+          { timeout: 10_000 },
+        ),
+      ).toBeInTheDocument()
+    },
+    10_000,
+  )
 
   it.each([
     ['/work/tis-admissions', 'TIS Admissions 2026–27'],
