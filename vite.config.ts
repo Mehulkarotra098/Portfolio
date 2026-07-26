@@ -10,9 +10,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  build: {
-    chunkSizeWarningLimit: 550,
-  },
   test: {
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',

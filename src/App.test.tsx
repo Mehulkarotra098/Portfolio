@@ -11,14 +11,24 @@ const renderAt = (path: string) =>
   )
 
 describe('portfolio routes', () => {
-  it('renders the portfolio homepage at /', () => {
+  it('announces route loading while the page bundle resolves', () => {
+    renderAt('/work/roar-arena')
+
+    expect(screen.getByRole('status')).toHaveTextContent('Loading page')
+  })
+
+  it('renders the portfolio homepage at /', async () => {
     renderAt('/')
 
     expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: /Crafting Seamless Digital Interfaces/i,
-      }),
+      await screen.findByRole(
+        'heading',
+        {
+          level: 1,
+          name: /Crafting Seamless Digital Interfaces/i,
+        },
+        { timeout: 3_000 },
+      ),
     ).toBeInTheDocument()
   })
 
@@ -26,17 +36,19 @@ describe('portfolio routes', () => {
     ['/work/tis-admissions', 'TIS Admissions 2026–27'],
     ['/work/antrah-wellness', 'Antrah Wellness'],
     ['/work/roar-arena', 'Roar Arena'],
-  ])('renders the %s flagship case study', (path, title) => {
+  ])('renders the %s flagship case study', async (path, title) => {
     renderAt(path)
 
-    expect(screen.getByRole('heading', { level: 1, name: title })).toBeInTheDocument()
+    expect(
+      await screen.findByRole('heading', { level: 1, name: title }),
+    ).toBeInTheDocument()
   })
 
-  it('renders a not-found page for an unknown route', () => {
+  it('renders a not-found page for an unknown route', async () => {
     renderAt('/work/not-a-project')
 
     expect(
-      screen.getByRole('heading', { level: 1, name: /Page not found/i }),
+      await screen.findByRole('heading', { level: 1, name: /Page not found/i }),
     ).toBeInTheDocument()
   })
 
