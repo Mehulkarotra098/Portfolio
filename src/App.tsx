@@ -1,54 +1,27 @@
-import { useRef } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { RouteScrollManager } from './components/RouteScrollManager'
 import { ThemeProvider } from './context/ThemeContext'
-import { Nav } from './components/Nav'
-import { Hero } from './components/Hero'
-import { SelectedWorks } from './components/SelectedWorks'
-import { Philosophy } from './components/Philosophy'
-import { Skills } from './components/Skills'
-import { Contact } from './components/Contact'
-import { Footer } from './components/Footer'
-import { ScrollToTop } from './components/ScrollToTop'
+import { CaseStudyPage } from './pages/CaseStudyPage'
+import { HomePage } from './pages/HomePage'
+import { NotFoundPage } from './pages/NotFoundPage'
 
 function App() {
-  const mainRef = useRef<HTMLElement>(null)
-
   return (
     <ThemeProvider>
-    <div className="bg-background text-on-surface">
-      <Nav />
-      <main ref={mainRef} className="overflow-x-hidden">
-        {/* Hero Section */}
-        <section>
-          <Hero />
-        </section>
-
-        {/* Breathing Space */}
-        <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
-
-        {/* Selected Works Section */}
-        <section>
-          <SelectedWorks />
-        </section>
-
-        {/* Philosophy Section */}
-        <section>
-          <Philosophy />
-        </section>
-
-        {/* Skills Section */}
-        <section>
-          <Skills />
-        </section>
-
-        {/* Contact Section */}
-        <section>
-          <Contact />
-        </section>
-      </main>
-
-      <Footer />
-      <ScrollToTop />
-    </div>
+      <RouteScrollManager />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/work/tis-admissions"
+          element={<CaseStudyPage slug="tis-admissions" />}
+        />
+        <Route
+          path="/work/antrah-wellness"
+          element={<CaseStudyPage slug="antrah-wellness" />}
+        />
+        <Route path="/work/roar-arena" element={<CaseStudyPage slug="roar-arena" />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </ThemeProvider>
   )
 }

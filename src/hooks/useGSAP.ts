@@ -14,5 +14,7 @@ export const useGSAPAnimation = (callback: AnimationCallback, deps: React.Depend
     return () => {
       contextRef.current?.revert()
     }
+    // `deps` is the caller-controlled dependency contract for this custom hook.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
 }
