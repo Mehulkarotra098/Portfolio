@@ -240,5 +240,9 @@ export const archiveProjects: Project[] = [
 export const getProjectBySlug = (slug: string) =>
   featuredProjects.find((project) => project.slug === slug)
 
-// Kept temporarily for existing homepage consumers until the project layouts are rebuilt.
-export const projects = archiveProjects
+// Combined in the order the existing homepage grid should present the work.
+export const projects: Project[] = [
+  ...featuredProjects,
+  ...supportingProjects,
+  ...archiveProjects,
+]
