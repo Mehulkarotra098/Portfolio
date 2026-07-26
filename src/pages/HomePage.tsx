@@ -12,20 +12,30 @@ export const HomePage = () => {
   const mainRef = useRef<HTMLElement>(null)
 
   return (
-    <div className="min-h-screen bg-background text-on-surface">
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
+    <div className="bg-background text-on-surface">
       <Nav />
-      <main ref={mainRef} className="overflow-x-clip" id="main-content">
-        <Hero />
+      <main ref={mainRef} className="overflow-x-hidden">
+        <section>
+          <Hero />
+        </section>
 
         <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
 
-        <SelectedWorks />
-        <Philosophy />
-        <Skills />
-        <Contact />
+        <section>
+          <SelectedWorks />
+        </section>
+
+        <section>
+          <Philosophy />
+        </section>
+
+        <section>
+          <Skills />
+        </section>
+
+        <section>
+          <Contact />
+        </section>
       </main>
 
       <Footer />

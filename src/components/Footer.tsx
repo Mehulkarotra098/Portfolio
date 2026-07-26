@@ -1,20 +1,29 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowUpRight, ExternalLink, Mail, type LucideIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
-const connectLinks = [
+const connectLinks: {
+  label: string
+  href: string
+  icon: LucideIcon
+  external: boolean
+}[] = [
   {
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/in/mehulkarotra/',
+    icon: ExternalLink,
     external: true,
   },
   {
     label: 'GitHub',
     href: 'https://github.com/Mehulkarotra098/',
+    icon: ExternalLink,
     external: true,
   },
   {
     label: 'Email',
     href: 'mailto:mehulbitmaster@gmail.com',
+    icon: Mail,
     external: false,
   },
 ]
@@ -27,79 +36,132 @@ const navLinks = [
 ]
 
 export const Footer = () => {
-  const shouldReduceMotion = useReducedMotion()
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 85,
+        damping: 16,
+      },
+    },
+  }
 
   return (
-    <footer className="px-4 pb-6 pt-16 sm:px-6 sm:pb-8 sm:pt-20 md:px-8 lg:px-margin-x lg:pt-24">
-      <motion.div
-        className="mx-auto max-w-container-max border-t border-outline-variant/30"
-        initial={
-          shouldReduceMotion ? false : { opacity: 0, y: 16 }
-        }
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.15 }}
-      >
-        <div className="grid grid-cols-12 gap-x-gutter gap-y-12 py-12 sm:py-14 lg:py-16">
-          <div className="col-span-12 lg:col-span-6">
-            <a
-              className="inline-flex min-h-11 items-center font-display-xl text-3xl font-medium tracking-[-0.025em] text-on-surface transition-colors hover:text-primary sm:text-4xl"
-              href="#hero"
-            >
-              Mehul Karotra
+    <motion.footer
+      className="px-4 pb-8 pt-16 sm:px-6 sm:pb-12 sm:pt-20 md:px-8 md:pb-16 md:pt-24 lg:px-margin-x"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <div className="mx-auto max-w-container-max">
+        <motion.div
+          className="mb-12 h-px bg-[linear-gradient(90deg,var(--gradient-line-from),var(--gradient-line-via),var(--gradient-line-to))] sm:mb-14 md:mb-16"
+          variants={itemVariants}
+        />
+
+        <div className="grid grid-cols-12 items-start gap-x-gutter gap-y-10 sm:gap-y-12 lg:gap-y-0">
+          {/* Brand */}
+          <motion.div className="col-span-12 lg:col-span-5" variants={itemVariants}>
+            <a href="#hero" className="group inline-block">
+              <h3 className="font-display-xl text-3xl font-bold tracking-tight text-on-surface transition-colors duration-300 group-hover:text-primary sm:text-4xl">
+                Mehul Karotra
+              </h3>
             </a>
-            <p className="mt-5 max-w-md text-sm leading-6 text-on-surface-variant sm:text-base sm:leading-7">
-              UI/UX designer and front-end developer creating thoughtful
-              digital experiences from design system to production.
+            <p className="mt-4 max-w-sm font-body-lg text-sm leading-relaxed text-on-surface-variant sm:text-base">
+              A digital artisan focused on the marriage of function and beauty.
             </p>
-          </div>
+            <p className="mt-3 font-label-sm text-[10px] uppercase tracking-[0.28em] text-primary-container/70">
+              Mumbai, India · Open worldwide
+            </p>
+          </motion.div>
 
-          <div className="col-span-12 grid grid-cols-2 gap-6 sm:grid-cols-4 lg:col-span-6 lg:grid-cols-2">
-            <FooterColumn heading="Navigate" links={navLinks} />
-            <FooterColumn heading="Connect" links={connectLinks} />
-          </div>
-        </div>
+          {/* Link columns — grouped and top-aligned */}
+          <motion.div
+            className="col-span-12 grid grid-cols-2 gap-8 sm:gap-10 lg:col-span-7 lg:grid-cols-2 lg:gap-gutter lg:pl-8"
+            variants={containerVariants}
+          >
+            {/* Connect */}
+            <motion.div className="flex flex-col gap-5" variants={itemVariants}>
+              <span className="font-label-sm text-[10px] uppercase tracking-[0.28em] text-primary">
+                Connect
+              </span>
+              <ul className="flex flex-col gap-3">
+                {connectLinks.map((link) => (
+                  <li key={link.label}>
+                    <FooterLink
+                      href={link.href}
+                      label={link.label}
+                      icon={link.icon}
+                      external={link.external}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
-        <div className="flex flex-col gap-2 border-t border-outline-variant/20 py-5 font-label-sm text-[9px] uppercase tracking-[0.16em] text-on-surface-variant sm:flex-row sm:items-center sm:justify-between">
-          <p>Mumbai, India</p>
-          <p>Design and front-end development</p>
+            {/* Navigation */}
+            <motion.div className="flex flex-col gap-5" variants={itemVariants}>
+              <span className="font-label-sm text-[10px] uppercase tracking-[0.28em] text-primary">
+                Navigation
+              </span>
+              <ul className="flex flex-col gap-3">
+                {navLinks.map((link) => (
+                  <li key={link.label}>
+                    <FooterLink href={link.href} label={link.label} />
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
         </div>
-      </motion.div>
-    </footer>
+      </div>
+    </motion.footer>
   )
 }
 
-type FooterColumnProps = {
-  heading: string
-  links: {
-    label: string
-    href: string
-    external?: boolean
-  }[]
+type FooterLinkProps = {
+  href: string
+  label: string
+  icon?: LucideIcon
+  external?: boolean
 }
 
-const FooterColumn = ({ heading, links }: FooterColumnProps) => (
-  <div className="col-span-2 sm:col-span-2 lg:col-span-1">
-    <h2 className="font-label-sm text-[9px] uppercase tracking-[0.18em] text-primary">
-      {heading}
-    </h2>
-    <ul className="mt-5">
-      {links.map((link) => (
-        <li key={link.label}>
-          <a
-            className="group inline-flex min-h-11 items-center gap-2 text-sm text-on-surface-variant transition-colors hover:text-on-surface"
-            href={link.href}
-            target={link.external ? '_blank' : undefined}
-            rel={link.external ? 'noopener noreferrer' : undefined}
-          >
-            {link.label}
-            <ArrowUpRight
-              aria-hidden="true"
-              className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
+const FooterLink = ({ href, label, icon: Icon, external }: FooterLinkProps) => (
+  <a
+    href={href}
+    className={cn(
+      'group inline-flex items-center gap-2.5 font-body-md text-sm text-on-surface-variant transition-colors duration-300',
+      'hover:text-on-surface'
+    )}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener noreferrer' : undefined}
+  >
+    {Icon && (
+      <span className="grid size-8 place-items-center rounded-lg border border-outline-variant/20 bg-surface-container/40 text-on-surface-variant transition-all duration-300 group-hover:border-primary-container/30 group-hover:bg-surface-container/60 group-hover:text-primary-container">
+        <Icon className="size-3.5" aria-hidden />
+      </span>
+    )}
+    <span className="inline-flex items-center gap-1">
+      {label}
+      <ArrowUpRight
+        className="size-3 opacity-0 transition-all duration-300 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0"
+        aria-hidden
+      />
+    </span>
+  </a>
 )
