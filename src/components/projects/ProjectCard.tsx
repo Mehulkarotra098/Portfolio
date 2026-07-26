@@ -21,7 +21,8 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
       <CardContent className="relative aspect-[1.82] overflow-hidden bg-surface-container-lowest px-0">
         <motion.img
           src={project.image}
-          alt={project.title}
+          alt={`${project.title} project preview`}
+          loading="lazy"
           className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.025]"
           data-parallax="image"
         />
