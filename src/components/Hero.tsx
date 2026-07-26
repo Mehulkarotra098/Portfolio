@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotionConfig } from 'framer-motion'
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
 
 const practiceDetails = [
@@ -8,7 +8,7 @@ const practiceDetails = [
 ]
 
 export const Hero = () => {
-  const shouldReduceMotion = useReducedMotion()
+  const shouldReduceMotion = useReducedMotionConfig()
 
   const entrance = (delay: number) => ({
     initial: shouldReduceMotion ? false : { opacity: 0, y: 18 },

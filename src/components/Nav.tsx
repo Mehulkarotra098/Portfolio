@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotionConfig } from 'framer-motion'
 import { Mail, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/context/useTheme'
 
@@ -11,7 +11,7 @@ const navLinks = [
 
 export const Nav = () => {
   const { theme, toggleTheme } = useTheme()
-  const shouldReduceMotion = useReducedMotion()
+  const shouldReduceMotion = useReducedMotionConfig()
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-outline-variant/20 bg-surface-container-lowest/90 backdrop-blur-md">
