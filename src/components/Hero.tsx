@@ -7,7 +7,7 @@ import { buttonVariants, buttonHoverAccent } from './ui/button'
 import { cn } from '@/lib/utils'
 import heroSectionImage from '@/assets/hero-section.png'
 import heroSectionLightImage from '@/assets/hero-section-light.png'
-import { useTheme } from '@/context/useTheme'
+import { useTheme } from '@/context/ThemeContext'
 
 gsap.registerPlugin(ScrollTrigger)
 

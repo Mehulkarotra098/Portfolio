@@ -1,160 +1,137 @@
 import { describe, expect, it } from 'vitest'
-import * as projectModule from './projects'
-
-type LinkSnapshot = {
-  label: string
-  href: string
-}
-
-type ProjectSnapshot = {
-  id: string
-  slug: string
-  title: string
-  links: LinkSnapshot[]
-}
-
-type ProjectModel = {
-  featuredProjects?: ProjectSnapshot[]
-  supportingProjects?: ProjectSnapshot[]
-  archiveProjects?: ProjectSnapshot[]
-  getProjectBySlug?: (slug: string) => ProjectSnapshot | undefined
-}
-
-const model = projectModule as ProjectModel
+import { projects } from './projects'
 
 describe('project catalog', () => {
-  it('keeps the approved flagship order', () => {
-    expect(model.featuredProjects?.map(({ title }) => title)).toEqual([
+  it('keeps the exact ten-card grid order', () => {
+    expect(projects.map(({ title }) => title)).toEqual([
       'TIS Admissions 2026–27',
       'Antrah Wellness',
       'Roar Arena',
+      'GrowCred',
+      'My Country Mobile',
+      'Callmama',
+      'Ordhekdeen',
+      'Bachira',
+      'Luminae',
+      'EduTrack',
     ])
   })
 
-  it('keeps the approved flagship destinations exact', () => {
-    expect(
-      model.featuredProjects?.map(({ slug, links }) => ({ slug, links })),
-    ).toEqual([
+  it('stores the four new projects as conventional live-link records', () => {
+    expect(projects.slice(0, 4)).toEqual([
       {
-        slug: 'tis-admissions',
-        links: [
-          {
-            label: 'Live site',
-            href: 'https://tis-school-admissions-2026.vercel.app/',
-          },
-          {
-            label: 'Figma',
-            href: 'https://www.figma.com/design/HzBRale6rfopuSuIsPtthh/TIS-Admissions-2026-27-%E2%80%94-UI-UX-Design?node-id=0-1&p=f',
-          },
-        ],
+        id: 'tis-admissions',
+        title: 'TIS Admissions 2026–27',
+        year: '2026',
+        role: 'UI/UX Design & Front-end Development',
+        description: 'A school admissions website for the 2026–27 academic year.',
+        image: '/projects/tis-admissions/cover.webp',
+        techStack: ['Figma', 'UI/UX', 'Front-end Development'],
+        liveUrl: 'https://tis-school-admissions-2026.vercel.app/',
       },
       {
-        slug: 'antrah-wellness',
-        links: [
-          {
-            label: 'Live site',
-            href: 'https://antrah-wellness.vercel.app/',
-          },
-          {
-            label: 'Figma',
-            href: 'https://www.figma.com/design/46wA5ZJf2vUucsRB6Rysnl/Antrah-Wellness-Event-%E2%80%94-UI-UX-Assignment?node-id=0-1&t=I1tJHwo6VLN88OEd-1',
-          },
-        ],
+        id: 'antrah-wellness',
+        title: 'Antrah Wellness',
+        year: '2026',
+        role: 'UI/UX Design & Front-end Development',
+        description: 'A wellness event website designed and built in 2026.',
+        image: '/projects/antrah-wellness/cover.webp',
+        techStack: ['Figma', 'UI/UX', 'Front-end Development'],
+        liveUrl: 'https://antrah-wellness.vercel.app/',
       },
       {
-        slug: 'roar-arena',
-        links: [
-          {
-            label: 'Live site',
-            href: 'https://roararenaindia.vercel.app/',
-          },
-        ],
+        id: 'roar-arena',
+        title: 'Roar Arena',
+        year: '2026',
+        role: 'Web Design & Development',
+        description: 'A 2026 website for Roar Arena.',
+        image: '/projects/roar-arena/cover.webp',
+        techStack: ['UI/UX', 'Front-end Development'],
+        liveUrl: 'https://roararenaindia.vercel.app/',
       },
-    ])
-  })
-
-  it('keeps GrowCred as supporting work with its verified destination', () => {
-    expect(model.supportingProjects?.map(({ title, links }) => ({ title, links }))).toEqual([
       {
+        id: 'growcred',
         title: 'GrowCred',
-        links: [
-          {
-            label: 'Live site',
-            href: 'https://greencred.vercel.app/',
-          },
-        ],
+        year: '2026',
+        role: 'Web Design & Development',
+        description: 'A 2026 web project for GrowCred.',
+        image: '/projects/growcred/cover.webp',
+        techStack: ['UI/UX', 'Front-end Development'],
+        liveUrl: 'https://greencred.vercel.app/',
       },
     ])
   })
 
-  it('preserves all six earlier projects and their destinations', () => {
-    expect(
-      model.archiveProjects?.map(({ id, title, links }) => ({ id, title, links })),
-    ).toEqual([
+  it('preserves the six original project records exactly', () => {
+    expect(projects.slice(4)).toEqual([
       {
         id: 'my-country-mobile',
         title: 'My Country Mobile',
-        links: [{ label: 'Live site', href: 'http://mycountrymobile.com/' }],
+        year: '2023',
+        role: 'UI/UX Developer, WordPress, Graphics',
+        clientOrCompany: 'My Country Mobile',
+        description:
+          'Worked on UI/UX development, WordPress pages, and visual graphics for the company website and marketing surfaces.',
+        image: '/my-country-mobile.png',
+        techStack: ['WordPress', 'UI/UX', 'Graphic Design'],
+        liveUrl: 'http://mycountrymobile.com/',
       },
       {
         id: 'callmama',
         title: 'Callmama',
-        links: [{ label: 'Live site', href: 'https://www.callmama.com/' }],
+        year: '2023',
+        role: 'UI/UX Developer, WordPress, Graphics',
+        clientOrCompany: 'My Country Mobile',
+        description:
+          'Contributed to Callmama, an internal product of My Country Mobile, focusing on WordPress implementation, UI/UX, and graphics.',
+        image: '/callmama.png',
+        techStack: ['WordPress', 'UI/UX', 'Graphic Design'],
+        liveUrl: 'https://www.callmama.com/',
       },
       {
         id: 'ordhekdeen',
         title: 'Ordhekdeen',
-        links: [
-          {
-            label: 'Figma',
-            href: 'https://www.figma.com/design/Kh9i4e3tSF2jTjGySidzk7/Matrimony-Website--Community-?node-id=0-1&p=f',
-          },
-        ],
+        role: 'Figma UI Designer',
+        description:
+          'Designed UI screens for a matrimonial portal focused on profile discovery, trust, and a clean user journey.',
+        image: '/matrimony.png',
+        techStack: ['Figma', 'UI Design', 'User Flows'],
+        liveUrl:
+          'https://www.figma.com/design/Kh9i4e3tSF2jTjGySidzk7/Matrimony-Website--Community-?node-id=0-1&p=f',
       },
       {
         id: 'bachira',
         title: 'Bachira',
-        links: [
-          {
-            label: 'Figma',
-            href: 'https://www.figma.com/design/7oYAa78La5UhpkfPoKkJCZ/Bachira-Online-Shop--Community-?node-id=169-249&p=f',
-          },
-        ],
+        role: 'Figma UI Designer',
+        description:
+          'Created Figma designs for an e-commerce product with a modern shopping experience and clear product presentation.',
+        image: '/bachira.png',
+        techStack: ['Figma', 'E-commerce UI', 'Visual Design'],
+        liveUrl:
+          'https://www.figma.com/design/7oYAa78La5UhpkfPoKkJCZ/Bachira-Online-Shop--Community-?node-id=169-249&p=f',
       },
       {
         id: 'luminae',
         title: 'Luminae',
-        links: [
-          {
-            label: 'Figma',
-            href: 'https://www.figma.com/design/rnGMe9FnPzGFbIQlFmgfQJ/Ecommerce-UI-Kit--Community-?node-id=0-1&p=f',
-          },
-        ],
+        role: 'Figma UI Designer',
+        description:
+          'Designed Figma UI for an e-commerce platform with category navigation, product discovery, and a polished retail shopping experience.',
+        image: '/luminae.png',
+        techStack: ['Figma', 'E-commerce UI', 'Visual Design'],
+        liveUrl:
+          'https://www.figma.com/design/rnGMe9FnPzGFbIQlFmgfQJ/Ecommerce-UI-Kit--Community-?node-id=0-1&p=f',
       },
       {
         id: 'edutrack',
         title: 'EduTrack',
-        links: [
-          {
-            label: 'Figma',
-            href: 'https://www.figma.com/design/zcZ6QGU9neTpj7TKYuiE3B/practice2?node-id=0-1&p=f',
-          },
-        ],
+        role: 'Figma UI Designer',
+        description:
+          'Designed a school and college management app where students take tests and prepare for exams, and teachers mark attendance, view records, and create assessments.',
+        image: '/edutrack.png',
+        techStack: ['Figma', 'Mobile UI', 'Education'],
+        liveUrl:
+          'https://www.figma.com/design/zcZ6QGU9neTpj7TKYuiE3B/practice2?node-id=0-1&p=f',
       },
     ])
-  })
-
-  it('finds routable projects by slug', () => {
-    expect(model.getProjectBySlug?.('antrah-wellness')?.title).toBe('Antrah Wellness')
-  })
-
-  it('returns undefined for an unknown slug', () => {
-    expect(model.getProjectBySlug).toBeTypeOf('function')
-    expect(model.getProjectBySlug?.('not-a-project')).toBeUndefined()
-  })
-
-  it('does not expose supporting work as an internal case study', () => {
-    expect(model.getProjectBySlug).toBeTypeOf('function')
-    expect(model.getProjectBySlug?.('growcred')).toBeUndefined()
   })
 })

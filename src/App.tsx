@@ -1,47 +1,54 @@
-import { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { RouteScrollManager } from './components/RouteScrollManager'
+import { useRef } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
-
-const HomePage = lazy(() =>
-  import('./pages/HomePage').then(({ HomePage: page }) => ({ default: page })),
-)
-const CaseStudyPage = lazy(() =>
-  import('./pages/CaseStudyPage').then(({ CaseStudyPage: page }) => ({ default: page })),
-)
-const NotFoundPage = lazy(() =>
-  import('./pages/NotFoundPage').then(({ NotFoundPage: page }) => ({ default: page })),
-)
-
-const routeLoadingFallback = (
-  <div
-    role="status"
-    aria-live="polite"
-    className="grid min-h-screen place-items-center bg-background text-on-surface"
-  >
-    Loading page…
-  </div>
-)
+import { Nav } from './components/Nav'
+import { Hero } from './components/Hero'
+import { SelectedWorks } from './components/SelectedWorks'
+import { Philosophy } from './components/Philosophy'
+import { Skills } from './components/Skills'
+import { Contact } from './components/Contact'
+import { Footer } from './components/Footer'
+import { ScrollToTop } from './components/ScrollToTop'
 
 function App() {
+  const mainRef = useRef<HTMLElement>(null)
+
   return (
     <ThemeProvider>
-      <RouteScrollManager />
-      <Suspense fallback={routeLoadingFallback}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/work/tis-admissions"
-            element={<CaseStudyPage slug="tis-admissions" />}
-          />
-          <Route
-            path="/work/antrah-wellness"
-            element={<CaseStudyPage slug="antrah-wellness" />}
-          />
-          <Route path="/work/roar-arena" element={<CaseStudyPage slug="roar-arena" />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+    <div className="bg-background text-on-surface">
+      <Nav />
+      <main ref={mainRef} className="overflow-x-hidden">
+        {/* Hero Section */}
+        <section>
+          <Hero />
+        </section>
+
+        {/* Breathing Space */}
+        <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
+
+        {/* Selected Works Section */}
+        <section>
+          <SelectedWorks />
+        </section>
+
+        {/* Philosophy Section */}
+        <section>
+          <Philosophy />
+        </section>
+
+        {/* Skills Section */}
+        <section>
+          <Skills />
+        </section>
+
+        {/* Contact Section */}
+        <section>
+          <Contact />
+        </section>
+      </main>
+
+      <Footer />
+      <ScrollToTop />
+    </div>
     </ThemeProvider>
   )
 }

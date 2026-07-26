@@ -16,10 +16,6 @@ type ProjectCardProps = {
 const formatCategory = (project: Project) => project.techStack.slice(0, 2).join(' - ')
 
 export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
-  const destination =
-    project.liveUrl ??
-    project.links.find(({ label }) => label === 'Live site')?.href
-
   const cardContent = (
     <Card className="h-full gap-0 border border-outline-variant/15 bg-surface-container/45 py-0 shadow-[0_12px_36px_rgb(var(--color-deep-violet-rgb)/0.14)] backdrop-blur-xl transition-all duration-500 group-hover:border-primary-container/25 group-hover:bg-surface-container/55 group-hover:shadow-[0_16px_48px_rgb(var(--color-light-violet-rgb)/0.08)]">
       <CardContent className="relative aspect-[1.82] overflow-hidden bg-surface-container-lowest px-0">
@@ -54,9 +50,9 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
       whileHover={{ y: -5 }}
       transition={{ duration: 0.35 }}
     >
-      {destination ? (
+      {project.liveUrl ? (
         <a
-          href={destination}
+          href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="block h-full overflow-hidden rounded-xl"

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Mail, Moon, Sun } from 'lucide-react'
-import { useTheme } from '@/context/useTheme'
+import { useTheme } from '@/context/ThemeContext'
 import { buttonHoverAccent } from './ui/button'
 import { cn } from '@/lib/utils'
 
