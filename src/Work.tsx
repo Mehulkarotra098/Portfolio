@@ -17,28 +17,37 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     el.style.setProperty('--ph', sstep(0.36, 0.7, t).toFixed(3))
   })
   const media = useRef<HTMLDivElement>(null)
-  const [view, setView] = useState<'desk' | 'mob'>(() => (p.mobile && innerWidth < 700 ? 'mob' : 'desk'))
+  const [view, setView] = useState<'desk' | 'mob'>(() => (p.mobile && matchMedia('(max-width: 860px)').matches ? 'mob' : 'desk'))
   const [dragging, setDragging] = useState(false)
   const mobW = useRef(0.36)
-  // the screen keeps a fixed height, like a browser's responsive mode; only the width changes
+  // Size the browser. Desktop view keeps a 16:10 screen. Mobile view keeps a real phone shape:
+  // on narrow layouts it fills the height left under the text, on wide ones it is a fixed width.
+  const layout = (v: 'desk' | 'mob') => {
+    const m = media.current
+    if (!m) return
+    const w = m.clientWidth
+    if (!w) return
+    const narrow = matchMedia('(max-width: 860px)').matches
+    const bar = m.querySelector<HTMLElement>('.browser__bar')?.offsetHeight ?? 42
+    m.style.setProperty('--sh', `${(w * 0.625).toFixed(1)}px`)
+    if (narrow) {
+      const screenH = clamp(m.clientHeight - bar - 6, 240, 640)
+      m.style.setProperty('--shm', `${screenH.toFixed(1)}px`)
+      mobW.current = clamp(screenH / 2.236 / w, 0.3, 0.92)
+    } else {
+      m.style.removeProperty('--shm')
+      mobW.current = clamp(Math.max(0.36, 210 / w), 0.36, 0.7)
+    }
+    if (!m.dataset.drag) m.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1')
+    requestAnimationFrame(() => { const sc = m.querySelector<HTMLElement>('.screen'); if (sc) m.style.setProperty('--shr', (sc.clientHeight / w).toFixed(4)) })
+  }
   useEffect(() => {
     const m = media.current!
-    const ro = new ResizeObserver(() => {
-      const w = m.clientWidth
-      m.style.setProperty('--sh', `${(w * 0.625).toFixed(1)}px`)
-      mobW.current = clamp(Math.max(0.36, 210 / w), 0.36, 0.7)
-      if (!m.dataset.drag) m.style.setProperty('--bw', view === 'mob' ? mobW.current.toFixed(3) : '1')
-      requestAnimationFrame(() => { const sc = m.querySelector<HTMLElement>('.screen'); if (sc && w) m.style.setProperty('--shr', (sc.clientHeight / w).toFixed(4)) })
-    })
+    const ro = new ResizeObserver(() => layout(view))
     ro.observe(m)
     return () => ro.disconnect()
-  }, [view])
-  const setTo = (v: 'desk' | 'mob') => {
-    setView(v)
-    const m = media.current!
-    m.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1')
-    requestAnimationFrame(() => { const sc = m.querySelector<HTMLElement>('.screen'); if (sc) m.style.setProperty('--shr', (sc.clientHeight / m.clientWidth).toFixed(4)) })
-  }
+  })
+  const setTo = (v: 'desk' | 'mob') => { setView(v); requestAnimationFrame(() => layout(v)) }
   const fit = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const im = e.currentTarget
     media.current!.style.setProperty('--rd', (im.naturalHeight / im.naturalWidth).toFixed(4))
@@ -73,7 +82,7 @@ function Chapter({ p, i }: { p: Project; i: number }) {
           <p className="ch__meta"><span>{p.meta}</span>{p.note && <em>{p.note}</em>}</p>
           <p className="ch__text">{p.text}</p>
           <p className="ch__role">{p.role}</p>
-          <a className="btn btn--light" href={p.url} target="_blank" rel="noopener">Visit {host(p.url)}<Ext /></a>
+          <a className="btn btn--light ch__visit" href={p.url} target="_blank" rel="noopener">Visit <span className="ch__host">{host(p.url)}</span><span className="ch__host-s">the live site</span><Ext /></a>
         </div>
         <div ref={media} className={`ch__media is-${view}${dragging ? ' is-dragging' : ''}`}>
           <div className="browser">
@@ -90,7 +99,7 @@ function Chapter({ p, i }: { p: Project; i: number }) {
             <div className="screen">
               <div className="screen__page screen__desk">
                 <img {...shot(p.slug, 'page')} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
-                {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" />}
+                {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" on={view === 'desk'} still={false} />}
               </div>
               {p.mobile && <img className="screen__page screen__mob" {...shot(p.slug, 'mobile')} alt={`${p.name} website, mobile`} loading="lazy" decoding="async" width={360} height={805} />}
             </div>

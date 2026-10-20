@@ -77,6 +77,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
   const noteInput = useRef<HTMLInputElement>(null)
   const zoom = useRef(0)
   const scale = useRef(1)
+  const settle = useRef(0)
   const pan = useRef({ x: 0, y: 0 })
   const drag = useRef<Drag | null>(null)
   const history = useRef<Frame[][]>([])
@@ -109,7 +110,15 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     const vw = st.clientWidth, vh = st.clientHeight
     const s0 = Math.max(vw / B.w, vh / B.h)
     const z = sstep(0.06, 1, p)
-    const ox = (vw - B.w * s0) / 2 + pan.current.x * (1 - z), oy = (vh - B.h * s0) / 2 + pan.current.y * (1 - z)
+    // on tall phones, keep the screens clear of the headline and buttons
+    let lift = 0
+    if (portrait && copy.current) {
+      const btns = copy.current.querySelector<HTMLElement>('.btns')
+      const safe = btns ? btns.offsetTop + btns.offsetHeight + 34 : 0
+      const firstY = Math.min(...live.current.filter((x) => x.y > B.h * 0.4).map((x) => x.y))
+      lift = Math.max(0, safe - ((vh - B.h * s0) / 2 + firstY * s0))
+    }
+    const ox = (vw - B.w * s0) / 2 + pan.current.x * (1 - z), oy = (vh - B.h * s0) / 2 + lift + pan.current.y * (1 - z)
     const f = live.current.find((x) => x.id === ZOOM_TO) ?? live.current[0]
     const fh = f.w * ratio(f.view)
     const s1 = Math.min((vh * 0.8) / fh, (vw * 0.9) / f.w)
@@ -118,6 +127,9 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     const cx = cx0 + (vw / 2 - cx0) * z, cy = cy0 + (vh / 2 - cy0) * z
     const tx = cx - (f.x + f.w / 2) * s, ty = cy - (f.y + fh / 2) * s
     scale.current = s
+    bd.classList.add('is-moving')
+    clearTimeout(settle.current)
+    settle.current = window.setTimeout(() => bd.classList.remove('is-moving'), 180)
     bd.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${s.toFixed(4)})`
     bd.style.setProperty('--fade', (1 - sstep(0.25, 0.75, p)).toFixed(3))
     bd.style.setProperty('--s', (1 / s).toFixed(4))
@@ -133,7 +145,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     }
     st.style.setProperty('--cur', (1 - sstep(0.02, 0.15, p)).toFixed(3))
     st.classList.toggle('is-scrolled', p > 0.12)
-  }, [B.w, B.h])
+  }, [B.w, B.h, portrait])
   const pin = usePin<HTMLElement>((p) => { zoom.current = p; place(p) })
   useEffect(() => { place(zoom.current) })
 
@@ -261,21 +273,38 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
   // ------------------------------------------------------------------ headline: resize from the corners (it can't be moved)
   const headResize = (e: React.PointerEvent<HTMLElement>, corner: string) => {
     e.preventDefault(); e.stopPropagation()
-    const box = (e.currentTarget.parentElement as HTMLElement)
-    const w0 = box.getBoundingClientRect().width, sx = e.clientX, start = hs
-    const room = (stage.current!.clientWidth * (portrait ? 0.96 : 0.97)) / w0
+    const box = e.currentTarget.parentElement as HTMLElement
+    const st = stage.current!.getBoundingClientRect()
+    const r = box.getBoundingClientRect()
+    const btns = copy.current!.querySelector('.btns')!.getBoundingClientRect()
+    const start = hs, sx = e.clientX
+    // limits: stay left of the screens on wide layouts, and keep the buttons above the canvas tools
+    let rightLimit = st.left + st.width * 0.95
+    if (!portrait) {
+      // stop just before the first screen that sits beside the headline
+      const grow = r.height * 0.8
+      for (const fr of Array.from(board.current!.querySelectorAll<HTMLElement>('.fr:not(.is-hidden)'))) {
+        const fb = fr.getBoundingClientRect()
+        if (fb.left > r.left + 40 && fb.bottom > r.top - grow && fb.top < r.bottom + grow) rightLimit = Math.min(rightLimit, fb.left - 18)
+      }
+    }
+    const maxW = start * Math.max(1, (rightLimit - r.left) / r.width)
+    const maxH = start * (1 + Math.max(0, st.bottom - 132 - btns.bottom) / r.height)
+    const hi = Math.min(maxW, maxH, 1.8), lo = 0.55
     const sign = corner.includes('e') ? 1 : -1
-    let v = start
+    let v = start, hit = false
     e.currentTarget.setPointerCapture(e.pointerId)
-    say('Make it huge if you like. It just stays put.')
+    say('Bigger or smaller. It stays where it is.')
     const mv = (ev: PointerEvent) => {
-      v = clamp(start * (1 + (sign * (ev.clientX - sx)) / w0), 0.5, Math.min(2.6, start * room))
+      const want = start * (1 + (sign * (ev.clientX - sx)) / r.width)
+      v = clamp(want, lo, hi)
+      if (want > hi + 0.02 && !hit) { hit = true; say("That's as big as it goes. It would crash into my work.") }
       box.style.setProperty('--hs', v.toFixed(3))
     }
     const up = () => {
       removeEventListener('pointermove', mv); removeEventListener('pointerup', up); removeEventListener('pointercancel', up)
       setHs(v)
-      say(v > start + 0.02 ? 'Bigger headline, bolder promise.' : v < start - 0.02 ? 'Small and quiet. Classy.' : 'Same size. Fair.')
+      if (!hit) say(v > start + 0.02 ? 'Bigger headline, bolder promise.' : v < start - 0.02 ? 'Small and quiet. Classy.' : 'Same size. Fair.')
     }
     addEventListener('pointermove', mv); addEventListener('pointerup', up); addEventListener('pointercancel', up)
   }
@@ -442,8 +471,8 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); endEdit(true) } if (e.key === 'Escape') { e.preventDefault(); endEdit(false) } }}
               >{line1}</span>
               {['nw', 'ne', 'sw', 'se'].map((c) => <i key={c} className={`h hd-${c}`} onPointerDown={(e) => headResize(e, c)} />)}
-              <b className="h-badge">{editing ? 'Editing text' : 'Text'}</b>
-            </span>
+              <b className="h-badge" data-label={editing ? 'Editing text' : 'Text'} aria-hidden="true" />
+            </span>{' '}
             <span className="h-two" onPointerDown={() => say(pick(["That line's locked. I do the building.", 'Locked. The building part is my job.']))}>
               Then I build it.<span className="h-lock" aria-hidden="true"><IcLock /></span>
             </span>

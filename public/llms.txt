@@ -1,6 +1,6 @@
 # Mehul Karotra
 
-> UI/UX designer and developer in Mumbai, India. Designs websites and product interfaces in Figma and builds them in code himself. Founder of U Scale (https://uscale.in), a practice for websites, SEO, social media and ads. UI/UX developer at Apex36 Technology Services.
+> UI/UX designer and developer in Mumbai, India. Designs websites and product interfaces in Figma and builds them in code himself. Founder of U Scale (https://uscale.in), a practice for websites, SEO, social media and ads. UI/UX developer at Apex36 Technologies.
 
 - Portfolio: https://mehulpatel.vercel.app/
 - WhatsApp: https://wa.me/917977360142 (+91 79773 60142)
@@ -32,7 +32,7 @@
 ## Questions
 
 ### Who is Mehul Karotra?
-Mehul Karotra is a UI/UX designer and developer in Mumbai. He designs websites and product interfaces in Figma and builds them in code himself. He works as a UI/UX developer at Apex36 Technology Services and runs U Scale, his own practice for websites, SEO, social media and ads.
+Mehul Karotra is a UI/UX designer and developer in Mumbai. He designs websites and product interfaces in Figma and builds them in code himself. He works as a UI/UX developer at Apex36 Technologies and runs U Scale, his own practice for websites, SEO, social media and ads.
 
 ### What does Mehul design and build?
 Marketing websites, portfolios, landing pages and product interfaces. The work covers research, flows and wireframes, final screens and design systems in Figma, then responsive, fast and accessible front-end code in React, TypeScript, Tailwind CSS or WordPress, with forms and analytics wired in.

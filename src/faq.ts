@@ -2,7 +2,7 @@
 export const faq: { q: string; a: string }[] = [
   {
     q: 'Who is Mehul Karotra?',
-    a: 'Mehul Karotra is a UI/UX designer and developer in Mumbai. He designs websites and product interfaces in Figma and builds them in code himself. He works as a UI/UX developer at Apex36 Technology Services and runs U Scale, his own practice for websites, SEO, social media and ads.',
+    a: 'Mehul Karotra is a UI/UX designer and developer in Mumbai. He designs websites and product interfaces in Figma and builds them in code himself. He works as a UI/UX developer at Apex36 Technologies and runs U Scale, his own practice for websites, SEO, social media and ads.',
   },
   {
     q: 'What does Mehul design and build?',

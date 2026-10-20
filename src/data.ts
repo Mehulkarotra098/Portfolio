@@ -82,7 +82,7 @@ export const concepts = [
 
 export const journey = [
   { org: 'U Scale', role: 'Founder', note: 'My independent practice for websites, SEO, social and ads.', now: true },
-  { org: 'Apex36 Technology Services', role: 'UI/UX Developer', now: true },
+  { org: 'Apex36 Technologies', role: 'UI/UX Developer', now: true },
   { org: 'My Country Mobile', role: 'UI/UX Designer and Web Developer' },
   { org: 'ApplQ Innovations', role: 'Front-end Developer' },
   { org: 'Threepin Info Tec.', role: 'Junior Web Developer' },

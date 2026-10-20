@@ -6,6 +6,7 @@ import { Work, MoreWork } from './Work'
 import { Ext, WA } from './icons'
 import { kick } from './scroll'
 import { Nav } from './Nav'
+import { Cursor } from './Cursor'
 import { faq } from './faq'
 
 function useScrollTo(lenis: React.RefObject<Lenis | null>) {
@@ -91,7 +92,7 @@ function About() {
         <div>
           <h2 id="about-title" className="h2">Hi, I'm Mehul.</h2>
           <p className="lead">I'm a UI/UX designer and developer from Mumbai. I like the whole journey of a product: the first sketch, the Figma file, the code, and the day it goes live.</p>
-          <p className="about__p">Right now I'm a UI/UX developer at Apex36 Technology Services, and I run U Scale, my own practice, on the side.</p>
+          <p className="about__p">Right now I'm a UI/UX developer at <a href="https://www.apex36tech.com/" target="_blank" rel="noopener">Apex36 Technologies</a>, and I run <a href={contact.uscale} target="_blank" rel="noopener">U Scale</a>, my own practice, on the side.</p>
           <ul className="journey">
             {journey.map((j) => (
               <li key={j.org}>
@@ -176,6 +177,7 @@ export default function App() {
       <a className="skip" href="#work">Skip to the work</a>
       <a className="wordmark" href="#top" onClick={go}>Mehul Karotra</a>
       <Nav go={go} />
+      <Cursor />
       <main>
         <Hero go={go} />
         <div data-tone="dark">

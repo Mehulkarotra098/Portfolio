@@ -21,7 +21,7 @@ function jsonLd() {
     address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressRegion: 'Maharashtra', addressCountry: 'IN' },
     worksFor: [
       { '@type': 'Organization', name: 'U Scale', url: contact.uscale, description: 'Mehul Karotra\'s practice for websites, SEO, social media and ads in Mumbai.' },
-      { '@type': 'Organization', name: 'Apex36 Technology Services' },
+      { '@type': 'Organization', name: 'Apex36 Technologies', url: 'https://www.apex36tech.com/' },
     ],
     knowsAbout: ['UI/UX design', 'Web design', 'Figma', 'Design systems', 'Front-end development', 'React', 'TypeScript', 'Tailwind CSS', 'WordPress', 'SEO', 'Local SEO'],
     sameAs: [contact.linkedin, contact.github, `${contact.uscale}/about`],
