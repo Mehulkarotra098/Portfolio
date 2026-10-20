@@ -61,7 +61,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     const f = frames.find((x) => x.id === ZOOM_TO)!
     const fh = f.w * (872 / 390)
     const z = sstep(0.06, 1, p)
-    const s1 = (vh * 0.84) / fh
+    const s1 = (vh * (portrait ? 0.6 : 0.84)) / fh
     const s = s0 + (s1 - s0) * z
     // keep the target frame's centre moving from where it is to the screen centre
     const cx0 = ox + (f.x + f.w / 2) * s0, cy0 = oy + (f.y + fh / 2) * s0
@@ -70,6 +70,9 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     bd.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${s.toFixed(4)})`
     bd.style.setProperty('--fade', (1 - sstep(0.25, 0.75, p)).toFixed(3))
     bd.style.setProperty('--s', (1 / s).toFixed(4))
+    const g = 24 * s
+    st.style.backgroundSize = `${g.toFixed(2)}px ${g.toFixed(2)}px`
+    st.style.backgroundPosition = `${tx.toFixed(1)}px ${ty.toFixed(1)}px`
     const c = copy.current
     if (c) {
       c.style.opacity = (1 - sstep(0.02, 0.3, p)).toFixed(3)
@@ -87,7 +90,8 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     const st = stage.current!, meEl = me.current!, youEl = you.current!
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
     const touch = matchMedia('(hover: none)').matches
-    let raf = 0, last = performance.now(), t0 = last
+    const t0 = performance.now()
+    let raf = 0, last = t0
     const ptr = { x: -999, y: -999, seen: -1e9, inside: false }
     const pos = { x: st.clientWidth + 60, y: st.clientHeight * 0.85 }
     let cooldown = 0, caught = 0, wanderAt = 0, wanderIdx = 0
@@ -102,10 +106,10 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
       ptr.inside = ptr.y >= 0 && ptr.y <= r.height
       if (!touch && e.pointerType === 'mouse') {
         youEl.style.transform = `translate3d(${ptr.x.toFixed(1)}px, ${ptr.y.toFixed(1)}px, 0)`
-        youEl.style.opacity = ptr.inside ? '1' : '0'
+        youEl.style.setProperty('--on', ptr.inside ? '1' : '0')
       }
     }
-    const leave = () => { ptr.inside = false; youEl.style.opacity = '0' }
+    const leave = () => { ptr.inside = false; youEl.style.setProperty('--on', '0') }
     addEventListener('pointermove', move, { passive: true })
     addEventListener('pointerdown', move, { passive: true })
     document.documentElement.addEventListener('pointerleave', leave)
@@ -200,7 +204,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
 
         <div ref={me} className="mp mp--me" aria-hidden="true"><CursorSvg color="#FF5C35" /><span className="mp__tag">Mehul</span><span ref={bubble} className="mp__bubble">Got you.</span></div>
         <div ref={you} className="mp mp--you" aria-hidden="true"><span className="mp__tag">You</span></div>
-        <p className="hero__hint" aria-hidden="true">Mehul's cursor is coming for yours</p>
+        <p className="hero__hint" aria-hidden="true"><i /><span className="for-mouse">Move your mouse. My cursor will try to catch yours.</span><span className="for-touch">Tap anywhere. My cursor will come and find you.</span></p>
       </div>
     </section>
   )

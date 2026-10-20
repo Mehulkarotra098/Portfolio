@@ -1,24 +1,22 @@
-import { useRef } from 'react'
 import { projects, type Project } from './data'
 import { sstep, usePin } from './scroll'
 import { Ext } from './icons'
 
-export const featured = projects.slice(0, 6)
-export const more = projects.slice(6)
+const featured = projects.slice(0, 6)
+const more = projects.slice(6)
 const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
 function Chapter({ p, i }: { p: Project; i: number }) {
-  const chip = useRef<HTMLSpanElement>(null)
-  const ref = usePin<HTMLElement>((t) => {
-    const el = ref.current!
-    const b = sstep(0.14, 0.66, t)
-    el.style.setProperty('--t', sstep(0, 0.22, t).toFixed(3))
-    el.style.setProperty('--b', b.toFixed(4))
-    el.style.setProperty('--ph', sstep(0.5, 0.84, t).toFixed(3))
-    el.style.setProperty('--scan', (b > 0.003 && b < 0.997 ? 1 : 0).toString())
-    const c = chip.current
-    if (c) { const live = b > 0.5; if (c.dataset.live !== String(live)) { c.dataset.live = String(live); c.textContent = live ? 'Live site' : 'Wireframe' } }
+  const ref = usePin<HTMLElement>((t, _r, el) => {
+    el.style.setProperty('--t', sstep(0, 0.24, t).toFixed(3))
+    el.style.setProperty('--sc', sstep(0.16, 0.9, t).toFixed(4))
+    el.style.setProperty('--ph', sstep(0.36, 0.7, t).toFixed(3))
   })
+  const fit = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const im = e.currentTarget
+    const r = im.naturalHeight / im.naturalWidth
+    im.style.setProperty('--range', Math.max(0, 1 - 0.625 / r).toFixed(4))
+  }
   return (
     <section ref={ref} className={`ch${i % 2 ? ' ch--flip' : ''}`} style={{ ['--accent' as string]: p.accent }} aria-labelledby={`ch-${p.slug}`}>
       <div className="ch__stage">
@@ -33,11 +31,9 @@ function Chapter({ p, i }: { p: Project; i: number }) {
         </div>
         <div className="ch__media">
           <div className="browser">
-            <div className="browser__bar" aria-hidden="true"><i /><i /><i /><span>{host(p.url)}</span><b ref={chip} className="chip" data-live="false">Wireframe</b></div>
+            <div className="browser__bar" aria-hidden="true"><i /><i /><i /><span>{host(p.url)}</span></div>
             <div className="screen">
-              <img className="screen__wire" src={`/work/${p.slug}-wire.webp`} alt="" loading="lazy" decoding="async" width={1152} height={720} />
-              <img className="screen__live" src={`/work/${p.slug}-live.webp`} alt={`${p.name} website, home page`} loading="lazy" decoding="async" width={1152} height={720} />
-              <span className="screen__scan" aria-hidden="true" />
+              <img className="screen__page" src={`/work/${p.slug}-page.webp`} alt={`${p.name} website`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
             </div>
           </div>
           {p.mobile && (
@@ -56,7 +52,7 @@ export function Work() {
     <div className="work" id="work">
       <header className="work__intro wrap">
         <h2 className="h2">Selected work</h2>
-        <p className="lead">Six sites, each one designed in Figma and built by me. Scroll through them to watch every wireframe go live.</p>
+        <p className="lead">Six sites, each one designed in Figma and built by me. Keep scrolling to move through every page.</p>
       </header>
       {featured.map((p, i) => <Chapter key={p.slug} p={p} i={i} />)}
     </div>

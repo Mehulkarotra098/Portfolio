@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 // One shared scroll/resize loop. Sections subscribe with a callback that gets
 // their pin progress (0 when the section top hits the viewport top, 1 when its
 // bottom reaches the viewport bottom). Off-screen sections are skipped.
-type Sub = { el: HTMLElement; fn: (p: number, r: DOMRect) => void; on: boolean }
+type Sub = { el: HTMLElement; fn: (p: number, r: DOMRect, el: HTMLElement) => void; on: boolean }
 const subs = new Set<Sub>()
 let raf = 0
 
@@ -17,7 +17,7 @@ function run() {
     if (!s.on) continue
     const r = s.el.getBoundingClientRect()
     const len = r.height - vh
-    s.fn(len > 1 ? clamp(-r.top / len) : clamp(-r.top / vh), r)
+    s.fn(len > 1 ? clamp(-r.top / len) : clamp(-r.top / vh), r, s.el)
   }
 }
 export function kick() { if (!raf) raf = requestAnimationFrame(run) }
@@ -26,14 +26,14 @@ if (typeof window !== 'undefined') {
   addEventListener('resize', kick)
 }
 
-export function usePin<T extends HTMLElement>(fn: (p: number, r: DOMRect) => void) {
+export function usePin<T extends HTMLElement>(fn: (p: number, r: DOMRect, el: HTMLElement) => void) {
   const ref = useRef<T>(null)
   const fnRef = useRef(fn)
   useEffect(() => { fnRef.current = fn })
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const s: Sub = { el, fn: (p, r) => fnRef.current(p, r), on: true }
+    const s: Sub = { el, fn: (p, r, e) => fnRef.current(p, r, e), on: true }
     subs.add(s)
     const io = new IntersectionObserver(([e]) => { s.on = e.isIntersecting; if (s.on) kick() }, { rootMargin: '25% 0px 25% 0px' })
     io.observe(el)

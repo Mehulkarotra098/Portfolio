@@ -3,7 +3,6 @@ import Lenis from 'lenis'
 import { concepts, contact, journey } from './data'
 import { Hero } from './Hero'
 import { Work, MoreWork } from './Work'
-import { HoldToShip } from './HoldToShip'
 import { Ext, WA } from './icons'
 import { kick } from './scroll'
 
@@ -176,7 +175,6 @@ export default function App() {
         <div data-tone="dark">
           <Work />
           <MoreWork />
-          <HoldToShip />
         </div>
         <Sketchbook />
         <Services />
