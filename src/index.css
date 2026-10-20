@@ -266,7 +266,7 @@ html.on-screen, html.on-screen body { cursor: pointer; }
 .static .f-stop { position: relative; left: auto; bottom: auto; transform: none; width: auto; max-width: calc(var(--max) + 2 * var(--gutter)); margin: 0 auto 3rem; padding-inline: var(--gutter); display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; align-items: center; opacity: 1 !important; visibility: visible !important; }
 .static .f-stop__img { display: block; border-radius: 6px; }
 .static .finale { background: url(/poster/night.webp) center / cover; }
-.static .film .anchor { position: relative; display: block; }
+.static .film .anchor { position: absolute; top: 100svh; }
 
 /* ------------------------------------------------------------------ responsive */
 @media (max-width: 980px) {
