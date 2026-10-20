@@ -22,14 +22,14 @@ export type Project = {
 // Live work: screenshots in /public/work/<slug>-live.webp, wireframes in <slug>-wire.webp
 export const projects: Project[] = [
   {
-    slug: 'sashe', name: 'Sashe by Prachi', meta: 'Fashion label, Mumbai', role: 'Design and build', accent: '#641F2A', mobile: true,
-    text: "A digital flagship for a bespoke fashion label: an editorial hero, signature looks, studio forms and the founder's story. Built mobile-first to the founder's pixel-level bar.",
-    url: 'https://sashebyprachi.vercel.app',
-  },
-  {
     slug: 'vidhi', name: 'Vidhi Parmar', meta: 'AI visual artist, Mumbai', role: 'Design and build', accent: '#F0457F', mobile: true,
     text: 'A hire-me portfolio that moves like her films: a showreel hero, selected AI ad films, a four-step process, services and FAQs.',
     url: 'https://www.vidhiparmar.me',
+  },
+  {
+    slug: 'sashe', name: 'Sashe by Prachi', meta: 'Fashion label, Mumbai', role: 'Design and build', accent: '#641F2A', mobile: true,
+    text: "A digital flagship for a bespoke fashion label: an editorial hero, signature looks, studio forms and the founder's story. Built mobile-first to the founder's pixel-level bar.",
+    url: 'https://sashebyprachi.vercel.app',
   },
   {
     slug: 'uscale', name: 'U Scale', meta: 'My own studio, Mumbai', role: 'Brand, design, build and SEO', accent: '#63B849', mobile: true,

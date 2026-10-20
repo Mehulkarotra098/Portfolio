@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import { projects, type Project } from './data'
-import { sstep, usePin } from './scroll'
+import { clamp, sstep, usePin } from './scroll'
 import { Ext } from './icons'
+import { IcDesktop, IcPhone } from './canvasIcons'
 
 const featured = projects.slice(0, 6)
 const more = projects.slice(6)
@@ -12,10 +14,46 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     el.style.setProperty('--sc', sstep(0.16, 0.9, t).toFixed(4))
     el.style.setProperty('--ph', sstep(0.36, 0.7, t).toFixed(3))
   })
+  const media = useRef<HTMLDivElement>(null)
+  const [view, setView] = useState<'desk' | 'mob'>('desk')
+  const [dragging, setDragging] = useState(false)
+  const mobW = useRef(0.36)
+  // the screen keeps a fixed height, like a browser's responsive mode; only the width changes
+  useEffect(() => {
+    const m = media.current!
+    const ro = new ResizeObserver(() => {
+      const w = m.clientWidth
+      m.style.setProperty('--sh', `${(w * 0.625).toFixed(1)}px`)
+      mobW.current = clamp(Math.max(0.36, 210 / w), 0.36, 0.7)
+      if (!m.dataset.drag) m.style.setProperty('--bw', view === 'mob' ? mobW.current.toFixed(3) : '1')
+    })
+    ro.observe(m)
+    return () => ro.disconnect()
+  }, [view])
+  const setTo = (v: 'desk' | 'mob') => { setView(v); media.current!.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1') }
   const fit = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const im = e.currentTarget
-    const r = im.naturalHeight / im.naturalWidth
-    im.style.setProperty('--range', Math.max(0, 1 - 0.625 / r).toFixed(4))
+    media.current!.style.setProperty('--rd', (im.naturalHeight / im.naturalWidth).toFixed(4))
+  }
+  const grip = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const m = media.current!
+    const r = m.getBoundingClientRect()
+    const cx = r.left + r.width / 2
+    e.currentTarget.setPointerCapture(e.pointerId)
+    m.dataset.drag = '1'; setDragging(true)
+    let v = view
+    const mv = (ev: PointerEvent) => {
+      const bw = clamp((2 * (ev.clientX - cx)) / r.width, mobW.current * 0.85, 1)
+      m.style.setProperty('--bw', bw.toFixed(3))
+      const nv = bw < (1 + mobW.current) / 2 - 0.08 ? 'mob' : 'desk'
+      if (nv !== v) { v = nv; setView(nv) }
+    }
+    const up = () => {
+      removeEventListener('pointermove', mv); removeEventListener('pointerup', up); removeEventListener('pointercancel', up)
+      delete m.dataset.drag; setDragging(false)
+      m.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1')
+    }
+    addEventListener('pointermove', mv); addEventListener('pointerup', up); addEventListener('pointercancel', up)
   }
   return (
     <section ref={ref} className={`ch${i % 2 ? ' ch--flip' : ''}`} style={{ ['--accent' as string]: p.accent }} aria-labelledby={`ch-${p.slug}`}>
@@ -29,18 +67,30 @@ function Chapter({ p, i }: { p: Project; i: number }) {
           <p className="ch__role">{p.role}</p>
           <a className="btn btn--light" href={p.url} target="_blank" rel="noopener">Visit {host(p.url)}<Ext /></a>
         </div>
-        <div className="ch__media">
+        <div ref={media} className={`ch__media is-${view}${dragging ? ' is-dragging' : ''}`}>
           <div className="browser">
-            <div className="browser__bar" aria-hidden="true"><i /><i /><i /><span>{host(p.url)}</span></div>
-            <div className="screen">
-              <img className="screen__page" src={`/work/${p.slug}-page.webp`} alt={`${p.name} website`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
+            <div className="browser__bar">
+              <i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" />
+              <span aria-hidden="true">{host(p.url)}</span>
+              {p.mobile && (
+                <div className="vseg" role="group" aria-label={`View ${p.name} on`}>
+                  <button className={view === 'desk' ? 'is-on' : ''} aria-pressed={view === 'desk'} onClick={() => setTo('desk')}><IcDesktop /><span>Desktop</span></button>
+                  <button className={view === 'mob' ? 'is-on' : ''} aria-pressed={view === 'mob'} onClick={() => setTo('mob')}><IcPhone /><span>Mobile</span></button>
+                </div>
+              )}
             </div>
+            <div className="screen">
+              <img className="screen__page screen__desk" src={`/work/${p.slug}-page.webp`} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
+              {p.mobile && <img className="screen__page screen__mob" src={`/work/${p.slug}-mobile.webp`} alt={`${p.name} website, mobile`} loading="lazy" decoding="async" width={360} height={805} />}
+            </div>
+            {p.mobile && <button className="grip" onPointerDown={grip} aria-label="Drag to resize the browser" title="Drag to resize"><i /><i /></button>}
           </div>
           {p.mobile && (
             <div className="phone" aria-hidden="true">
               <img src={`/work/${p.slug}-mobile.webp`} alt="" loading="lazy" decoding="async" width={360} height={805} />
             </div>
           )}
+          {p.mobile && <p className="ch__tip" aria-hidden="true">Drag the edge to resize</p>}
         </div>
       </div>
     </section>
