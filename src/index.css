@@ -382,6 +382,8 @@ html.menu-open { overflow: hidden; }
 .about__photo .h1, .about__photo .h2 { top: calc(12px + 7px - 4px); }
 .about .lead { margin-top: 1.2rem; color: var(--ink-2); }
 .about__p { margin-top: 1rem; color: var(--ink-2); max-width: 36rem; }
+.about__p a { color: var(--ink); font-weight: 600; text-decoration-thickness: 1.5px; text-underline-offset: 0.18em; }
+.about__p a:hover { color: var(--tomato); }
 .journey { margin-top: 2.2rem; border-top: 1px solid rgb(26 10 61 / 16%); max-width: 40rem; }
 .journey li { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 1rem; padding-block: 0.95rem; border-bottom: 1px solid rgb(26 10 61 / 16%); }
 .journey .org { font-weight: 650; display: grid; gap: 0.15rem; }
