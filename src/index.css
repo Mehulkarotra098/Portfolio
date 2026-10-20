@@ -325,7 +325,7 @@ html.menu-open { overflow: hidden; }
   border: 1px solid rgb(255 255 255 / 16%); box-shadow: 0 40px 70px -30px rgb(0 0 0 / 85%);
   transform: translate3d(0, calc((1 - var(--ph, 0)) * 55%), 0) rotate(calc((1 - var(--ph, 0)) * 7deg)); opacity: min(1, calc(var(--ph, 0) * 5));
 }
-.ch--flip .phone { right: auto; left: -3%; transform: translate3d(0, calc((1 - var(--ph, 0)) * 55%), 0) rotate(calc((1 - var(--ph, 0)) * -7deg)); }
+.ch--flip .phone { right: auto; left: 2.5%; transform: translate3d(0, calc((1 - var(--ph, 0)) * 55%), 0) rotate(calc((1 - var(--ph, 0)) * -7deg)); }
 .phone img { width: 100%; aspect-ratio: 360 / 805; object-fit: cover; object-position: top; border-radius: 21px; }
 
 /* ------------------------------------------------------------------ more work */
@@ -423,7 +423,24 @@ html.menu-open { overflow: hidden; }
 .contact .mp__bubble { background: var(--ink); color: var(--lav-soft); }
 .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; margin-top: clamp(5rem, 16vh, 9rem); padding-block: 1.5rem 6.5rem; border-top: 1.5px solid rgb(26 10 61 / 35%); font-size: 0.9rem; color: var(--ink); }
 
+/* ------------------------------------------------------------------ your cursor
+   A chartreuse Figma arrow (yours; Mehul's is tomato), dark when it's over something clickable,
+   plus a name tag that says what a click will do (Cursor.tsx). Canvas tools keep their own cursors. */
+.ycur { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; }
+.ycur span { position: absolute; left: 14px; top: 19px; padding: 5px 9px; border-radius: 4px 10px 10px 10px; background: var(--chart); color: var(--ink); font: 650 12px/1 var(--sans); white-space: nowrap; box-shadow: 0 0 0 1.5px var(--ink), 0 10px 20px -10px rgb(26 10 61 / 55%); transform-origin: 0 0; scale: 0.6; opacity: 0; transition: scale 0.22s var(--ease), opacity 0.15s; }
+.ycur.is-on span { scale: 1; opacity: 1; }
+.ycur.is-on.is-down span { scale: 0.9; }
+@media (hover: hover) and (pointer: fine) {
+  html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'%3E%3Cpath d='M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z' fill='%23DFFF00' stroke='%231A0A3D' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, auto; cursor: -webkit-image-set(url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'%3E%3Cpath d='M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z' fill='%23DFFF00' stroke='%231A0A3D' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 1x, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='44' viewBox='0 0 20 22'%3E%3Cpath d='M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z' fill='%23DFFF00' stroke='%231A0A3D' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 2x) 2 2, auto; }
+  a, button, summary, label, [role="button"], .cap__menu, .menu__close, .vseg button, .faq summary, .ctools button, .panel button, .cnote__box button {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'%3E%3Cpath d='M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z' fill='%231A0A3D' stroke='%23DFFF00' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, pointer; cursor: -webkit-image-set(url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='22' viewBox='0 0 20 22'%3E%3Cpath d='M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z' fill='%231A0A3D' stroke='%23DFFF00' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 1x, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='44' viewBox='0 0 20 22'%3E%3Cpath d='M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z' fill='%231A0A3D' stroke='%23DFFF00' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 2x) 2 2, pointer; }
+  input, textarea, [contenteditable="true"] { cursor: text; }
+}
+@media (hover: none), (pointer: coarse) { .ycur { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ycur span { transition: opacity 0.15s; scale: 1; } .ycur.is-on.is-down span { scale: 1; } }
+
 /* ------------------------------------------------------------------ responsive */
+@media (min-width: 1001px) { :root { --gutter: clamp(3.6rem, 0.4rem + 3vw, 4rem); } }
 @media (max-width: 1100px) {
   .more__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .more__head { grid-template-columns: 1fr; }

@@ -6,6 +6,7 @@ import { Work, MoreWork } from './Work'
 import { Ext, WA } from './icons'
 import { kick } from './scroll'
 import { Nav } from './Nav'
+import { Cursor } from './Cursor'
 import { faq } from './faq'
 
 function useScrollTo(lenis: React.RefObject<Lenis | null>) {
@@ -176,6 +177,7 @@ export default function App() {
       <a className="skip" href="#work">Skip to the work</a>
       <a className="wordmark" href="#top" onClick={go}>Mehul Karotra</a>
       <Nav go={go} />
+      <Cursor />
       <main>
         <Hero go={go} />
         <div data-tone="dark">
