@@ -1,7 +1,8 @@
 // Screens captured at double resolution, and sites that have a recorded loop.
 const HI = new Set(['vidhi', 'uscale'])
-export const LOOPS: Record<string, { webm: string; mp4: string }> = {
-  vidhi: { webm: '/work/vidhi-hero.webm', mp4: '/work/vidhi-hero.mp4' },
+// Each loop comes in a 1440px cut for large screens and a 960px cut for phones, as WebM and MP4.
+export const LOOPS: Record<string, { base: string }> = {
+  vidhi: { base: '/work/vidhi-hero' },
 }
 export type Kind = 'live' | 'page' | 'mobile'
 export const shot = (slug: string, kind: Kind) => ({

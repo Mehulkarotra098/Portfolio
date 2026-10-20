@@ -18,8 +18,10 @@ export function Loop({ slug, className, label }: { slug: string; className?: str
   }, [])
   return (
     <video ref={ref} className={className} muted loop playsInline preload="none" poster={poster(slug)} aria-label={label} aria-hidden={label ? undefined : true}>
-      <source src={loop.webm} type="video/webm" />
-      <source src={loop.mp4} type="video/mp4" />
+      <source media="(min-width: 900px)" src={`${loop.base}-1440.webm`} type="video/webm" />
+      <source media="(min-width: 900px)" src={`${loop.base}-1440.mp4`} type="video/mp4" />
+      <source src={`${loop.base}-960.webm`} type="video/webm" />
+      <source src={`${loop.base}-960.mp4`} type="video/mp4" />
     </video>
   )
 }
