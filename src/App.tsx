@@ -91,7 +91,7 @@ function About() {
         <div>
           <h2 id="about-title" className="h2">Hi, I'm Mehul.</h2>
           <p className="lead">I'm a UI/UX designer and developer from Mumbai. I like the whole journey of a product: the first sketch, the Figma file, the code, and the day it goes live.</p>
-          <p className="about__p">Right now I'm a UI/UX developer at Apex36 Technology Services, and I run U Scale, my own practice, on the side.</p>
+          <p className="about__p">Right now I'm a UI/UX developer at Apex36 Technologies, and I run U Scale, my own practice, on the side.</p>
           <ul className="journey">
             {journey.map((j) => (
               <li key={j.org}>
