@@ -1,18 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
-    <script>
-      (() => {
-        const storedTheme = localStorage.getItem('theme')
-        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
-        document.documentElement.dataset.theme =
-          storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : prefersLight ? 'light' : 'dark'
-      })()
-    </script>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mehul-portfolio</title>
+    <title>Mehul Karotra | UI/UX designer and developer in Mumbai</title>
+    <meta name="description" content="Mehul Karotra designs websites in Figma and builds them in code. UI/UX designer and developer in Mumbai, and founder of U Scale. Walk through the work." />
+    <link rel="canonical" href="https://mehulpatel.vercel.app/" />
+    <meta name="theme-color" content="#0b1426" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mehul Karotra | UI/UX developer and designer" />
+    <meta property="og:description" content="I draw it. Then I build it. Selected work by Mehul Karotra, UI/UX designer and developer in Mumbai." />
+    <meta property="og:url" content="https://mehulpatel.vercel.app/" />
+    <meta property="og:image" content="https://mehulpatel.vercel.app/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" as="image" href="/poster/hero.webp" media="(min-aspect-ratio: 9/10)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/poster/hero-m.webp" media="(max-aspect-ratio: 9/10)" fetchpriority="high" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mehul Karotra",
+        "jobTitle": "UI/UX developer and designer",
+        "url": "https://mehulpatel.vercel.app/",
+        "image": "https://mehulpatel.vercel.app/mehul.webp",
+        "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressCountry": "IN" },
+        "worksFor": { "@type": "Organization", "name": "U Scale", "url": "https://uscale.in" },
+        "sameAs": ["https://www.linkedin.com/in/mehulkarotra/", "https://github.com/Mehulkarotra098", "https://uscale.in/about"]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
