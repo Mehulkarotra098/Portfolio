@@ -3,7 +3,7 @@ const HI = new Set(['vidhi', 'uscale'])
 // Each loop comes in a 1440px cut for large screens and a 960px cut for phones, as WebM and MP4.
 // w × h is the recorded area: the whole hero, so it lines up with the full-page screenshot under it.
 export const LOOPS: Record<string, { base: string; w: number; h: number }> = {
-  vidhi: { base: '/work/vidhi-hero', w: 1440, h: 900 },
+  vidhi: { base: '/work/vidhi-hero', w: 1440, h: 1008 },
 }
 export type Kind = 'live' | 'page' | 'mobile'
 export const shot = (slug: string, kind: Kind) => ({
