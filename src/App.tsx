@@ -6,6 +6,7 @@ import { Work, MoreWork } from './Work'
 import { Ext, WA } from './icons'
 import { kick } from './scroll'
 import { Nav } from './Nav'
+import { faq } from './faq'
 
 function useScrollTo(lenis: React.RefObject<Lenis | null>) {
   return (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -106,6 +107,27 @@ function About() {
   )
 }
 
+function Faq() {
+  return (
+    <section className="faq canvas-bg" id="faq" aria-labelledby="faq-title">
+      <div className="wrap faq__grid">
+        <div>
+          <h2 id="faq-title" className="h2">Questions</h2>
+          <p className="lead">The things people ask before we start.</p>
+        </div>
+        <div className="faq__list">
+          {faq.map((f, i) => (
+            <details key={f.q} open={i === 0}>
+              <summary><h3>{f.q}</h3><i aria-hidden="true" /></summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Contact() {
   const [user, domain] = contact.email.split('@')
   return (
@@ -163,6 +185,7 @@ export default function App() {
         <Sketchbook />
         <Services />
         <About />
+        <Faq />
         <Contact />
       </main>
     </>

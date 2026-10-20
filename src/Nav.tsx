@@ -13,6 +13,7 @@ const PAGES: Page[] = [
   { id: 'sketchbook', label: 'Sketchbook' },
   { id: 'services', label: 'What I do' },
   { id: 'about', label: 'About' },
+  { id: 'faq', label: 'Questions' },
   { id: 'contact', label: 'Contact' },
 ]
 const MENU = PAGES.filter((p) => !p.sub)

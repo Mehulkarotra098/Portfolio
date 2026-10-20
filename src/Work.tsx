@@ -3,6 +3,8 @@ import { projects, type Project } from './data'
 import { clamp, sstep, usePin } from './scroll'
 import { Ext } from './icons'
 import { IcDesktop, IcPhone } from './canvasIcons'
+import { Loop } from './media'
+import { LOOPS, shot } from './shots'
 
 const featured = projects.slice(0, 6)
 const more = projects.slice(6)
@@ -15,7 +17,7 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     el.style.setProperty('--ph', sstep(0.36, 0.7, t).toFixed(3))
   })
   const media = useRef<HTMLDivElement>(null)
-  const [view, setView] = useState<'desk' | 'mob'>('desk')
+  const [view, setView] = useState<'desk' | 'mob'>(() => (p.mobile && innerWidth < 700 ? 'mob' : 'desk'))
   const [dragging, setDragging] = useState(false)
   const mobW = useRef(0.36)
   // the screen keeps a fixed height, like a browser's responsive mode; only the width changes
@@ -26,11 +28,17 @@ function Chapter({ p, i }: { p: Project; i: number }) {
       m.style.setProperty('--sh', `${(w * 0.625).toFixed(1)}px`)
       mobW.current = clamp(Math.max(0.36, 210 / w), 0.36, 0.7)
       if (!m.dataset.drag) m.style.setProperty('--bw', view === 'mob' ? mobW.current.toFixed(3) : '1')
+      requestAnimationFrame(() => { const sc = m.querySelector<HTMLElement>('.screen'); if (sc && w) m.style.setProperty('--shr', (sc.clientHeight / w).toFixed(4)) })
     })
     ro.observe(m)
     return () => ro.disconnect()
   }, [view])
-  const setTo = (v: 'desk' | 'mob') => { setView(v); media.current!.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1') }
+  const setTo = (v: 'desk' | 'mob') => {
+    setView(v)
+    const m = media.current!
+    m.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1')
+    requestAnimationFrame(() => { const sc = m.querySelector<HTMLElement>('.screen'); if (sc) m.style.setProperty('--shr', (sc.clientHeight / m.clientWidth).toFixed(4)) })
+  }
   const fit = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const im = e.currentTarget
     media.current!.style.setProperty('--rd', (im.naturalHeight / im.naturalWidth).toFixed(4))
@@ -80,14 +88,17 @@ function Chapter({ p, i }: { p: Project; i: number }) {
               )}
             </div>
             <div className="screen">
-              <img className="screen__page screen__desk" src={`/work/${p.slug}-page.webp`} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
-              {p.mobile && <img className="screen__page screen__mob" src={`/work/${p.slug}-mobile.webp`} alt={`${p.name} website, mobile`} loading="lazy" decoding="async" width={360} height={805} />}
+              <div className="screen__page screen__desk">
+                <img {...shot(p.slug, 'page')} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
+                {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" />}
+              </div>
+              {p.mobile && <img className="screen__page screen__mob" {...shot(p.slug, 'mobile')} alt={`${p.name} website, mobile`} loading="lazy" decoding="async" width={360} height={805} />}
             </div>
             {p.mobile && <button className="grip" onPointerDown={grip} aria-label="Drag to resize the browser" title="Drag to resize"><i /><i /></button>}
           </div>
           {p.mobile && (
             <div className="phone" aria-hidden="true">
-              <img src={`/work/${p.slug}-mobile.webp`} alt="" loading="lazy" decoding="async" width={360} height={805} />
+              <img {...shot(p.slug, 'mobile')} alt="" loading="lazy" decoding="async" width={360} height={805} />
             </div>
           )}
           {p.mobile && <p className="ch__tip" aria-hidden="true">Drag the edge to resize</p>}

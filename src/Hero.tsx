@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { contact, projects } from './data'
 import { clamp, sstep, usePin } from './scroll'
 import { WA } from './icons'
+import { Loop } from './media'
+import { LOOPS, shot } from './shots'
 import { IcClose, IcComment, IcDesktop, IcEye, IcEyeOff, IcFrame, IcHand, IcLayers, IcLock, IcMove, IcPhone, IcReset, IcSend, IcText, IcUndo, IcUnlock } from './canvasIcons'
 
 // The hero is a live design canvas. Visitors can select, drag and resize the frames,
@@ -419,7 +421,9 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
               style={{ left: f.x, top: f.y, width: f.w, animationDelay: `${0.08 + i * 0.07}s` }}
             >
               <figcaption>{f.locked && <IcLock />}{label(f)}</figcaption>
-              <img src={`/work/${f.slug}-${f.view === 'desk' ? 'live' : 'mobile'}.webp`} alt="" decoding="async" draggable={false} fetchPriority={i < 4 ? 'high' : 'low'} />
+              {f.view === 'desk' && LOOPS[f.slug]
+                ? <Loop slug={f.slug} className="fr__media" />
+                : <img className="fr__media" {...shot(f.slug, f.view === 'desk' ? 'live' : 'mobile')} alt="" decoding="async" draggable={false} fetchPriority={i < 4 ? 'high' : 'low'} />}
               <span className="fr__size">{sizeOf(f)}</span>
               {['nw', 'ne', 'sw', 'se'].map((c) => <i key={c} className={`h hd-${c}`} data-handle={c} />)}
               {f.note && <span className="pin"><b>V</b><span>{f.note}</span></span>}
