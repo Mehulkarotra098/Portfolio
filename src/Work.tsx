@@ -17,7 +17,8 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     el.style.setProperty('--ph', sstep(0.36, 0.7, t).toFixed(3))
   })
   const media = useRef<HTMLDivElement>(null)
-  const [view, setView] = useState<'desk' | 'mob'>(() => (p.mobile && matchMedia('(max-width: 860px)').matches ? 'mob' : 'desk'))
+  // Every project opens on its desktop site; the phone view is one tap away.
+  const [view, setView] = useState<'desk' | 'mob'>('desk')
   const [dragging, setDragging] = useState(false)
   const mobW = useRef(0.36)
   // Size the browser. Desktop view keeps a 16:10 screen. Mobile view keeps a real phone shape:
@@ -82,7 +83,7 @@ function Chapter({ p, i }: { p: Project; i: number }) {
           <p className="ch__meta"><span>{p.meta}</span>{p.note && <em>{p.note}</em>}</p>
           <p className="ch__text">{p.text}</p>
           <p className="ch__role">{p.role}</p>
-          <a className="btn btn--light ch__visit" href={p.url} target="_blank" rel="noopener">Visit <span className="ch__host">{host(p.url)}</span><span className="ch__host-s">the live site</span><Ext /></a>
+          <a className="btn btn--light ch__visit" href={p.url} target="_blank" rel="noopener"><span className="ch__host">Visit {host(p.url)}</span><span className="ch__host-s">Visit the live site</span><Ext /></a>
         </div>
         <div ref={media} className={`ch__media is-${view}${dragging ? ' is-dragging' : ''}`}>
           <div className="browser">

@@ -27,6 +27,9 @@ export function Nav({ go }: { go: Go }) {
   const [open, setOpen] = useState(false)
   const rail = useRef<HTMLElement>(null)
   const bar = useRef<HTMLDivElement>(null)
+  const cap = useRef<HTMLDivElement>(null)
+  const band = useRef<HTMLDivElement>(null)
+  const lastY = useRef(0)
 
   useEffect(() => {
     let raf = 0
@@ -45,6 +48,26 @@ export function Nav({ go }: { go: Go }) {
       setActive(cur)
       const probe = vh / 2
       setDark(Array.from(document.querySelectorAll<HTMLElement>('[data-tone="dark"]')).some((el) => { const r = el.getBoundingClientRect(); return r.top < probe && r.bottom > probe }))
+      // Phones: the buttons sit on a band tinted like the section beneath, so text never runs
+      // into them. It steps away while scrolling down and returns on the way up.
+      const y = scrollY
+      const narrow = innerWidth <= 1000
+      const menuOpen = document.documentElement.classList.contains('menu-open')
+      let hide = false
+      if (narrow && y > 120 && !menuOpen) hide = y > lastY.current + 4 ? true : y < lastY.current - 4 ? false : !!cap.current?.classList.contains('is-hidden')
+      lastY.current = y
+      cap.current?.classList.toggle('is-hidden', hide)
+      band.current?.classList.toggle('is-hidden', hide)
+      band.current?.classList.toggle('is-on', narrow && y > 24)
+      if (narrow && band.current) {
+        const h = band.current.offsetHeight || 70
+        const under = document.elementsFromPoint(16, h / 2)
+        for (const el of under) {
+          if (el === band.current || cap.current?.contains(el)) continue
+          const c = getComputedStyle(el).backgroundColor.match(/[\d.]+/g)
+          if (c && (c[3] === undefined || +c[3] > 0.5)) { band.current.style.backgroundColor = `rgb(${c[0]} ${c[1]} ${c[2]} / 86%)`; break }
+        }
+      }
     }
     const on = () => { if (!raf) raf = requestAnimationFrame(tick) }
     tick()
@@ -80,7 +103,8 @@ export function Nav({ go }: { go: Go }) {
         </ul>
       </nav>
 
-      <div className={`cap${dark ? ' on-dark' : ''}`}>
+      <div ref={band} className="capband" aria-hidden="true" />
+      <div ref={cap} className={`cap${dark ? ' on-dark' : ''}`}>
         <a className="cap__us" href={uscaleServices} target="_blank" rel="noopener">U Scale<Ext /></a>
         <a className="cap__wa" href={contact.whatsapp} target="_blank" rel="noopener"><WA /><span>WhatsApp</span></a>
         <button className="cap__menu" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="menu" aria-label="Open the menu"><i /><i /></button>
