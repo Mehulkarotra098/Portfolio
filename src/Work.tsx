@@ -56,7 +56,7 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     addEventListener('pointermove', mv); addEventListener('pointerup', up); addEventListener('pointercancel', up)
   }
   return (
-    <section ref={ref} className={`ch${i % 2 ? ' ch--flip' : ''}`} style={{ ['--accent' as string]: p.accent }} aria-labelledby={`ch-${p.slug}`}>
+    <section ref={ref} id={`p-${p.slug}`} className={`ch${i % 2 ? ' ch--flip' : ''}`} style={{ ['--accent' as string]: p.accent }} aria-labelledby={`ch-${p.slug}`}>
       <div className="ch__stage">
         <div className="ch__glow" aria-hidden="true" />
         <div className="ch__copy">
@@ -111,7 +111,7 @@ export function Work() {
 
 export function MoreWork() {
   return (
-    <section className="more" aria-labelledby="more-title">
+    <section className="more" id="more" aria-labelledby="more-title">
       <div className="wrap">
         <div className="more__head">
           <h2 id="more-title" className="h2">More work</h2>

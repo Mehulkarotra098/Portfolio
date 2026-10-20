@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
 import { concepts, contact, journey } from './data'
 import { Hero } from './Hero'
 import { Work, MoreWork } from './Work'
 import { Ext, WA } from './icons'
 import { kick } from './scroll'
+import { Nav } from './Nav'
 
 function useScrollTo(lenis: React.RefObject<Lenis | null>) {
   return (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -18,33 +19,10 @@ function useScrollTo(lenis: React.RefObject<Lenis | null>) {
   }
 }
 
-// ------------------------------------------------------------------ floating toolbar (navigation)
-function Toolbar({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => void }) {
-  const [dark, setDark] = useState(false)
-  useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>('[data-tone="dark"]'))
-    const on = () => {
-      const y = innerHeight - 40
-      setDark(els.some((el) => { const r = el.getBoundingClientRect(); return r.top < y && r.bottom > y }))
-    }
-    on(); addEventListener('scroll', on, { passive: true }); addEventListener('resize', on)
-    return () => { removeEventListener('scroll', on); removeEventListener('resize', on) }
-  }, [])
-  return (
-    <nav className={`tools${dark ? ' on-dark' : ''}`} aria-label="Main">
-      <a href="#top" onClick={go} className="tools__mark" aria-label="Mehul Karotra, back to top">MK</a>
-      <a href="#work" onClick={go}>Work</a>
-      <a href="#about" onClick={go}>About</a>
-      <a href="#contact" onClick={go}>Contact</a>
-      <a className="tools__wa" href={contact.whatsapp} target="_blank" rel="noopener"><WA /><span>WhatsApp</span></a>
-    </nav>
-  )
-}
-
 // ------------------------------------------------------------------ sketchbook: Figma concepts on a canvas
 function Sketchbook() {
   return (
-    <section className="sketch canvas-bg" aria-labelledby="sketch-title">
+    <section className="sketch canvas-bg" id="sketchbook" aria-labelledby="sketch-title">
       <div className="wrap">
         <div className="sec-head">
           <h2 id="sketch-title" className="h2">From the sketchbook</h2>
@@ -74,7 +52,7 @@ const services = [
 ]
 function Services() {
   return (
-    <section className="svc" aria-labelledby="svc-title">
+    <section className="svc" id="services" aria-labelledby="svc-title">
       <div className="wrap">
         <h2 id="svc-title" className="h2">What I do</h2>
         <ul className="svc__list">
@@ -88,7 +66,13 @@ function Services() {
             </li>
           ))}
         </ul>
-        <p className="svc__us">I also run <a href={contact.uscale} target="_blank" rel="noopener">U Scale<Ext /></a>, my practice for websites, SEO, social media and ads. Every price is published, and you talk to me directly.</p>
+        <div className="svc__us">
+          <p>Want the whole thing handled? I also run <b>U Scale</b>, my practice for websites, SEO, social media and ads. Every price is published, and you talk to me directly.</p>
+          <div className="btns">
+            <a className="btn btn--violet" href={`${contact.uscale}/services`} target="_blank" rel="noopener">See U Scale services<Ext /></a>
+            <a className="btn btn--line" href={`${contact.uscale}/pricing`} target="_blank" rel="noopener">See the prices<Ext /></a>
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -125,7 +109,7 @@ function About() {
 function Contact() {
   const [user, domain] = contact.email.split('@')
   return (
-    <section className="contact" id="contact" data-tone="dark" aria-labelledby="contact-title">
+    <section className="contact" id="contact" aria-labelledby="contact-title">
       <div className="wrap">
         <h2 id="contact-title" className="display contact__title">Your turn.</h2>
         <p className="lead">Tell me what you're building. I usually reply the same day.</p>
@@ -169,7 +153,7 @@ export default function App() {
     <>
       <a className="skip" href="#work">Skip to the work</a>
       <a className="wordmark" href="#top" onClick={go}>Mehul Karotra</a>
-      <Toolbar go={go} />
+      <Nav go={go} />
       <main>
         <Hero go={go} />
         <div data-tone="dark">

@@ -261,13 +261,13 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     e.preventDefault(); e.stopPropagation()
     const box = (e.currentTarget.parentElement as HTMLElement)
     const w0 = box.getBoundingClientRect().width, sx = e.clientX, start = hs
-    const room = (stage.current!.clientWidth * (portrait ? 0.94 : 0.54)) / w0
+    const room = (stage.current!.clientWidth * (portrait ? 0.96 : 0.97)) / w0
     const sign = corner.includes('e') ? 1 : -1
     let v = start
     e.currentTarget.setPointerCapture(e.pointerId)
-    say('Make it big. Or small. Just not somewhere else.')
+    say('Make it huge if you like. It just stays put.')
     const mv = (ev: PointerEvent) => {
-      v = clamp(start * (1 + (sign * (ev.clientX - sx)) / w0), 0.5, Math.min(1.5, start * room))
+      v = clamp(start * (1 + (sign * (ev.clientX - sx)) / w0), 0.5, Math.min(2.6, start * room))
       box.style.setProperty('--hs', v.toFixed(3))
     }
     const up = () => {
@@ -422,7 +422,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
               <img src={`/work/${f.slug}-${f.view === 'desk' ? 'live' : 'mobile'}.webp`} alt="" decoding="async" draggable={false} fetchPriority={i < 4 ? 'high' : 'low'} />
               <span className="fr__size">{sizeOf(f)}</span>
               {['nw', 'ne', 'sw', 'se'].map((c) => <i key={c} className={`h hd-${c}`} data-handle={c} />)}
-              {f.note && <span className="pin"><b>P</b><span>{f.note}</span></span>}
+              {f.note && <span className="pin"><b>V</b><span>{f.note}</span></span>}
             </figure>
           ))}
         </div>
