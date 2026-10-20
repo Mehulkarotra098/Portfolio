@@ -179,7 +179,7 @@ html.menu-open { overflow: hidden; }
 @media (hover: none) { .fr .h { width: 12px; height: 12px; } .fr .hd-nw, .fr .hd-ne { top: -7px; } .fr .hd-sw, .fr .hd-se { bottom: -7px; } .fr .hd-nw, .fr .hd-sw { left: -7px; } .fr .hd-ne, .fr .hd-se { right: -7px; } }
 
 .hero__copy .h-sel, .hero__copy .h-two { pointer-events: auto; }
-.h-sel { cursor: text; white-space: nowrap; font-size: calc(1em * var(--hs, 1)); }
+.h-sel { cursor: text; white-space: nowrap; font-size: calc(1em * var(--hs, 1)); margin-bottom: 0.1em; }
 .h-sel .h { pointer-events: auto; touch-action: none; }
 .h-sel.is-on .h::after { content: ''; position: absolute; inset: -9px; }
 .h-sel .hd-nw, .h-sel .hd-se { cursor: nwse-resize; } .h-sel .hd-ne, .h-sel .hd-sw { cursor: nesw-resize; }

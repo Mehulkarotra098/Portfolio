@@ -279,7 +279,15 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     const btns = copy.current!.querySelector('.btns')!.getBoundingClientRect()
     const start = hs, sx = e.clientX
     // limits: stay left of the screens on wide layouts, and keep the buttons above the canvas tools
-    const rightLimit = st.left + st.width * (portrait ? 0.95 : 0.6)
+    let rightLimit = st.left + st.width * 0.95
+    if (!portrait) {
+      // stop just before the first screen that sits beside the headline
+      const grow = r.height * 0.8
+      for (const fr of Array.from(board.current!.querySelectorAll<HTMLElement>('.fr:not(.is-hidden)'))) {
+        const fb = fr.getBoundingClientRect()
+        if (fb.left > r.left + 40 && fb.bottom > r.top - grow && fb.top < r.bottom + grow) rightLimit = Math.min(rightLimit, fb.left - 18)
+      }
+    }
     const maxW = start * Math.max(1, (rightLimit - r.left) / r.width)
     const maxH = start * (1 + Math.max(0, st.bottom - 132 - btns.bottom) / r.height)
     const hi = Math.min(maxW, maxH, 1.8), lo = 0.55
