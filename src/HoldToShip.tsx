@@ -3,46 +3,13 @@ import { projects } from './data'
 
 const PICKS = ['sashe', 'uscale', 'roar', 'growcred'].map((s) => projects.find((p) => p.slug === s)!)
 const BUILD_SECONDS = 2.4
-const CW = 960, CH = 600
+const CW = 1152, CH = 720
 
-type Pair = { live: HTMLImageElement; bp: HTMLCanvasElement }
+type Pair = { live: HTMLImageElement; bp: HTMLImageElement }
 const cache = new Map<string, Promise<Pair>>()
-
-/** Turn a screenshot into a blueprint: navy paper, faint grid, edges in blueprint blue. */
-function blueprintOf(img: HTMLImageElement) {
-  const c = document.createElement('canvas'); c.width = CW; c.height = CH
-  const x = c.getContext('2d', { willReadFrequently: true })!
-  x.drawImage(img, 0, 0, CW, CH)
-  const src = x.getImageData(0, 0, CW, CH).data
-  const g = new Float32Array(CW * CH)
-  for (let i = 0; i < CW * CH; i++) g[i] = src[i * 4] * 0.299 + src[i * 4 + 1] * 0.587 + src[i * 4 + 2] * 0.114
-  const out = x.createImageData(CW, CH)
-  const o = out.data
-  for (let y = 0; y < CH; y++) for (let xx = 0; xx < CW; xx++) {
-    const i = y * CW + xx
-    let m = 0
-    if (xx > 0 && y > 0 && xx < CW - 1 && y < CH - 1) {
-      const gx = -g[i - CW - 1] - 2 * g[i - 1] - g[i + CW - 1] + g[i - CW + 1] + 2 * g[i + 1] + g[i + CW + 1]
-      const gy = -g[i - CW - 1] - 2 * g[i - CW] - g[i - CW + 1] + g[i + CW - 1] + 2 * g[i + CW] + g[i + CW + 1]
-      m = Math.min(1, Math.max(0, (Math.hypot(gx, gy) - 40) / 160))
-    }
-    const grid = xx % 24 === 0 || y % 24 === 0 ? 0.07 : 0
-    const a = Math.max(m, grid)
-    o[i * 4] = 11 + (158 - 11) * a
-    o[i * 4 + 1] = 20 + (195 - 20) * a
-    o[i * 4 + 2] = 38 + (255 - 38) * a
-    o[i * 4 + 3] = 255
-  }
-  x.putImageData(out, 0, 0)
-  return c
-}
+const img = (src: string) => new Promise<HTMLImageElement>((res, rej) => { const i = new Image(); i.decoding = 'async'; i.onload = () => res(i); i.onerror = rej; i.src = src })
 function load(slug: string) {
-  if (!cache.has(slug)) cache.set(slug, new Promise<Pair>((res, rej) => {
-    const img = new Image()
-    img.onload = () => res({ live: img, bp: blueprintOf(img) })
-    img.onerror = rej
-    img.src = `/work/${slug}-live.webp`
-  }))
+  if (!cache.has(slug)) cache.set(slug, Promise.all([img(`/work/${slug}-live.webp`), img(`/work/${slug}-wire.webp`)]).then(([live, bp]) => ({ live, bp })))
   return cache.get(slug)!
 }
 
@@ -65,7 +32,7 @@ export function HoldToShip() {
     const c = canvas.current, s = st.current
     if (!c || !s.pair) return
     const x = c.getContext('2d')!
-    x.drawImage(s.pair.bp, 0, 0)
+    x.drawImage(s.pair.bp, 0, 0, CW, CH)
     const yb = Math.round(CH * (1 - s.p))
     if (s.p > 0) {
       x.save(); x.beginPath(); x.rect(0, yb, CW, CH - yb); x.clip()
