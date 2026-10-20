@@ -1,17 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
 import { projects, type Project } from './data'
-import { clamp, sstep, usePin } from './scroll'
+import { clamp, kick, sstep, usePin } from './scroll'
 import { Ext } from './icons'
 import { IcDesktop, IcPhone } from './canvasIcons'
 import { Loop } from './media'
 import { LOOPS, shot } from './shots'
+import { Handset } from './Handset'
 
 const featured = projects.slice(0, 6)
 const more = projects.slice(6)
 const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
 function Chapter({ p, i }: { p: Project; i: number }) {
-  const ref = usePin<HTMLElement>((t, _r, el) => {
+  const narrow = () => matchMedia('(max-width: 860px)').matches
+  const ref = usePin<HTMLElement>((t, r, el) => {
+    if (narrow()) {
+      // Phones: chapters sit in the page flow, so progress follows the chapter across the screen.
+      const vh = innerHeight
+      el.style.setProperty('--t', sstep(0, 1, (vh - r.top) / (vh * 0.55)).toFixed(3))
+      el.style.setProperty('--sc', sstep(0.25, 0.9, (vh - r.top) / (vh + r.height)).toFixed(4))
+      el.style.setProperty('--ph', '1')
+      return
+    }
     el.style.setProperty('--t', sstep(0, 0.24, t).toFixed(3))
     el.style.setProperty('--sc', sstep(0.16, 0.9, t).toFixed(4))
     el.style.setProperty('--ph', sstep(0.36, 0.7, t).toFixed(3))
@@ -20,56 +30,53 @@ function Chapter({ p, i }: { p: Project; i: number }) {
   // Every project opens on its desktop site; the phone view is one tap away.
   const [view, setView] = useState<'desk' | 'mob'>('desk')
   const [dragging, setDragging] = useState(false)
-  const mobW = useRef(0.36)
-  // Size the browser. Desktop view keeps a 16:10 screen. Mobile view keeps a real phone shape:
-  // on narrow layouts it fills the height left under the text, on wide ones it is a fixed width.
-  const layout = (v: 'desk' | 'mob') => {
+  // Size the browser (16:10 screen) and, on wide layouts, the phone that replaces it in phone view.
+  const layout = () => {
     const m = media.current
     if (!m) return
     const w = m.clientWidth
     if (!w) return
-    const narrow = matchMedia('(max-width: 860px)').matches
     const bar = m.querySelector<HTMLElement>('.browser__bar')?.offsetHeight ?? 42
-    m.style.setProperty('--sh', `${(w * 0.625).toFixed(1)}px`)
-    if (narrow) {
-      const screenH = clamp(m.clientHeight - bar - 6, 240, 640)
-      m.style.setProperty('--shm', `${screenH.toFixed(1)}px`)
-      mobW.current = clamp(screenH / 2.236 / w, 0.3, 0.92)
-    } else {
-      m.style.removeProperty('--shm')
-      mobW.current = clamp(Math.max(0.36, 210 / w), 0.36, 0.7)
-    }
-    if (!m.dataset.drag) m.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1')
+    const sh = w * 0.625
+    m.style.setProperty('--sh', `${sh.toFixed(1)}px`)
+    if (!narrow()) m.style.setProperty('--hw', `${clamp((sh + bar) / 2.09, 190, 300).toFixed(1)}px`)
+    else m.style.removeProperty('--hw')
+    if (!m.dataset.drag) m.style.setProperty('--bw', '1')
     requestAnimationFrame(() => { const sc = m.querySelector<HTMLElement>('.screen'); if (sc) m.style.setProperty('--shr', (sc.clientHeight / w).toFixed(4)) })
   }
   useEffect(() => {
     const m = media.current!
-    const ro = new ResizeObserver(() => layout(view))
+    const ro = new ResizeObserver(() => layout())
     ro.observe(m)
     return () => ro.disconnect()
   })
-  const setTo = (v: 'desk' | 'mob') => { setView(v); requestAnimationFrame(() => layout(v)) }
+  const setTo = (v: 'desk' | 'mob') => { setView(v); requestAnimationFrame(() => { layout(); kick() }) }
   const fit = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const im = e.currentTarget
     media.current!.style.setProperty('--rd', (im.naturalHeight / im.naturalWidth).toFixed(4))
   }
+  // Wide screens: drag the browser's edge narrower and it turns into the phone.
   const grip = (e: React.PointerEvent<HTMLButtonElement>) => {
     const m = media.current!
     const r = m.getBoundingClientRect()
     const cx = r.left + r.width / 2
+    const minW = 0.34
+    e.preventDefault()
     e.currentTarget.setPointerCapture(e.pointerId)
     m.dataset.drag = '1'; setDragging(true)
     let v = view
+    if (v === 'mob') { v = 'desk'; setView('desk') }
     const mv = (ev: PointerEvent) => {
-      const bw = clamp((2 * (ev.clientX - cx)) / r.width, mobW.current * 0.85, 1)
+      const bw = clamp((2 * (ev.clientX - cx)) / r.width, minW, 1)
       m.style.setProperty('--bw', bw.toFixed(3))
-      const nv = bw < (1 + mobW.current) / 2 - 0.08 ? 'mob' : 'desk'
-      if (nv !== v) { v = nv; setView(nv) }
+      v = bw < 0.5 ? 'mob' : 'desk'
+      m.classList.toggle('is-narrow', bw < 0.62)
     }
     const up = () => {
       removeEventListener('pointermove', mv); removeEventListener('pointerup', up); removeEventListener('pointercancel', up)
-      delete m.dataset.drag; setDragging(false)
-      m.style.setProperty('--bw', v === 'mob' ? mobW.current.toFixed(3) : '1')
+      delete m.dataset.drag; setDragging(false); m.classList.remove('is-narrow')
+      m.style.setProperty('--bw', '1')
+      setView(v)
     }
     addEventListener('pointermove', mv); addEventListener('pointerup', up); addEventListener('pointercancel', up)
   }
@@ -86,32 +93,37 @@ function Chapter({ p, i }: { p: Project; i: number }) {
           <a className="btn btn--light ch__visit" href={p.url} target="_blank" rel="noopener"><span className="ch__host">Visit {host(p.url)}</span><span className="ch__host-s">Visit the live site</span><Ext /></a>
         </div>
         <div ref={media} className={`ch__media is-${view}${dragging ? ' is-dragging' : ''}`}>
-          <div className="browser">
-            <div className="browser__bar">
-              <i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" />
-              <span aria-hidden="true">{host(p.url)}</span>
-              {p.mobile && (
-                <div className="vseg" role="group" aria-label={`View ${p.name} on`}>
-                  <button className={view === 'desk' ? 'is-on' : ''} aria-pressed={view === 'desk'} onClick={() => setTo('desk')}><IcDesktop /><span>Desktop</span></button>
-                  <button className={view === 'mob' ? 'is-on' : ''} aria-pressed={view === 'mob'} onClick={() => setTo('mob')}><IcPhone /><span>Mobile</span></button>
-                </div>
-              )}
-            </div>
-            <div className="screen">
-              <div className="screen__page screen__desk">
-                <img {...shot(p.slug, 'page')} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
-                {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" on={view === 'desk'} still={false} />}
+          {p.mobile && (
+            <div className="ch__tools">
+              <div className="vseg" role="group" aria-label={`View ${p.name} on`}>
+                <button className={view === 'desk' ? 'is-on' : ''} aria-pressed={view === 'desk'} onClick={() => setTo('desk')}><IcDesktop /><span>Desktop</span></button>
+                <button className={view === 'mob' ? 'is-on' : ''} aria-pressed={view === 'mob'} onClick={() => setTo('mob')}><IcPhone /><span>Mobile</span></button>
               </div>
-              {p.mobile && <img className="screen__page screen__mob" {...shot(p.slug, 'mobile')} alt={`${p.name} website, mobile`} loading="lazy" decoding="async" width={360} height={805} />}
+              <p className="ch__tip" aria-hidden="true">Drag the edge to resize</p>
             </div>
-            {p.mobile && <button className="grip" onPointerDown={grip} aria-label="Drag to resize the browser" title="Drag to resize"><i /><i /></button>}
+          )}
+          <div className="ch__devices">
+            <div className="browser" aria-hidden={view === 'mob' || undefined}>
+              <div className="browser__bar">
+                <i aria-hidden="true" /><i aria-hidden="true" /><i aria-hidden="true" />
+                <span aria-hidden="true">{host(p.url)}</span>
+              </div>
+              <div className="screen">
+                <div className="screen__page screen__desk">
+                  <img {...shot(p.slug, 'page')} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
+                  {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" on={view === 'desk'} still={false} />}
+                </div>
+                {p.mobile && <img className="screen__page screen__mob" {...shot(p.slug, 'mobile')} alt="" aria-hidden="true" loading="lazy" decoding="async" width={360} height={805} />}
+              </div>
+              {p.mobile && <button className="grip" onPointerDown={grip} aria-label="Drag to resize the browser" title="Drag to resize"><i /><i /></button>}
+            </div>
+            {p.mobile && <div className="ch__handset"><Handset slug={p.slug} name={p.name} hidden={view !== 'mob'} /></div>}
           </div>
           {p.mobile && (
             <div className="phone" aria-hidden="true">
-              <img {...shot(p.slug, 'mobile')} alt="" loading="lazy" decoding="async" width={360} height={805} />
+              <Handset slug={p.slug} name={p.name} hidden />
             </div>
           )}
-          {p.mobile && <p className="ch__tip" aria-hidden="true">Drag the edge to resize</p>}
         </div>
       </div>
     </section>
