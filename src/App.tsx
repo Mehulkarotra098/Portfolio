@@ -1,56 +1,35 @@
-import { useRef } from 'react'
-import { ThemeProvider } from './context/ThemeContext'
-import { Nav } from './components/Nav'
-import { Hero } from './components/Hero'
-import { SelectedWorks } from './components/SelectedWorks'
-import { Philosophy } from './components/Philosophy'
-import { Skills } from './components/Skills'
-import { Contact } from './components/Contact'
-import { Footer } from './components/Footer'
-import { ScrollToTop } from './components/ScrollToTop'
+import { useEffect, useRef, useState } from 'react'
 
-function App() {
-  const mainRef = useRef<HTMLElement>(null)
-
+// Work in progress: the hero scene is in place; the rest of the redesign is being built.
+export default function App() {
+  const canvas = useRef<HTMLCanvasElement>(null)
+  const [caught, setCaught] = useState(0)
+  useEffect(() => {
+    const c = canvas.current
+    if (!c) return
+    let alive = true
+    let stop = () => {}
+    import('./hero/Meadow').then(({ Meadow }) => {
+      if (!alive) return
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+      const low = (navigator.hardwareConcurrency || 8) <= 4
+      const m = new Meadow(c, { reducedMotion: reduced, lowPower: low, modelUrl: '/model/neil.glb' }, { onCatch: setCaught })
+      const fit = () => m.resize(c.clientWidth, c.clientHeight)
+      const ro = new ResizeObserver(fit); ro.observe(c); fit()
+      const move = (e: PointerEvent) => { const r = c.getBoundingClientRect(); m.pointerMove(e.clientX - r.left, e.clientY - r.top, e.pointerType === 'touch') }
+      window.addEventListener('pointermove', move)
+      stop = () => { ro.disconnect(); window.removeEventListener('pointermove', move); m.dispose() }
+    })
+    return () => { alive = false; stop() }
+  }, [])
   return (
-    <ThemeProvider>
-    <div className="bg-background text-on-surface">
-      <Nav />
-      <main ref={mainRef} className="overflow-x-hidden">
-        {/* Hero Section */}
-        <section>
-          <Hero />
-        </section>
-
-        {/* Breathing Space */}
-        <div className="h-16 sm:h-24 md:h-section-gap-md lg:h-section-gap-lg" />
-
-        {/* Selected Works Section */}
-        <section>
-          <SelectedWorks />
-        </section>
-
-        {/* Philosophy Section */}
-        <section>
-          <Philosophy />
-        </section>
-
-        {/* Skills Section */}
-        <section>
-          <Skills />
-        </section>
-
-        {/* Contact Section */}
-        <section>
-          <Contact />
-        </section>
-      </main>
-
-      <Footer />
-      <ScrollToTop />
-    </div>
-    </ThemeProvider>
+    <main className="wip">
+      <canvas ref={canvas} className="wip__scene" aria-hidden="true" />
+      <div className="wip__copy">
+        <p>Mehul Karotra, UI/UX developer and designer in Mumbai</p>
+        <h1>I design interfaces, then I build them.</h1>
+        <p className="wip__hint">Move your cursor: the bot is trying to catch the butterfly. Caught {caught} {caught === 1 ? 'time' : 'times'}.</p>
+      </div>
+    </main>
   )
 }
-
-export default App
