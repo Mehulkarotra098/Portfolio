@@ -19,23 +19,24 @@ const PORT = { w: 600, h: 1300 }
 const landFrames: Frame[] = [
   { id: 'growcred', slug: 'growcred', name: 'GrowCred', x: 300, y: -175, w: 420, view: 'desk' },
   { id: 'vidhi', slug: 'vidhi', name: 'Vidhi Parmar', x: 860, y: 92, w: 560, view: 'desk', note: 'Love it. Ship it!' },
-  { id: 'vidhi-m', slug: 'vidhi', name: 'Vidhi Parmar', x: 1452, y: 246, w: 150, view: 'mob' },
-  { id: 'antrah-m', slug: 'antrah', name: 'Antrah Wellness', x: 858, y: 470, w: 128, view: 'mob' },
+  { id: 'tis', slug: 'tis', name: 'TIS Admissions', x: 1452, y: 246, w: 150, view: 'mob' },
+  { id: 'antrah', slug: 'antrah', name: 'Antrah Wellness', x: 858, y: 470, w: 128, view: 'mob' },
   { id: 'uscale', slug: 'uscale', name: 'U Scale', x: 1018, y: 496, w: 430, view: 'desk' },
-  { id: 'tis', slug: 'tis', name: 'TIS Admissions', x: 1478, y: 640, w: 400, view: 'desk' },
-  { id: 'sashe', slug: 'sashe', name: 'Sashe by Prachi', x: 64, y: 712, w: 380, view: 'desk' },
-  { id: 'roar', slug: 'roar', name: 'Roar Arena', x: 476, y: 736, w: 350, view: 'desk' },
+  { id: 'sashe', slug: 'sashe', name: 'Sashe by Prachi', x: 1478, y: 640, w: 400, view: 'desk' },
+  { id: 'roar', slug: 'roar', name: 'Roar Arena', x: 64, y: 712, w: 380, view: 'desk' },
+  { id: 'brandgen', slug: 'brandgen', name: 'BrandGen', x: 476, y: 736, w: 350, view: 'desk' },
 ]
 const portFrames: Frame[] = [
   { id: 'growcred', slug: 'growcred', name: 'GrowCred', x: 250, y: -150, w: 400, view: 'desk' },
   { id: 'vidhi', slug: 'vidhi', name: 'Vidhi Parmar', x: 24, y: 820, w: 410, view: 'desk', note: 'Love it. Ship it!' },
-  { id: 'vidhi-m', slug: 'vidhi', name: 'Vidhi Parmar', x: 452, y: 760, w: 132, view: 'mob' },
+  { id: 'tis', slug: 'tis', name: 'TIS Admissions', x: 452, y: 760, w: 132, view: 'mob' },
   { id: 'sashe', slug: 'sashe', name: 'Sashe by Prachi', x: -150, y: 1110, w: 360, view: 'desk' },
   { id: 'roar', slug: 'roar', name: 'Roar Arena', x: 250, y: 1120, w: 360, view: 'desk' },
 ]
-const ZOOM_TO = 'vidhi-m'
+const ZOOM_TO = 'vidhi'
 const LINE1 = 'I design it.'
 const urlOf = (slug: string) => projects.find((p) => p.slug === slug)?.url ?? contact.uscale
+const hasMob = (slug: string) => !!projects.find((p) => p.slug === slug)?.mobile
 const label = (f: Frame) => `${f.name} / ${f.view === 'desk' ? 'Desktop' : 'Mobile'}`
 const sizeOf = (f: Frame) => (f.view === 'desk' ? '1440 × 900' : '390 × 872')
 const CATCH = ['Got you.', 'Caught you. Shall we build yours?', 'Too slow. Want a website?', 'Again! Okay, WhatsApp me.']
@@ -58,6 +59,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
   const [tool, setTool] = useState<'move' | 'hand' | 'comment'>('move')
   const [layers, setLayers] = useState(false)
   const [line1, setLine1] = useState(LINE1)
+  const [hs, setHs] = useState(1)
   const [editing, setEditing] = useState(false)
   const [note, setNote] = useState<{ x: number; y: number; text: string; sent: boolean } | null>(null)
   const [touch] = useState(() => matchMedia('(hover: none)').matches)
@@ -108,7 +110,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     const ox = (vw - B.w * s0) / 2 + pan.current.x * (1 - z), oy = (vh - B.h * s0) / 2 + pan.current.y * (1 - z)
     const f = live.current.find((x) => x.id === ZOOM_TO) ?? live.current[0]
     const fh = f.w * ratio(f.view)
-    const s1 = (vh * (portrait ? 0.6 : 0.84)) / fh
+    const s1 = Math.min((vh * 0.8) / fh, (vw * 0.9) / f.w)
     const s = s0 + (s1 - s0) * z
     const cx0 = ox + (f.x + f.w / 2) * s0, cy0 = oy + (f.y + fh / 2) * s0
     const cx = cx0 + (vw / 2 - cx0) * z, cy = cy0 + (vh / 2 - cy0) * z
@@ -129,13 +131,13 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     }
     st.style.setProperty('--cur', (1 - sstep(0.02, 0.15, p)).toFixed(3))
     st.classList.toggle('is-scrolled', p > 0.12)
-  }, [B.w, B.h, portrait])
+  }, [B.w, B.h])
   const pin = usePin<HTMLElement>((p) => { zoom.current = p; place(p) })
   useEffect(() => { place(zoom.current) })
 
   const reset = () => {
     commit((portrait ? portFrames : landFrames).map((f) => ({ ...f })))
-    setSel(null); setLine1(LINE1); pan.current = { x: 0, y: 0 }; place(zoom.current)
+    setSel(null); setLine1(LINE1); setHs(1); pan.current = { x: 0, y: 0 }; place(zoom.current)
     say('Back to how I left it.')
   }
 
@@ -253,6 +255,28 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
     addEventListener('keydown', key)
     return () => removeEventListener('keydown', key)
   })
+
+  // ------------------------------------------------------------------ headline: resize from the corners (it can't be moved)
+  const headResize = (e: React.PointerEvent<HTMLElement>, corner: string) => {
+    e.preventDefault(); e.stopPropagation()
+    const box = (e.currentTarget.parentElement as HTMLElement)
+    const w0 = box.getBoundingClientRect().width, sx = e.clientX, start = hs
+    const room = (stage.current!.clientWidth * (portrait ? 0.94 : 0.54)) / w0
+    const sign = corner.includes('e') ? 1 : -1
+    let v = start
+    e.currentTarget.setPointerCapture(e.pointerId)
+    say('Make it big. Or small. Just not somewhere else.')
+    const mv = (ev: PointerEvent) => {
+      v = clamp(start * (1 + (sign * (ev.clientX - sx)) / w0), 0.5, Math.min(1.5, start * room))
+      box.style.setProperty('--hs', v.toFixed(3))
+    }
+    const up = () => {
+      removeEventListener('pointermove', mv); removeEventListener('pointerup', up); removeEventListener('pointercancel', up)
+      setHs(v)
+      say(v > start + 0.02 ? 'Bigger headline, bolder promise.' : v < start - 0.02 ? 'Small and quiet. Classy.' : 'Same size. Fair.')
+    }
+    addEventListener('pointermove', mv); addEventListener('pointerup', up); addEventListener('pointercancel', up)
+  }
 
   // ------------------------------------------------------------------ headline editing
   const startEdit = () => {
@@ -406,14 +430,14 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
         <div ref={copy} className="hero__copy wrap">
           <p className="eyebrow">Mehul Karotra, UI/UX designer and developer in Mumbai</p>
           <h1 id="hero-title" className="display">
-            <span className={`h-sel${editing ? ' is-editing' : ''}`} onDoubleClick={startEdit} title="Double-click to edit">
+            <span className={`h-sel${editing ? ' is-editing' : ''}`} style={{ ['--hs' as string]: hs }} onDoubleClick={startEdit} title="Double-click to edit, drag a corner to resize">
               <span
                 ref={edit} className="h-sel__text"
                 contentEditable={editing} suppressContentEditableWarning spellCheck={false}
                 onBlur={() => editing && endEdit(true)}
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); endEdit(true) } if (e.key === 'Escape') { e.preventDefault(); endEdit(false) } }}
               >{line1}</span>
-              {['nw', 'ne', 'sw', 'se'].map((c) => <i key={c} className={`h hd-${c}`} />)}
+              {['nw', 'ne', 'sw', 'se'].map((c) => <i key={c} className={`h hd-${c}`} onPointerDown={(e) => headResize(e, c)} />)}
               <b className="h-badge">{editing ? 'Editing text' : 'Text'}</b>
             </span>
             <span className="h-two" onPointerDown={() => say(pick(["That line's locked. I do the building.", 'Locked. The building part is my job.']))}>
@@ -471,7 +495,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
             </div>
             <div className="seg" role="group" aria-label="View">
               <button className={selFrame.view === 'desk' ? 'is-on' : ''} onClick={() => switchView(selFrame, 'desk')}><IcDesktop />Desktop</button>
-              <button className={selFrame.view === 'mob' ? 'is-on' : ''} onClick={() => switchView(selFrame, 'mob')}><IcPhone />Mobile</button>
+              <button className={selFrame.view === 'mob' ? 'is-on' : ''} disabled={!hasMob(selFrame.slug)} title={hasMob(selFrame.slug) ? undefined : 'No mobile screen for this one'} onClick={() => switchView(selFrame, 'mob')}><IcPhone />Mobile</button>
             </div>
             <div className="props__row">
               <button onClick={() => update(selFrame.id, { locked: !selFrame.locked })}>{selFrame.locked ? <><IcLock />Locked</> : <><IcUnlock />Lock</>}</button>
@@ -495,7 +519,7 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
           </div>
         )}
 
-        <div ref={me} className="mp mp--me" aria-hidden="true"><CursorSvg color="#FF5C35" /><span className="mp__tag">Mehul</span><span ref={bubble} className="mp__bubble">Got you.</span></div>
+        <div ref={me} className="mp mp--me" aria-hidden="true"><CursorSvg color="#FF6347" /><span className="mp__tag">Mehul</span><span ref={bubble} className="mp__bubble">Got you.</span></div>
         <div ref={you} className="mp mp--you" aria-hidden="true"><span className="mp__tag">You</span></div>
         <p className="hero__hint" aria-hidden="true"><i />
           <span className="for-mouse">It's a live canvas. Drag, resize, double-click my headline.</span>

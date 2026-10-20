@@ -134,7 +134,7 @@ function Contact() {
           <span className="contact__wa">
             <a className="btn btn--orange" href={contact.whatsapp} target="_blank" rel="noopener"><WA />WhatsApp {contact.phone}</a>
             <span className="mp mp--me mp--static" aria-hidden="true">
-              <svg viewBox="0 0 20 22" width="20" height="22"><path d="M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z" fill="#FF5C35" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
+              <svg viewBox="0 0 20 22" width="20" height="22"><path d="M2 1.6 17.4 10 10.2 11.6 6.6 18.6Z" fill="#FF6347" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
               <span className="mp__tag">Mehul</span><span className="mp__bubble">This one goes straight to me.</span>
             </span>
           </span>
