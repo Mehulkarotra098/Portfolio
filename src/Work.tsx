@@ -99,7 +99,7 @@ function Chapter({ p, i }: { p: Project; i: number }) {
             <div className="screen">
               <div className="screen__page screen__desk">
                 <img {...shot(p.slug, 'page')} alt={`${p.name} website, desktop`} loading="lazy" decoding="async" width={1152} onLoad={fit} />
-                {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" />}
+                {LOOPS[p.slug] && <Loop slug={p.slug} className="screen__loop" on={view === 'desk'} still={false} />}
               </div>
               {p.mobile && <img className="screen__page screen__mob" {...shot(p.slug, 'mobile')} alt={`${p.name} website, mobile`} loading="lazy" decoding="async" width={360} height={805} />}
             </div>

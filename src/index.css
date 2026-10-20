@@ -308,7 +308,7 @@ html.menu-open { overflow: hidden; }
 .screen { position: relative; height: var(--sh); overflow: hidden; background: #fff; border-radius: 0 0 11px 11px; }
 .screen__page { position: absolute; left: 0; top: 0; width: 100%; height: auto; will-change: transform; transition: opacity 0.35s; }
 .screen__desk img { display: block; width: 100%; height: auto; }
-.screen__loop { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.screen__loop { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: var(--lr, 16 / 10); object-fit: cover; }
 .screen__desk { transform: translate3d(0, calc(var(--sc, 0) * max(0, 1 - var(--shr, 0.625) / (var(--bw) * var(--rd))) * -100%), 0); }
 .screen__mob { opacity: 0; transform: translate3d(0, calc(var(--sc, 0) * max(0, 1 - var(--shr, 0.625) / (var(--bw) * 2.236)) * -100%), 0); }
 .is-mob .screen__desk { opacity: 0; }
