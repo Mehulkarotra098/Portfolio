@@ -44,7 +44,8 @@ function jsonLd() {
 
 function staticBody() {
   const li = (s: string) => `<li>${s}</li>`
-  return `<div class="pre">
+  return `<div class="boot" aria-hidden="true"><div class="boot__in"><div class="boot__mark"><svg viewBox="0 0 64 64"><path d="M18 13 49 30 34.5 33.4 27.4 48Z" fill="#ff6347" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div><div class="boot__name">Mehul Karotra</div><div class="boot__bar"><i></i></div></div></div>
+<div class="pre">
 <header><p>Mehul Karotra, UI/UX designer and developer in Mumbai</p>
 <h1>I design it. Then I build it.</h1>
 <p>Every site starts as a frame in Figma, and I write the code that takes it live. One person from the first sketch to launch, so nothing gets lost on the way.</p>

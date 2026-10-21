@@ -37,7 +37,27 @@
       .pre { max-width: 52rem; margin: 0 auto; padding: 6rem 1.25rem 4rem; font: 400 1.05rem/1.6 system-ui, sans-serif; color: #1a0a3d; background: #c4a8ff; }
       .pre h1 { font-size: clamp(2.4rem, 8vw, 4.5rem); line-height: 1; margin: 0.4rem 0 1rem; }
       .pre h2 { margin-top: 3rem; } .pre ul { padding-left: 1.1rem; } .pre a { color: inherit; }
+      /* while the app loads: a branded screen for people, the readable content stays in the page for crawlers */
+      html { background: #c4a8ff; }
+      .boot { display: none; }
+      .boot-js .pre { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      .boot-js .boot { display: flex; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; background: #c4a8ff radial-gradient(rgba(26, 10, 61, 0.13) 1px, transparent 1.4px) 0 0 / 24px 24px; color: #1a0a3d; animation: boot-in 0.35s ease 0.12s both; }
+      .boot__in { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+      .boot__mark { position: relative; width: 64px; height: 64px; border-radius: 16px; background: #1a0a3d; box-shadow: 0 10px 30px rgba(26, 10, 61, 0.25); }
+      .boot__mark svg { position: absolute; left: 12px; top: 10px; width: 40px; height: 40px; animation: boot-click 1.4s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+      .boot__name { font: 800 20px/1 'Arial Narrow', system-ui, -apple-system, 'Segoe UI', sans-serif; letter-spacing: 0.01em; }
+      .boot__bar { width: 128px; height: 3px; border-radius: 3px; background: rgba(26, 10, 61, 0.14); overflow: hidden; }
+      .boot__bar i { display: block; width: 45%; height: 100%; border-radius: 3px; background: #ff6347; animation: boot-bar 1.4s ease-in-out infinite; }
+      @keyframes boot-in { from { opacity: 0; } }
+      @keyframes boot-click { 0%, 100% { transform: translate(0, 0) scale(1); } 45% { transform: translate(3px, 3px) scale(0.86); } 60% { transform: translate(3px, 3px) scale(0.92); } }
+      @keyframes boot-bar { from { transform: translateX(-110%); } to { transform: translateX(240%); } }
+      @media (prefers-reduced-motion: reduce) { .boot__mark svg, .boot__bar i { animation: none; } .boot__bar i { width: 100%; opacity: 0.6; } }
     </style>
+    <script>
+      document.documentElement.classList.add('boot-js');
+      // if the app hasn't started after 8 s, show the readable page instead of a spinner
+      setTimeout(function () { var r = document.getElementById('root'); if (r && r.querySelector('.boot')) document.documentElement.classList.remove('boot-js'); }, 8000);
+    </script>
   </head>
   <body>
     <div id="root"></div>
