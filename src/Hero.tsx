@@ -117,6 +117,10 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
       const safe = btns ? btns.offsetTop + btns.offsetHeight + 34 : 0
       const firstY = Math.min(...live.current.filter((x) => x.y > B.h * 0.4).map((x) => x.y))
       lift = Math.max(0, safe - ((vh - B.h * s0) / 2 + firstY * s0))
+    } else {
+      // on wide, short screens the board overflows top and bottom: keep the comment pin above the top frame on screen
+      const noted = live.current.find((x) => x.note)
+      if (noted) lift = Math.max(0, 14 - ((vh - B.h * s0) / 2 + noted.y * s0 - 30))
     }
     const ox = (vw - B.w * s0) / 2 + pan.current.x * (1 - z), oy = (vh - B.h * s0) / 2 + lift + pan.current.y * (1 - z)
     const f = live.current.find((x) => x.id === ZOOM_TO) ?? live.current[0]
