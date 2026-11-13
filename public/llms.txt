@@ -14,6 +14,7 @@
 
 - [Vidhi Parmar](https://www.vidhiparmar.me): AI visual artist, Mumbai. Design and build. A hire-me portfolio that moves like her films: a showreel hero, selected AI ad films, a four-step process, services and FAQs.
 - [Sashe by Prachi](https://sashebyprachi.vercel.app): Fashion label, Mumbai. Design and build. A digital flagship for a bespoke fashion label: an editorial hero, signature looks, studio forms and the founder's story. Built mobile-first to the founder's pixel-level bar.
+- [Space Studio Chennai](https://spacestudiochennai.com): Commercial architects, Chennai. Design, build and SEO. A ground-up rebuild for an architecture studio, from WordPress to custom code: every project, service and article moved across with its address kept, told through scroll-driven 3D.
 - [U Scale](https://uscale.in): My own studio, Mumbai. Brand, design, build and SEO. The site for my practice: every price published, free tools for local businesses, a blog and pages written to be found by Google and AI search.
 - [TIS Admissions 2026–27](https://tis-school-admissions-2026.vercel.app): School, Kandivali West. Concept, design and build. A concept admissions experience for an ICSE school: programmes, campus life and an enquiry flow with no friction.
 - [Antrah Wellness](https://antrah-wellness.vercel.app): Wellness gathering, Mumbai. Design and build. A launch site for a two-day wellness gathering: five paths to wellbeing in one calm place.

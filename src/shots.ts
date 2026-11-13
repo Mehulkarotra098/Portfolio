@@ -1,7 +1,7 @@
 // Screens captured at double resolution, and sites that have a recorded loop.
-const HI = new Set(['vidhi', 'uscale'])
+const HI = new Set(['vidhi', 'uscale', 'space'])
 // Phone screens with a 2x file (sharp on modern phones).
-const HI_MOBILE = new Set(['vidhi', 'uscale', 'sashe', 'tis', 'antrah', 'roar'])
+const HI_MOBILE = new Set(['vidhi', 'uscale', 'sashe', 'tis', 'antrah', 'roar', 'space'])
 // Each loop comes in a 1440px cut for large screens and a 960px cut for phones, as WebM and MP4.
 // w × h is the recorded area: the whole hero, so it lines up with the full-page screenshot under it.
 export const LOOPS: Record<string, { base: string; w: number; h: number }> = {
@@ -19,6 +19,7 @@ export const poster = (slug: string) => (HI.has(slug) ? `/work/${slug}-live@2x.w
 export const STATUS: Record<string, { bg: string; fg: 'dark' | 'light' }> = {
   vidhi: { bg: '#212121', fg: 'light' },
   sashe: { bg: '#f5efe8', fg: 'dark' },
+  space: { bg: '#27302c', fg: 'light' },
   uscale: { bg: '#fafafc', fg: 'dark' },
   tis: { bg: '#fffaf0', fg: 'dark' },
   antrah: { bg: '#f4f2e3', fg: 'dark' },

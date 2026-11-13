@@ -26,10 +26,10 @@ const landFrames: Frame[] = [
   { id: 'uscale', slug: 'uscale', name: 'U Scale', x: 1018, y: 496, w: 430, view: 'desk' },
   { id: 'sashe', slug: 'sashe', name: 'Sashe by Prachi', x: 1478, y: 640, w: 400, view: 'desk' },
   { id: 'roar', slug: 'roar', name: 'Roar Arena', x: 64, y: 712, w: 380, view: 'desk' },
-  { id: 'brandgen', slug: 'brandgen', name: 'BrandGen', x: 476, y: 736, w: 350, view: 'desk' },
+  { id: 'space', slug: 'space', name: 'Space Studio Chennai', x: 476, y: 736, w: 350, view: 'desk' },
 ]
 const portFrames: Frame[] = [
-  { id: 'growcred', slug: 'growcred', name: 'GrowCred', x: 250, y: -150, w: 400, view: 'desk' },
+  { id: 'space', slug: 'space', name: 'Space Studio Chennai', x: 250, y: -150, w: 400, view: 'desk' },
   { id: 'vidhi', slug: 'vidhi', name: 'Vidhi Parmar', x: 24, y: 820, w: 410, view: 'desk', note: 'Love it. Ship it!' },
   { id: 'tis', slug: 'tis', name: 'TIS Admissions', x: 452, y: 760, w: 132, view: 'mob' },
   { id: 'sashe', slug: 'sashe', name: 'Sashe by Prachi', x: -150, y: 1110, w: 360, view: 'desk' },

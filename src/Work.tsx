@@ -7,8 +7,8 @@ import { Loop } from './media'
 import { LOOPS, shot } from './shots'
 import { Handset } from './Handset'
 
-const featured = projects.slice(0, 6)
-const more = projects.slice(6)
+const featured = projects.slice(0, 7)
+const more = projects.slice(7)
 const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
 function Chapter({ p, i }: { p: Project; i: number }) {
@@ -135,7 +135,7 @@ export function Work() {
     <div className="work" id="work">
       <header className="work__intro wrap">
         <h2 className="h2">Selected work</h2>
-        <p className="lead">Six sites, each one designed in Figma and built by me. Keep scrolling to move through every page.</p>
+        <p className="lead">Seven sites, each one designed in Figma and built by me. Keep scrolling to move through every page.</p>
       </header>
       {featured.map((p, i) => <Chapter key={p.slug} p={p} i={i} />)}
     </div>
