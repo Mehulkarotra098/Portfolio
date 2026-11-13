@@ -391,9 +391,22 @@ html.menu-open { overflow: hidden; }
 
 .svc { background: var(--chart); padding-block: clamp(5rem, 14vh, 9rem) clamp(4rem, 10vh, 6rem); }
 .svc__list { margin-top: clamp(2rem, 5vh, 3rem); border-top: 1.5px solid var(--ink); }
-.svc__list li { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem 3rem; align-items: center; padding-block: clamp(1.2rem, 3vh, 2rem); border-bottom: 1px solid rgb(26 10 61 / 16%); }
+.svc__list li { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr) clamp(180px, 18vw, 280px); gap: 1rem 3rem; align-items: center; padding-block: clamp(1.2rem, 3vh, 2rem); border-bottom: 1px solid rgb(26 10 61 / 16%); }
 .svc__list h3 { font: 850 clamp(3.4rem, 1rem + 7vw, 8.4rem)/0.86 var(--display); font-stretch: 60%; letter-spacing: -0.01em; transition: font-stretch 0.6s var(--ease), color 0.3s; }
-.svc__list li:hover h3 { font-stretch: 112%; color: var(--tomato); -webkit-text-stroke: 2px var(--ink); }
+.svc__list li:hover h3 { font-stretch: 112%; }
+.svc { overflow-x: clip; }
+/* the word fills with ink as its row crosses the screen; on hover it turns tomato */
+.svc__w { color: transparent; -webkit-text-stroke: 2px var(--ink); background: linear-gradient(90deg, var(--ink) var(--f, 100%), transparent var(--f, 100%)); -webkit-background-clip: text; background-clip: text; transition: background-color .3s; }
+.svc__list li:hover .svc__w { background-image: linear-gradient(90deg, var(--tomato) 100%, transparent 100%); }
+/* a frame of real work, labelled like a Figma frame, slides and straightens in */
+.svc__frame { position: relative; margin: 0; aspect-ratio: 16 / 10; border: 1.5px solid var(--ink); background: var(--ink); box-shadow: 8px 8px 0 var(--ink); transform: translateX(calc((1 - var(--t, 1)) * 60px)) rotate(calc((1 - var(--t, 1)) * 8deg + 2deg)); opacity: calc(.2 + var(--t, 1) * .8); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.svc__list li:nth-child(even) .svc__frame { rotate: -4deg; }
+.svc__list li:hover .svc__frame { transform: translateY(-6px) rotate(0deg); rotate: 0deg; box-shadow: 12px 14px 0 var(--tomato); }
+.svc__frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.svc__frame figcaption { position: absolute; left: -1.5px; bottom: calc(100% + 6px); font: 600 .72rem/1 var(--sans, inherit); color: var(--ink); white-space: nowrap; }
+.svc__frame .h { position: absolute; width: 9px; height: 9px; background: var(--chart); border: 1.5px solid var(--ink); }
+.svc__frame .h1 { left: -5px; top: -5px; } .svc__frame .h2 { right: -5px; top: -5px; } .svc__frame .h3 { left: -5px; bottom: -5px; } .svc__frame .h4 { right: -5px; bottom: -5px; }
+@media (prefers-reduced-motion: reduce) { .svc__w { background: none; color: var(--ink); } .svc__frame { transform: none; opacity: 1; } }
 .svc__list p { color: var(--ink-2); max-width: 30rem; }
 .svc__k { margin-top: 0.6rem; font-size: 0.92rem; color: var(--ink-2) !important; }
 .svc__us { margin-top: clamp(2.4rem, 6vh, 3.8rem); display: grid; grid-template-columns: minmax(0, 1.3fr) auto; gap: 1.5rem 3rem; align-items: center; padding: clamp(1.4rem, 3vw, 2.2rem); border-radius: 18px; background: var(--ink); color: var(--lav-soft); }
@@ -526,6 +539,7 @@ html.menu-open { overflow: hidden; }
   .is-desk .browser { animation: devIn 0.55s var(--ease) both; }
 
   .svc__list li { grid-template-columns: 1fr; }
+  .svc__frame { max-width: 340px; margin: 1.6rem 0 .6rem; }
   .about__grid { grid-template-columns: 1fr; }
   .faq__grid { grid-template-columns: 1fr; }
   .faq details p { padding-right: 0; }

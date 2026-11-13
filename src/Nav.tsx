@@ -8,7 +8,7 @@ type Page = { id: string; label: string; sub?: boolean }
 const PAGES: Page[] = [
   { id: 'top', label: 'Canvas' },
   { id: 'work', label: 'Selected work' },
-  ...projects.slice(0, 6).map((p) => ({ id: `p-${p.slug}`, label: p.name, sub: true })),
+  ...projects.slice(0, 7).map((p) => ({ id: `p-${p.slug}`, label: p.name, sub: true })),
   { id: 'more', label: 'More work' },
   { id: 'sketchbook', label: 'Sketchbook' },
   { id: 'services', label: 'What I do' },

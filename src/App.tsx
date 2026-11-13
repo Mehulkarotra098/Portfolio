@@ -4,7 +4,7 @@ import { concepts, contact, journey } from './data'
 import { Hero } from './Hero'
 import { Work, MoreWork } from './Work'
 import { Ext, WA } from './icons'
-import { kick } from './scroll'
+import { kick, sstep, usePin } from './scroll'
 import { Nav } from './Nav'
 import { Cursor } from './Cursor'
 import { faq } from './faq'
@@ -48,25 +48,39 @@ function Sketchbook() {
 }
 
 const services = [
-  { t: 'Design', d: 'Research, flows and wireframes, then real screens in Figma, with a design system your team can keep using.', k: 'Figma, prototyping, design systems, Illustrator, Photoshop' },
-  { t: 'Build', d: 'The approved design, coded to match: responsive, fast and accessible, with forms and analytics wired in.', k: 'React, TypeScript, Tailwind CSS, WordPress, Vercel' },
-  { t: 'Grow', d: 'Through U Scale: Google Business Profile, SEO, social media and ads, with a report every month.', k: 'Local SEO, AI search, social media, Google and Meta ads' },
+  { t: 'Design', d: 'Research, flows and wireframes, then real screens in Figma, with a design system your team can keep using.', k: 'Figma, prototyping, design systems, Illustrator, Photoshop', img: '/work/matrimony.webp', tag: 'Ordhekdeen / Figma' },
+  { t: 'Build', d: 'The approved design, coded to match: responsive, fast and accessible, with forms and analytics wired in.', k: 'React, TypeScript, Tailwind CSS, WordPress, Vercel', img: '/work/space-live.webp', tag: 'Space Studio / Live' },
+  { t: 'Grow', d: 'Through U Scale: Google Business Profile, SEO, social media and ads, with a report every month.', k: 'Local SEO, AI search, social media, Google and Meta ads', img: '/work/uscale-live.webp', tag: 'U Scale / Live' },
 ]
+// Each row fills its word in as it crosses the screen and slides a frame of real work in beside it.
+function SvcRow({ s, i }: { s: (typeof services)[number]; i: number }) {
+  const ref = usePin<HTMLLIElement>((_p, r, el) => {
+    const vh = innerHeight
+    el.style.setProperty('--f', (sstep(0.05, 0.75, (vh - r.top) / (vh * 0.85)) * 100).toFixed(1) + '%')
+    el.style.setProperty('--t', sstep(0, 0.6, (vh - r.top) / vh).toFixed(3))
+  })
+  return (
+    <li ref={ref} style={{ ['--i' as string]: i }}>
+      <h3><span className="svc__w" data-w={s.t}>{s.t}</span></h3>
+      <div>
+        <p>{s.d}</p>
+        <p className="svc__k">{s.k}</p>
+      </div>
+      <figure className="svc__frame" aria-hidden="true">
+        <figcaption>{s.tag}</figcaption>
+        <img src={s.img} alt="" loading="lazy" decoding="async" width={1152} height={720} />
+        <i className="h h1" /><i className="h h2" /><i className="h h3" /><i className="h h4" />
+      </figure>
+    </li>
+  )
+}
 function Services() {
   return (
     <section className="svc" id="services" aria-labelledby="svc-title">
       <div className="wrap">
         <h2 id="svc-title" className="h2">What I do</h2>
         <ul className="svc__list">
-          {services.map((s) => (
-            <li key={s.t}>
-              <h3>{s.t}</h3>
-              <div>
-                <p>{s.d}</p>
-                <p className="svc__k">{s.k}</p>
-              </div>
-            </li>
-          ))}
+          {services.map((s, i) => <SvcRow key={s.t} s={s} i={i} />)}
         </ul>
         <div className="svc__us">
           <p>Want the whole thing handled? I also run <b>U Scale</b>, my practice for websites, SEO, social media and ads. Every price is published, and you talk to me directly.</p>

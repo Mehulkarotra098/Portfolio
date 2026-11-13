@@ -32,6 +32,11 @@ export const projects: Project[] = [
     url: 'https://sashebyprachi.vercel.app',
   },
   {
+    slug: 'space', name: 'Space Studio Chennai', meta: 'Commercial architects, Chennai', role: 'Design, build and SEO', accent: '#2C5A4C', mobile: true,
+    text: "A ground-up rebuild for an architecture studio, from WordPress to custom code: every project, service and article moved across with its address kept, told through scroll-driven 3D.",
+    url: 'https://spacestudiochennai.com',
+  },
+  {
     slug: 'uscale', name: 'U Scale', meta: 'My own studio, Mumbai', role: 'Brand, design, build and SEO', accent: '#63B849', mobile: true,
     text: 'The site for my practice: every price published, free tools for local businesses, a blog and pages written to be found by Google and AI search.',
     url: 'https://uscale.in',
