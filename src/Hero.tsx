@@ -19,7 +19,6 @@ const ratio = (v: View) => (v === 'desk' ? DESK : MOB)
 const LAND = { w: 1600, h: 900 }
 const PORT = { w: 600, h: 1300 }
 const landFrames: Frame[] = [
-  { id: 'growcred', slug: 'growcred', name: 'GrowCred', x: 300, y: -175, w: 420, view: 'desk' },
   { id: 'vidhi', slug: 'vidhi', name: 'Vidhi Parmar', x: 860, y: 92, w: 560, view: 'desk', note: 'Love it. Ship it!' },
   { id: 'tis', slug: 'tis', name: 'TIS Admissions', x: 1452, y: 246, w: 150, view: 'mob' },
   { id: 'antrah', slug: 'antrah', name: 'Antrah Wellness', x: 858, y: 470, w: 128, view: 'mob' },
@@ -29,7 +28,6 @@ const landFrames: Frame[] = [
   { id: 'space', slug: 'space', name: 'Space Studio Chennai', x: 476, y: 736, w: 350, view: 'desk' },
 ]
 const portFrames: Frame[] = [
-  { id: 'space', slug: 'space', name: 'Space Studio Chennai', x: 250, y: -150, w: 400, view: 'desk' },
   { id: 'vidhi', slug: 'vidhi', name: 'Vidhi Parmar', x: 24, y: 820, w: 410, view: 'desk', note: 'Love it. Ship it!' },
   { id: 'tis', slug: 'tis', name: 'TIS Admissions', x: 452, y: 760, w: 132, view: 'mob' },
   { id: 'sashe', slug: 'sashe', name: 'Sashe by Prachi', x: -150, y: 1110, w: 360, view: 'desk' },
@@ -122,7 +120,8 @@ export function Hero({ go }: { go: (e: React.MouseEvent<HTMLAnchorElement>) => v
       const noted = live.current.find((x) => x.note)
       if (noted) lift = Math.max(0, 14 - ((vh - B.h * s0) / 2 + noted.y * s0 - 30))
     }
-    const ox = (vw - B.w * s0) / 2 + pan.current.x * (1 - z), oy = (vh - B.h * s0) / 2 + lift + pan.current.y * (1 - z)
+    // wide screens: when the board overflows sideways, let it run off the right edge, not under the headline
+    const ox = (vw - B.w * s0) * (portrait ? 0.5 : 0.15) + pan.current.x * (1 - z), oy = (vh - B.h * s0) / 2 + lift + pan.current.y * (1 - z)
     const f = live.current.find((x) => x.id === ZOOM_TO) ?? live.current[0]
     const fh = f.w * ratio(f.view)
     const s1 = Math.min((vh * 0.8) / fh, (vw * 0.9) / f.w)
