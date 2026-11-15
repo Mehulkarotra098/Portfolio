@@ -37,7 +37,17 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     const w = m.clientWidth
     if (!w) return
     const bar = m.querySelector<HTMLElement>('.browser__bar')?.offsetHeight ?? 42
-    const sh = w * 0.625
+    // Wide layouts: the browser keeps the full column width and gets shorter on short screens
+    // (like a real browser window), so it never leaves a hole beside the text or runs off the bottom.
+    let sh = w * 0.625
+    const st = m.closest<HTMLElement>('.ch__stage')
+    if (st && !narrow()) {
+      const cs = getComputedStyle(st)
+      const tools = m.querySelector<HTMLElement>('.ch__tools')
+      const toolsH = tools ? tools.offsetHeight + parseFloat(getComputedStyle(tools).marginBottom) : 0
+      const room = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - toolsH - bar - 2
+      sh = Math.max(Math.min(sh, room), w * 0.36)
+    }
     m.style.setProperty('--sh', `${sh.toFixed(1)}px`)
     if (!narrow()) m.style.setProperty('--hw', `${clamp((sh + bar) / 2.09, 190, 300).toFixed(1)}px`)
     else m.style.removeProperty('--hw')
@@ -48,7 +58,9 @@ function Chapter({ p, i }: { p: Project; i: number }) {
     const m = media.current!
     const ro = new ResizeObserver(() => layout())
     ro.observe(m)
-    return () => ro.disconnect()
+    const onResize = () => layout()
+    addEventListener('resize', onResize)
+    return () => { ro.disconnect(); removeEventListener('resize', onResize) }
   })
   const setTo = (v: 'desk' | 'mob') => { setView(v); requestAnimationFrame(() => { layout(); kick() }) }
   const fit = (e: React.SyntheticEvent<HTMLImageElement>) => {

@@ -56,8 +56,8 @@ const services = [
 function SvcRow({ s, i }: { s: (typeof services)[number]; i: number }) {
   const ref = usePin<HTMLLIElement>((_p, r, el) => {
     const vh = innerHeight
-    el.style.setProperty('--f', (sstep(0.05, 0.75, (vh - r.top) / (vh * 0.85)) * 100).toFixed(1) + '%')
-    el.style.setProperty('--t', sstep(0, 0.6, (vh - r.top) / vh).toFixed(3))
+    el.style.setProperty('--f', (sstep(0.08, 0.5, (vh - r.top) / vh) * 100).toFixed(1) + '%')
+    el.style.setProperty('--t', sstep(0, 0.45, (vh - r.top) / vh).toFixed(3))
   })
   return (
     <li ref={ref} style={{ ['--i' as string]: i }}>
